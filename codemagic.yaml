@@ -6,7 +6,7 @@ workflows:
     instance_type: mac_mini_m2
     max_build_duration: 90
     integrations:
-      app_store_connect: dareflip-app-store-connect
+      app_store_connect: "Kahvehanem ASC"
     environment:
       groups:
         - dareflip_beta # APPLE_TEAM_ID and APP_STORE_APPLE_ID, supplied by the publisher

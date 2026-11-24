@@ -16,17 +16,17 @@ Codemagic'te GitHub hesabını bağlayıp `fiyatperformanselif-lgtm/DareFlip` re
 
 ## 3. Apple API bağlantısını güvenli olarak kurun
 
-App Store Connect → Users and Access → Integrations → App Store Connect API bölümünde yetkili ekip kullanıcısıyla bir **team API key** oluşturun. Codemagic'in yayımlama entegrasyonu için belgelenen **App Manager** erişimini kullanın. Sertifika/profil yönetimi için hesabın ilgili Apple ve Codemagic ekip yetkileri de bulunmalıdır.
+Bu proje, Codemagic'te zaten kayıtlı **Kahvehanem ASC** bağlantısını kullanır. Aynı Apple ekibindeki DareFlip uygulamasına erişimi olan bu bağlantı için yeni bir anahtar oluşturmanız gerekmez. Farklı bir hesapta ilk kurulum yapılıyorsa App Store Connect → Users and Access → Integrations → App Store Connect API bölümünde yetkili ekip kullanıcısıyla bir **team API key** oluşturun. Codemagic'in yayımlama entegrasyonu için belgelenen **App Manager** erişimini kullanın. Sertifika/profil yönetimi için hesabın ilgili Apple ve Codemagic ekip yetkileri de bulunmalıdır.
 
 `.p8` anahtarı yalnızca bir kez indirilebilir. Key ID ve Issuer ID değerlerini kaydedin. Bunları ve özel anahtarı yalnızca Codemagic'in güvenli entegrasyon alanına girin; GitHub'a, YAML'e veya sohbete koymayın.
 
-Codemagic → Team settings → Team integrations → Developer Portal → Connect/Manage keys → Add key yolundan bağlantıyı ekleyin. Bağlantı adını tam olarak şöyle verin:
+Codemagic → Team settings → Team integrations → Developer Portal → Connect/Manage keys bölümünde mevcut bağlantının adını kontrol edin. YAML'de kullanılan ad tam olarak şudur:
 
 ```text
-dareflip-app-store-connect
+Kahvehanem ASC
 ```
 
-Key ID, Issuer ID ve `.p8` dosyasını bu alanda tanımlayın. YAML'deki `integrations.app_store_connect` bu adı kullanır. Codemagic gerekli Apple API bilgilerini build ortamına kendisi bağlar; ayrıca parolanızı veya API anahtarını repo environment variable'ı olarak yazmayın.
+Mevcut bağlantıyı yeniden adlandırmayın. Farklı bir hesapta yeni bağlantı gerekiyorsa Add key alanında Key ID, Issuer ID ve `.p8` dosyasını güvenli biçimde tanımlayın ve YAML'deki `integrations.app_store_connect` değerini oradaki gerçek adla eşleştirin. Codemagic gerekli Apple API bilgilerini build ortamına kendisi bağlar; ayrıca parolanızı veya API anahtarını repo environment variable'ı olarak yazmayın.
 
 ## 4. İmzalama kimliklerini Codemagic'te hazırlayın
 
