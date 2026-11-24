@@ -8,6 +8,8 @@ export default ts.config(
       "dist/**",
       "artifacts/**",
       "node_modules/**",
+      ".codemagic-tools/**",
+      "build/**",
       "android/**",
       "ios/**",
       "playwright-report/**",
