@@ -39,7 +39,7 @@ Browser “iPhone/iPad” profiles use Chromium with matching dimensions. They a
 
 - Source, pinned compatible dependencies, lockfile and CI quality workflow.
 - `android/` and `ios/` native project sources; generated build outputs are ignored.
-- Debug APK: `android/app/build/outputs/apk/debug/app-debug.apk`, local development artifact, debug-signed, test inventory only. Final size: 15,904,657 bytes. SHA256: `fe8d623a3673789eed76ce5ba002cc5780fead071f222a7c4b731e358e259c21`. Final incremental build passed after the last source sync; all 16 bundled offline assets match their copied native sources, and the test-only ad flag is verified.
+- Debug APK: `android/app/build/outputs/apk/debug/app-debug.apk`, local development artifact, debug-signed, test inventory only. Final size: 15,904,390 bytes. SHA256: `09de1763f978810e5e6289bb3bbc62110b702cb9c02fcd72d40cc9b1e2066017`. Final incremental build passed after the last source sync; all 16 bundled offline assets match their copied native sources, and the test-only ad flag is verified.
 - Original icon SVG, master PNG/splash, platform assets and 15 browser screen references.
 - `docs/ARCHITECTURE.md`, `CONTENT.md`, `ACCESSIBILITY.md`, `ADMOB.md`, `NATIVE_BUILDS.md`, `STORE_METADATA.md`, `PRIVACY_POLICY.md`, `TERMS_OF_USE.md`, `SUPPORT.md`.
 - Tested Linux native bootstrap/build helpers. JDK/SDK/Gradle caches live outside the checkout under `/workspace/.dareflip-*`; no credentials are embedded in helpers.
@@ -58,3 +58,5 @@ Current-instance compilation, saved cloud configuration, cloud environment publi
 ## Cloud environment handoff
 
 `install_script` and `start_skill` were saved successfully in the cloud configuration draft. They reproduce the frozen npm installation, verified Android bootstrap, web build and native sync, and document service startup and checks. Saving did not publish the environment. Review/save the draft in environment settings, then publish the cloud environment when desired; fresh-task restoration has not been verified. The development server is intended for port 5173; add that port in HTTP Previews to obtain a user-accessible hosted link.
+
+Final native artwork verification: Android API 26+ adaptive foreground/background and Android 12+ launch theme now use DareFlip artwork; inherited Capacitor adaptive assets and unused template splash/test files were removed. The APK was rebuilt successfully after this resource correction.
