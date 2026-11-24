@@ -81,3 +81,7 @@ Ads never start on opening the app. Explicit privacy action, UMP SDK permission 
 - [Release and implementation status](DEVELOPMENT_STATUS.md)
 
 Publisher identity, actual support contact, hosted legal URLs, AdMob console consent configuration, signing, completed localization/editorial work and real-device/native SDK verification remain release prerequisites. Documentation deliberately identifies unknown values rather than inventing them.
+
+## TestFlight beta
+
+For an internal iPhone/iPad beta, run `npm run beta:ios`, then follow [the TestFlight handoff](docs/TESTFLIGHT.md). The preparation command builds with test ad units and syncs iOS; native archiving/upload still requires a Mac/Xcode, an active Apple Developer team and App Store Connect signing/access. See [the static iOS audit](docs/IOS_BETA_AUDIT.md). Internal beta testing does not require completing the 5,000-card roadmap first.

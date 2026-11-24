@@ -20,7 +20,8 @@
     "format": "prettier --write src tests scripts *.ts *.js *.json *.html",
     "test:a11y": "playwright test -c tests/accessibility/playwright.config.ts",
     "setup:android": "bash scripts/setup-android.sh",
-    "build:android": "npm run native:sync && python3 scripts/android-build.py"
+    "build:android": "npm run native:sync && python3 scripts/android-build.py",
+    "beta:ios": "node scripts/prepare-ios-beta.mjs"
   },
   "dependencies": {
     "@capacitor-community/admob": "8.4.2",

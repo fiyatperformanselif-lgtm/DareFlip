@@ -60,3 +60,7 @@ Current-instance compilation, saved cloud configuration, cloud environment publi
 `install_script` and `start_skill` were saved successfully in the cloud configuration draft. They reproduce the frozen npm installation, verified Android bootstrap, web build and native sync, and document service startup and checks. Saving did not publish the environment. Review/save the draft in environment settings, then publish the cloud environment when desired; fresh-task restoration has not been verified. The development server is intended for port 5173; add that port in HTTP Previews to obtain a user-accessible hosted link.
 
 Final native artwork verification: Android API 26+ adaptive foreground/background and Android 12+ launch theme now use DareFlip artwork; inherited Capacitor adaptive assets and unused template splash/test files were removed. The APK was rebuilt successfully after this resource correction.
+
+## TestFlight preparation
+
+Added and exercised `npm run beta:ios` for test-ad web compilation and iOS synchronization. Detailed Mac/Xcode → Archive → App Store Connect → internal TestFlight steps are in `docs/TESTFLIGHT.md`, with static project audit in `docs/IOS_BETA_AUDIT.md`. No Apple team/signing/account bindings are configured on this Linux machine. No iOS archive, TestFlight upload, Apple processing or beta installation has been performed; those remain blocked on the publisher's Apple membership and authorized macOS build/account route. Internal beta testing does not require finishing the full-content/public-store release checklist.
