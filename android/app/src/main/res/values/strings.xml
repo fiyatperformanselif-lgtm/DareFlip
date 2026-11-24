@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">DareFlip</string>
+    <string name="title_activity_main">DareFlip</string>
+    <string name="package_name">com.dareflip.app</string>
+    <string name="custom_url_scheme">com.dareflip.app</string>
+</resources>
