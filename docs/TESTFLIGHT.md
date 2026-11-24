@@ -1,5 +1,7 @@
 # DareFlip — TestFlight beta
 
+**Preferred route: [Codemagic cloud build and upload](CODEMAGIC_TESTFLIGHT.md).** You do not need to open local Xcode; Codemagic provides macOS/Xcode in the cloud. The manual Mac route below remains optional.
+
 TestFlight is a private beta distribution step, separate from a public App Store release. The current 192 original cards and partial translations can be tested internally; completing the 5,000-card roadmap is not a technical prerequisite. Do not advertise unfinished features as complete to testers.
 
 ## What is prepared and what is missing
@@ -12,7 +14,7 @@ Do not send Apple passwords, app-specific passwords, `.p8` private keys, signing
 
 ## 1. Get this code onto the Mac
 
-Use the latest project checkout or a secure transfer of this source. The current cloud commits are local; they are not yet in GitHub. Pushing them or transferring a source bundle is necessary before a Mac can clone the updated project. Install the Node version in `.nvmrc`, then from the repository root:
+Use the latest project checkout or a secure transfer of this source. The repository is `https://github.com/fiyatperformanselif-lgtm/DareFlip`; use the main branch containing the prepared commits, or transfer a source bundle. Install the Node version in `.nvmrc`, then from the repository root:
 
 ```sh
 npm ci

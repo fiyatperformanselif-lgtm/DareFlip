@@ -1,0 +1,62 @@
+# Start this workflow manually in Codemagic. Pushes never build or upload automatically.
+# Setup: docs/CODEMAGIC_TESTFLIGHT.md. Keep account credentials/signing keys in Codemagic UI.
+workflows:
+  ios-testflight:
+    name: DareFlip · TestFlight upload (manual)
+    instance_type: mac_mini_m2
+    max_build_duration: 90
+    integrations:
+      app_store_connect: dareflip-app-store-connect
+    environment:
+      groups:
+        - dareflip_beta # APPLE_TEAM_ID and APP_STORE_APPLE_ID, supplied by the publisher
+      vars:
+        BUNDLE_ID: &bundle_id com.dareflip.app # Change this single value if your registered ID differs.
+        XCODE_PROJECT: ios/App/App.xcodeproj
+        XCODE_SCHEME: App
+        VITE_ADMOB_TESTING: "true"
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: *bundle_id
+      node: "24.22.3"
+      xcode: latest
+    scripts:
+      - name: Install verified CLI and check Apple app identity
+        script: |
+          set -euo pipefail
+          python3 -m venv "$CM_BUILD_DIR/.codemagic-tools"
+          "$CM_BUILD_DIR/.codemagic-tools/bin/python" -m pip install 'codemagic-cli-tools==0.72.0'
+          export PATH="$CM_BUILD_DIR/.codemagic-tools/bin:$PATH"
+          echo "PATH=$PATH" >> "$CM_ENV"
+          python3 scripts/codemagic-tests.py
+          python3 scripts/codemagic-ios.py check
+      - name: Build offline beta and apply publisher metadata
+        script: |
+          set -euo pipefail
+          npm ci
+          npm run lint
+          npm test
+          python3 scripts/codemagic-tests.py
+          DAREFLIP_BUNDLE_ID="$BUNDLE_ID" npm run beta:ios
+          python3 scripts/codemagic-ios.py prepare
+      - name: Apply stored distribution signing and resolve Swift packages
+        script: |
+          set -euo pipefail
+          xcode-project use-profiles --project "$XCODE_PROJECT" --archive-method app-store
+          python3 scripts/codemagic-ios.py verify-profile
+          xcodebuild -resolvePackageDependencies -project "$XCODE_PROJECT" -scheme "$XCODE_SCHEME"
+      - name: Archive and export signed beta IPA
+        script: |
+          set -euo pipefail
+          xcode-project build-ipa --project "$XCODE_PROJECT" --scheme "$XCODE_SCHEME" --config Release
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - build/ios/xcarchive/**/*.xcarchive
+      - /tmp/xcodebuild_logs/*.log
+      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
+    publishing:
+      app_store_connect:
+        auth: integration
+        # Upload only. Select testers / approve external beta review yourself in App Store Connect.
+        submit_to_testflight: false
+        submit_to_app_store: false

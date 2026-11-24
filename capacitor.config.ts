@@ -1,6 +1,6 @@
 import type { CapacitorConfig } from "@capacitor/cli";
 const config: CapacitorConfig = {
-  appId: "com.dareflip.app",
+  appId: process.env.DAREFLIP_BUNDLE_ID || "com.dareflip.app",
   appName: "DareFlip",
   webDir: "dist",
   backgroundColor: "#140c26",

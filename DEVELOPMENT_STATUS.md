@@ -53,7 +53,7 @@ Browser “iPhone/iPad” profiles use Chromium with matching dimensions. They a
 5. Build/test iOS and iPadOS on macOS/Xcode, configure final bundle IDs and signing for both stores, test native behavior and accessibility on physical phones/tablets, and capture final native store screenshots.
 6. Review English metadata, artwork and store requirements in the developer consoles and submit through publisher accounts. No store publication has been performed.
 
-Current-instance compilation, saved cloud configuration, cloud environment publication and successful restoration in a fresh task are distinct. Only the current-instance checks described here have been verified. Local commits have not been pushed to GitHub; preserve this checkout/snapshot or push the work before relying on a fresh clone. Cloud draft saving does not publish either the environment or the app.
+Current-instance compilation, saved cloud configuration, cloud environment publication and successful restoration in a fresh task are distinct. Only the current-instance checks described here have been verified. The GitHub publication target for this source is `fiyatperformanselif-lgtm/DareFlip`, branch `main`. A Git push publishes source only, not an App Store build or the cloud environment. Cloud draft saving does not publish either the environment or the app.
 
 ## Cloud environment handoff
 
@@ -64,3 +64,7 @@ Final native artwork verification: Android API 26+ adaptive foreground/backgroun
 ## TestFlight preparation
 
 Added and exercised `npm run beta:ios` for test-ad web compilation and iOS synchronization. Detailed Mac/Xcode → Archive → App Store Connect → internal TestFlight steps are in `docs/TESTFLIGHT.md`, with static project audit in `docs/IOS_BETA_AUDIT.md`. No Apple team/signing/account bindings are configured on this Linux machine. No iOS archive, TestFlight upload, Apple processing or beta installation has been performed; those remain blocked on the publisher's Apple membership and authorized macOS build/account route. Internal beta testing does not require finishing the full-content/public-store release checklist.
+
+## Codemagic upload workflow
+
+Added `codemagic.yaml` workflow `ios-testflight`, a shared App archive scheme and validated metadata/signing helpers. The user can build on Codemagic macOS without local Xcode. It is manually started and uploads to App Store Connect with automatic Beta App Review and App Store submission disabled; testing/review remains under the publisher's control. Real integration/signing identities and `dareflip_beta` group metadata must be configured in Codemagic; none have been fabricated or embedded. Read `docs/CODEMAGIC_TESTFLIGHT.md` for secure setup. Eight cloud-helper tests pass in addition to the existing 50 application tests; native cloud execution and Apple upload have not been performed here. The Capacitor bundle ID supports a CI override so custom publisher identity matches the Xcode project and profile.

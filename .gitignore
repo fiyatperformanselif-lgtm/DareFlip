@@ -28,3 +28,12 @@ __pycache__/
 artifacts/accessibility/
 artifacts/accessibility-report.json
 artifacts/accessibility-playwright/
+
+.codemagic-tools/
+build/
+*.p8
+*.p12
+*.mobileprovision
+*.key
+*.ipa
+*.xcarchive/

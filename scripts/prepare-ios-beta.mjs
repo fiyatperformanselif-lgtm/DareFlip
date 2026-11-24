@@ -21,11 +21,6 @@ console.log("\niOS beta web payload prepared with Google TEST ad units only.");
 console.log(
   "No native archive, signature or TestFlight upload has been produced by this command.",
 );
-if (process.platform === "darwin")
-  console.log(
-    "Next: npx cap open ios. Select your Apple team, then Archive and upload using Organizer.",
-  );
-else
-  console.log(
-    "Next step requires a Mac with Xcode and your Apple Developer team. See docs/TESTFLIGHT.md.",
-  );
+console.log(
+  "Cloud upload: configure Codemagic signing and start ios-testflight; see docs/CODEMAGIC_TESTFLIGHT.md. Local Xcode is optional.",
+);
