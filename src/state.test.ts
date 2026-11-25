@@ -2,7 +2,8 @@ import { describe, expect, it } from "vitest";
 import { cards } from "./content";
 import { loadState, saveState, STORAGE_KEY } from "./domain/storage";
 import type { StorageLike } from "./domain/storage";
-import { initialState, validState } from "./state";
+import { initialState, loadAppState, validState } from "./state";
+import { hasCompleteGenders } from "./domain/players";
 import type { Session, State } from "./state";
 
 const core = cards.find(
@@ -14,8 +15,10 @@ const bonus = cards.find(
 )!;
 
 function session(overrides: Partial<Session> = {}): Session {
+  const players = overrides.players ?? ["Deniz", "Alex"];
   return {
-    players: ["Deniz", "Alex"],
+    players,
+    genders: players.map(() => "undisclosed"),
     mode: "party",
     difficulty: core.difficulty,
     seen: [core.id],
@@ -27,6 +30,11 @@ function session(overrides: Partial<Session> = {}): Session {
 }
 function state(overrides: Partial<State> = {}): State {
   return { ...initialState(), locale: "en", session: session(), ...overrides };
+}
+function withoutGenders(value: Session): Omit<Session, "genders"> {
+  const copy: Partial<Session> = { ...value };
+  delete copy.genders;
+  return copy as Omit<Session, "genders">;
 }
 function memoryStorage(): StorageLike {
   const data = new Map<string, string>();
@@ -232,5 +240,162 @@ describe("persisted application state validation", () => {
     expect(storage.getItem(STORAGE_KEY)).toBe(before);
     expect(saveState(state(), storage)).toBe(true);
     expect(loadState(fallback, validState, storage)).toEqual(state());
+  });
+});
+
+describe("gender-aware application state and legacy migration", () => {
+  it("requires gender metadata aligned to every player in current state", () => {
+    const current = session();
+    const missingGenders = withoutGenders(current);
+    expect(validState({ ...state(), session: missingGenders })).toBe(false);
+    for (const genders of [
+      null,
+      {},
+      [],
+      ["female"],
+      ["female", "male", null],
+      ["female", "invalid"],
+      ["female", 0],
+    ]) {
+      expect(validState({ ...state(), session: { ...current, genders } })).toBe(
+        false,
+      );
+    }
+    expect(
+      validState(
+        state({ session: session({ genders: [null, "undisclosed"] }) }),
+      ),
+    ).toBe(true);
+    expect(
+      validState(
+        state({ session: session({ genders: ["female", "nonbinary"] }) }),
+      ),
+    ).toBe(true);
+  });
+
+  it("roundtrips explicit choices and preserves their order alongside names", () => {
+    const storage = memoryStorage();
+    const original = state({
+      session: session({ genders: ["male", "nonbinary"] }),
+    });
+    expect(saveState(original, storage)).toBe(true);
+    const restored = loadAppState(storage);
+    expect(restored).toEqual(original);
+    expect(restored.session!.players).toEqual(["Deniz", "Alex"]);
+    expect(restored.session!.genders).toEqual(["male", "nonbinary"]);
+    expect(hasCompleteGenders(restored.session!.genders)).toBe(true);
+  });
+
+  it("migrates a legacy save without guessing gender or changing any progress", () => {
+    const storage = memoryStorage();
+    const legacySession = withoutGenders(session({ rounds: 42 }));
+    const legacy = {
+      ...state(),
+      locale: "tr",
+      sound: false,
+      haptics: false,
+      favorites: [core.id, bonus.id],
+      unlocked: true,
+      ageConfirmed: true,
+      session: legacySession,
+    };
+    expect(saveState(legacy, storage)).toBe(true);
+    const before = storage.getItem(STORAGE_KEY);
+    const restored = loadAppState(storage);
+    expect(restored).toEqual({
+      ...legacy,
+      session: { ...legacySession, genders: [null, null] },
+    });
+    expect(restored.session!.card).toEqual(core);
+    expect(restored.session!.seen).toEqual([core.id]);
+    expect(restored.session!.rounds).toBe(42);
+    expect(hasCompleteGenders(restored.session!.genders)).toBe(false);
+    // Loading is read-only; existing persisted data is not destroyed or replaced.
+    expect(storage.getItem(STORAGE_KEY)).toBe(before);
+  });
+
+  it("leaves all 20 legacy choices unanswered regardless of names", () => {
+    const storage = memoryStorage();
+    const names = [
+      "Anna",
+      "John",
+      "Alex",
+      "Deniz",
+      ...Array.from({ length: 16 }, (_, index) => `Player ${index}`),
+    ];
+    const legacySession = withoutGenders(
+      session({ players: names, player: names[0] }),
+    );
+    saveState({ ...state(), session: legacySession }, storage);
+    const restored = loadAppState(storage);
+    expect(restored.session!.players).toEqual(names);
+    expect(restored.session!.genders).toEqual(Array(20).fill(null));
+  });
+
+  it("keeps a migrated pending session through a subsequent save and reload", () => {
+    const storage = memoryStorage();
+    const original = state({
+      session: session({ genders: [null, "undisclosed"], rounds: 8 }),
+    });
+    saveState(original, storage);
+    const restored = loadAppState(storage);
+    expect(restored).toEqual(original);
+    expect(hasCompleteGenders(restored.session!.genders)).toBe(false);
+    const completed = {
+      ...restored,
+      session: { ...restored.session!, genders: ["female", "undisclosed"] },
+    };
+    saveState(completed, storage);
+    expect(loadAppState(storage)).toEqual(completed);
+    expect(hasCompleteGenders(loadAppState(storage).session!.genders)).toBe(
+      true,
+    );
+  });
+
+  it("never treats malformed gender metadata or a tampered legacy card as migratable", () => {
+    const storage = memoryStorage();
+    for (const genders of [
+      null,
+      [],
+      ["female"],
+      ["female", "unknown"],
+      ["female", 1],
+    ]) {
+      const invalid = { ...state(), session: { ...session(), genders } };
+      saveState(invalid, storage);
+      expect(loadAppState(storage).session).toBeNull();
+    }
+    const legacySession = withoutGenders(session());
+    saveState(
+      {
+        ...state(),
+        session: { ...legacySession, card: { ...core, text: "tampered" } },
+      },
+      storage,
+    );
+    expect(loadAppState(storage).session).toBeNull();
+    saveState({ ...state(), version: 2, session: legacySession }, storage);
+    expect(loadAppState(storage).session).toBeNull();
+  });
+
+  it("falls back safely with unavailable or corrupt storage and leaves a no-session save intact", () => {
+    const denied: StorageLike = {
+      getItem: () => {
+        throw new Error("denied");
+      },
+      setItem: () => {
+        throw new Error("denied");
+      },
+      removeItem: () => {
+        throw new Error("denied");
+      },
+    };
+    expect(loadAppState(denied).session).toBeNull();
+    const storage = memoryStorage();
+    storage.setItem(STORAGE_KEY, "{");
+    expect(loadAppState(storage).session).toBeNull();
+    const pristine = state({ session: null, favorites: [core.id] });
+    saveState(pristine, storage);
+    expect(loadAppState(storage)).toEqual(pristine);
   });
 });

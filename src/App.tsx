@@ -32,10 +32,12 @@ import type { LucideIcon } from "lucide-react";
 import { cards } from "./content";
 import { dailyCard, drawCard, pickPlayer } from "./domain/engine";
 import type { Card, Difficulty, Mode } from "./domain/types";
-import { loadState, saveState } from "./domain/storage";
+import { saveState } from "./domain/storage";
+import { GENDERS, hasCompleteGenders } from "./domain/players";
+import type { Gender } from "./domain/players";
 import { detectLanguage, languages, localeInfo, t } from "./i18n";
 import type { Key, Locale } from "./i18n";
-import { initialState, validState } from "./state";
+import { initialState, loadAppState } from "./state";
 import type { Session, State } from "./state";
 import { ads } from "./services/ads";
 import { feedback } from "./services/feedback";
@@ -62,12 +64,22 @@ const modes: { id: Mode; icon: LucideIcon; label: string }[] = [
   { id: "crazy", icon: Zap, label: "05" },
   { id: "random", icon: Shuffle, label: "06" },
 ];
+interface DraftPlayer {
+  name: string;
+  gender: Gender | null;
+}
+const blankPlayers = (): DraftPlayer[] => [
+  { name: "", gender: null },
+  { name: "", gender: null },
+];
 const makeSession = (
   players: string[],
+  genders: Gender[],
   mode: Mode,
   difficulty: Difficulty,
 ): Session => ({
   players,
+  genders,
   mode,
   difficulty,
   seen: [],
@@ -77,15 +89,14 @@ const makeSession = (
 });
 
 export default function App() {
-  const [state, setState] = useState<State>(() =>
-    loadState(initialState(), validState),
-  );
+  const [state, setState] = useState<State>(() => loadAppState());
   const [tab, setTab] = useState<Tab>("play");
   const [screen, setScreen] = useState<"home" | "setup" | "game">("home");
   const [overlay, setOverlay] = useState<Overlay>(null);
   const [chosen, setChosen] = useState<Mode>("couples");
   const [difficulty, setDifficulty] = useState<Difficulty>("easy");
-  const [players, setPlayers] = useState<string[]>(["", ""]);
+  const [players, setPlayers] = useState<DraftPlayer[]>(blankPlayers);
+  const [resuming, setResuming] = useState(false);
   const [age, setAge] = useState(false);
   const [error, setError] = useState("");
   const [toast, setToast] = useState("");
@@ -241,13 +252,42 @@ export default function App() {
     feel();
     setChosen(mode);
     setDifficulty(session?.difficulty ?? "easy");
-    setPlayers(session?.players ?? ["", ""]);
+    setPlayers(
+      session
+        ? session.players.map((name, index) => ({
+            name,
+            gender: session.genders[index],
+          }))
+        : blankPlayers(),
+    );
+    setResuming(false);
     setAge(state.ageConfirmed);
     setScreen("setup");
     setError("");
   };
+  const resumeGame = () => {
+    if (!session) return;
+    feel();
+    setError("");
+    setExhausted(false);
+    if (hasCompleteGenders(session.genders)) {
+      setScreen("game");
+      return;
+    }
+    setChosen(session.mode);
+    setDifficulty(session.difficulty);
+    setPlayers(
+      session.players.map((name, index) => ({
+        name,
+        gender: session.genders[index],
+      })),
+    );
+    setAge(state.ageConfirmed);
+    setResuming(true);
+    setScreen("setup");
+  };
   const begin = () => {
-    const names = players.map((n) => n.trim());
+    const names = players.map((player) => player.name.trim());
     if (names.length < 2 || names.some((n) => !n)) {
       setError(tr("setup.minPlayers"));
       return;
@@ -258,16 +298,27 @@ export default function App() {
       setError(tr("setup.uniqueNames"));
       return;
     }
+    const genders = players.map((player) => player.gender);
+    if (!hasCompleteGenders(genders)) {
+      setError(tr("setup.genderRequired"));
+      const missing = genders.findIndex((gender) => gender === null);
+      document.getElementById(`player-gender-${missing}`)?.focus();
+      return;
+    }
     if ((chosen === "flirty" || chosen === "random") && !age) {
       setError(tr("setup.ageRequired"));
       return;
     }
     feel("success");
     update({
-      session: makeSession(names, chosen, difficulty),
+      session:
+        resuming && session
+          ? { ...session, genders }
+          : makeSession(names, genders, chosen, difficulty),
       ageConfirmed: state.ageConfirmed || age,
     });
     setScreen("game");
+    setResuming(false);
     setExhausted(false);
   };
   const nextTurn = () => {
@@ -599,14 +650,7 @@ export default function App() {
             </section>
             <aside className="home-aside">
               {session && (
-                <button
-                  className="resume-banner"
-                  onClick={() => {
-                    feel();
-                    setScreen("game");
-                    setExhausted(false);
-                  }}
-                >
+                <button className="resume-banner" onClick={resumeGame}>
                   <div className="resume-icon">
                     <Play size={20} fill="currentColor" />
                   </div>
@@ -669,60 +713,109 @@ export default function App() {
               </div>
             </div>
             <h1>{tr("setup.title")}</h1>
-            <p className="subtitle">{tr("setup.subtitle")}</p>
+            <p className="subtitle">
+              {tr(resuming ? "setup.completeGenders" : "setup.subtitle")}
+            </p>
             <div className="player-heading">
               <h2>{tr("setup.players")}</h2>
               <span>{players.length}/20</span>
             </div>
             <div className="players">
-              {players.map((name, i) => (
-                <div className="player-input" key={i}>
-                  <span className="player-number">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <input
-                    aria-label={`${tr("setup.playerName")} ${i + 1}`}
-                    placeholder={tr("setup.playerPlaceholder", {
-                      number: i + 1,
-                    })}
-                    value={name}
-                    maxLength={24}
-                    onChange={(e) =>
-                      setPlayers((p) =>
-                        p.map((n, j) => (j === i ? e.target.value : n)),
-                      )
-                    }
-                  />
-                  {players.length > 2 && (
-                    <button
-                      className="icon-button"
-                      aria-label={`${tr("setup.remove")} ${i + 1}`}
-                      onClick={() =>
-                        setPlayers((p) => p.filter((_, j) => j !== i))
+              {players.map((player, i) => (
+                <div className="player-entry" key={i}>
+                  <div className="player-input">
+                    <span className="player-number">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <input
+                      aria-label={`${tr("setup.playerName")} ${i + 1}`}
+                      placeholder={tr("setup.playerPlaceholder", {
+                        number: i + 1,
+                      })}
+                      value={player.name}
+                      readOnly={resuming}
+                      maxLength={24}
+                      onChange={(e) =>
+                        setPlayers((p) =>
+                          p.map((entry, j) =>
+                            j === i
+                              ? { ...entry, name: e.target.value }
+                              : entry,
+                          ),
+                        )
+                      }
+                    />
+                    {!resuming && players.length > 2 && (
+                      <button
+                        className="icon-button"
+                        aria-label={`${tr("setup.remove")} ${i + 1}`}
+                        onClick={() =>
+                          setPlayers((p) => p.filter((_, j) => j !== i))
+                        }
+                      >
+                        <X size={17} />
+                      </button>
+                    )}
+                  </div>
+                  <label
+                    className="player-gender"
+                    htmlFor={`player-gender-${i}`}
+                  >
+                    <span>{tr("setup.gender")}</span>
+                    <select
+                      id={`player-gender-${i}`}
+                      aria-label={`${tr("setup.gender")} ${i + 1}`}
+                      aria-invalid={
+                        error === tr("setup.genderRequired") &&
+                        player.gender === null
+                      }
+                      value={player.gender ?? ""}
+                      required
+                      onChange={(event) =>
+                        setPlayers((entries) =>
+                          entries.map((entry, index) =>
+                            index === i
+                              ? {
+                                  ...entry,
+                                  gender: event.target.value as Gender,
+                                }
+                              : entry,
+                          ),
+                        )
                       }
                     >
-                      <X size={17} />
-                    </button>
-                  )}
+                      <option value="" disabled>
+                        {tr("setup.genderPlaceholder")}
+                      </option>
+                      {GENDERS.map((gender) => (
+                        <option value={gender} key={gender}>
+                          {tr(`gender.${gender}`)}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
                 </div>
               ))}
             </div>
-            <button
-              className="add-player"
-              disabled={players.length >= 20}
-              onClick={() => {
-                feel();
-                setPlayers((p) => [...p, ""]);
-              }}
-            >
-              <Plus size={17} />
-              {tr("setup.add")}
-            </button>
+            {!resuming && (
+              <button
+                className="add-player"
+                disabled={players.length >= 20}
+                onClick={() => {
+                  feel();
+                  setPlayers((p) => [...p, { name: "", gender: null }]);
+                }}
+              >
+                <Plus size={17} />
+                {tr("setup.add")}
+              </button>
+            )}
             <h2 className="energy-heading">{tr("setup.difficulty")}</h2>
             <div className="difficulty">
               {(["easy", "medium", "bold"] as const).map((d, i) => (
                 <button
                   aria-pressed={difficulty === d}
+                  disabled={resuming}
                   className={difficulty === d ? "selected" : ""}
                   onClick={() => {
                     feel();
@@ -755,7 +848,7 @@ export default function App() {
               </p>
             )}
             <button className="primary wide" onClick={begin}>
-              {tr("setup.start")}
+              {tr(resuming ? "game.resume" : "setup.start")}
               <ArrowRight size={19} />
             </button>
           </section>
@@ -773,6 +866,13 @@ export default function App() {
                   ? tr("game.spinning")
                   : tr("game.turn", { name: session.player })}
               </h1>
+              {session.genders[session.players.indexOf(session.player)] && (
+                <p className="turn-gender">
+                  {tr(
+                    `gender.${session.genders[session.players.indexOf(session.player)]!}`,
+                  )}
+                </p>
+              )}
               <div className="player-dots">
                 {session.players.map((p, i) => (
                   <span

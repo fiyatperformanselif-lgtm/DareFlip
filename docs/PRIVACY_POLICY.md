@@ -1,15 +1,15 @@
 # DareFlip Privacy Policy
 
-Draft for publisher review. Last updated: 24 November 2026.
+Draft for publisher review. Last updated: 25 November 2026.
 
 Publisher/legal entity: **[REQUIRED BEFORE PUBLICATION]**
 Privacy contact: **[REQUIRED BEFORE PUBLICATION]**
 
-DareFlip is an offline Truth or Dare game. You do not need an account. The game does not operate an application backend and does not upload the names, answers, favorite cards, settings, or game progress you enter to a DareFlip server. Answers are spoken; the app does not record them.
+DareFlip is an offline Truth or Dare game. You do not need an account. The game does not operate an application backend and does not upload the names, gender choices, answers, favorite cards, settings, or game progress you enter to a DareFlip server. Answers are spoken; the app does not record them.
 
 ## Data stored on your device
 
-Player names, selected mode, language, settings, favorites, unlocked bonus packs, and the current session are stored locally. They are used to run the game and resume it. You can erase them using the app's Reset local data control, by clearing application data, or by uninstalling. Operating-system backups may retain a copy according to your device's backup settings; review those settings if you share a device.
+Player names, explicit gender choices, selected mode, language, settings, favorites, unlocked bonus packs, and the current session are stored locally. Each player can explicitly choose Woman, Man, Non-binary, or Prefer not to say. Gender choices are not inferred from names and are not sent to advertising services. They are used to run the game and resume it. You can erase them using the app's Reset local data control, by clearing application data, or by uninstalling. Operating-system backups may retain a copy according to your device's backup settings; review those settings if you share a device.
 
 ## Optional advertising
 
@@ -23,7 +23,7 @@ Ads are not requested alongside sensitive cards or the Flirty mode. Bonus packs 
 
 ## Sharing
 
-Sharing a card is an explicit action. DareFlip generates an image on your device and invokes the device's share sheet or downloads the image in the browser. Player names are excluded from generated images. The destination you choose processes shared information under its own policies. Native temporary share images are removed from the app cache after the share action completes.
+Sharing a card is an explicit action. DareFlip generates an image on your device and invokes the device's share sheet or downloads the image in the browser. Player names and gender choices are excluded from generated images. The destination you choose processes shared information under its own policies. Native temporary share images are removed from the app cache after the share action completes.
 
 ## Age and player safety
 

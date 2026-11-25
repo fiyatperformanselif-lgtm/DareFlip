@@ -87,6 +87,52 @@ describe("locale detection and translation transparency", () => {
     }
   });
 
+  it("translates every gender selection label and recovery message in all 20 locales", () => {
+    const keys: Key[] = [
+      "setup.gender",
+      "setup.genderPlaceholder",
+      "setup.genderRequired",
+      "setup.completeGenders",
+      "gender.female",
+      "gender.male",
+      "gender.nonbinary",
+      "gender.undisclosed",
+    ];
+    for (const { code } of languages) {
+      for (const key of keys) {
+        expect(
+          hasTranslation(code, key),
+          `${code}:${key} must not fall back`,
+        ).toBe(true);
+        expect(t(code, key).trim(), `${code}:${key}`).not.toBe("");
+        expect(
+          placeholders(t(code, key)),
+          `${code}:${key} must not require inferred player data`,
+        ).toEqual([]);
+      }
+      const options = [
+        "gender.female",
+        "gender.male",
+        "gender.nonbinary",
+        "gender.undisclosed",
+      ] as const;
+      expect(
+        new Set(options.map((key) => t(code, key))).size,
+        `${code}: distinct explicit options`,
+      ).toBe(4);
+      expect(options.map((key) => t(code, key))).not.toContain(
+        t(code, "setup.genderPlaceholder"),
+      );
+    }
+    expect(t("tr", "gender.female")).toBe("Kadın");
+    expect(t("tr", "gender.male")).toBe("Erkek");
+    expect(t("tr", "gender.nonbinary")).toBe("İkili olmayan");
+    expect(t("tr", "gender.undisclosed")).toBe("Belirtmek istemiyorum");
+    expect(t("tr", "setup.playerPlaceholder", { number: 20 })).toBe(
+      "Oyuncu 20",
+    );
+  });
+
   it("falls back only for missing strings and exposes their missing status", () => {
     expect(hasTranslation("fr", "consent.body")).toBe(false);
     expect(t("fr", "consent.body")).toBe(en["consent.body"]);

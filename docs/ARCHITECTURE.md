@@ -24,7 +24,7 @@ UI transitions stay in React. Game selection rules live in pure functions so tes
 ## Game and persistence flow
 
 1. Detect a supported device language or load a valid saved choice. Set document direction from language metadata.
-2. Select a mode, collect 2–20 unique player names, choose a difficulty, and require adult confirmation for Flirty/Random.
+2. Select a mode, collect 2–20 unique player names and an explicit gender option for each, choose a difficulty, and require adult confirmation for Flirty/Random.
 3. Create a session with selected mode/difficulty, player roster, previous player, seen concept IDs, current card, and played-card count.
 4. Randomly choose the next eligible player, excluding the previous player when possible. Choose Truth or Dare.
 5. Filter canonical English concepts by category, difficulty, kind, and unlocked pack, then resolve a matching translation where available. Filter out seen IDs and draw uniformly from the remaining pool.
@@ -32,6 +32,8 @@ UI transitions stay in React. Game selection rules live in pure functions so tes
 7. Skipping uses the same next-turn flow without penalties, lost points, coercion, or advertising obligations.
 
 The daily question hashes the UTC calendar date to one canonical nonsensitive core Truth card, then resolves the selected locale where available. This gives the same concept worldwide for a date and requires no server.
+
+Session gender choices align with the ordered player roster and use `female`, `male`, `nonbinary`, or `undisclosed`. Explicit preference not to disclose is a valid choice; `null` only marks an unanswered legacy value. New sessions require complete choices. `loadAppState` migrates legacy v1 saves that lack the field, preserving the original card, seen IDs, player, favorites and preferences; resume asks for the missing choices before returning to that same game. Names are never used to infer gender. The choices are stored locally and displayed with the current player; card and player selection stay gender-neutral.
 
 Storage uses a `dareflip:v1` key and a versioned JSON envelope. Corrupt data and storage exceptions fall back to a valid initial state. Persistence is device-local, subject to platform/browser clearing and OS backup behavior. It is not an encrypted vault; do not store sensitive answers or credentials. Answers are not collected.
 

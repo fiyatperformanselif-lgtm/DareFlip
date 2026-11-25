@@ -36,3 +36,7 @@ No native screen-reader compatibility or accessibility certification is claimed.
 ## iOS focus zoom regression — 25 November 2026
 
 A TestFlight report identified zoom after focusing player-name fields. Controls now have a minimum 16px text size; the native iOS configuration allows pinch zoom/recovery and the page viewport remains scalable. `tests/accessibility/viewport.spec.ts` adds four mobile-context flows at 320×740, 390×844, 844×390 and 768×1024. They check computed control font sizes, form focus/fill/blur, no horizontal document/app/main overflow, reachable game controls, language selection and return navigation. All four passed, as did the six existing keyboard/focus/target/responsive checks. Native iPhone keyboard behavior and pinch recovery must be verified in the newly packaged TestFlight build; desktop Chromium does not reproduce those OS gestures.
+
+## Player gender controls — 25 November 2026
+
+The required per-player gender selectors have associated labels, explicit unanswered-state placeholders, no preselected gender, 16px minimum text, and at least 44px targets. New choices and validation text are translated in all 20 selectable locales. All 11 accessibility tests pass with the controls present, including the four focus/viewport cases and the eight-state axe scan (zero definite automated violations). Physical-device keyboard/picker/VoiceOver/TalkBack behavior remains outside the browser verification scope.

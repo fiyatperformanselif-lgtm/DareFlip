@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { chooseGenders } from "../helpers/players";
 test("production shell cold reloads offline, resumes card and excludes third-party requests", async ({
   page,
   context,
@@ -32,6 +33,7 @@ test("production shell cold reloads offline, resumes card and excludes third-par
   await page
     .getByRole("textbox", { name: "Player name 2", exact: true })
     .fill("Leo");
+  await chooseGenders(page);
   await page
     .getByRole("button", { name: "Start the game", exact: true })
     .click();
@@ -66,6 +68,7 @@ test("storage denial preserves gameplay and discloses unsaved progress", async (
   await page
     .getByRole("textbox", { name: "Player name 2", exact: true })
     .fill("Leo");
+  await chooseGenders(page);
   await page
     .getByRole("button", { name: "Start the game", exact: true })
     .click();

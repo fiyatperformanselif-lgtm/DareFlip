@@ -50,7 +50,7 @@ For release, supply a publisher-owned signing configuration outside version cont
 
 ## Required device validation
 
-Test fresh install, offline first launch, resume after force quit, 2–20 players, duplicate/blank names, all modes and difficulties, repeated-card exhaustion, every skip, favorites, share cancellation/success, RTL, large text, reduced motion, VoiceOver/TalkBack, portrait/landscape, tablet layout, display cutouts/navigation bars, silent mode/haptics, and low-storage persistence failure. Test consent and ads separately with official test inventory. Verify that reward cancellation never unlocks content and that ads never interrupt sensitive cards.
+Test fresh install, offline first launch, resume after force quit, 2–20 players, duplicate/blank names, required explicit gender choices, all four options and add/remove alignment, legacy-save completion without progress loss, all modes and difficulties, repeated-card exhaustion, every skip, favorites, share cancellation/success, RTL, large text, name/gender field focus without automatic zoom, pinch recovery, reduced motion, VoiceOver/TalkBack, portrait/landscape, tablet layout, display cutouts/navigation bars, silent mode/haptics, and low-storage persistence failure. Test consent and ads separately with official test inventory. Verify that reward cancellation never unlocks content and that ads never interrupt sensitive cards.
 
 ## Store asset handoff
 

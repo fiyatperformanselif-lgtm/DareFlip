@@ -2545,3 +2545,50 @@ button:active:not(:disabled) {
 .offline-caption {
   color: #b8a3c7;
 }
+
+/* Player names and explicit gender choices stay together when rows are removed. */
+.player-entry {
+  border: 1px solid #ffffff0e;
+  background: #22192f;
+  border-radius: 14px;
+  overflow: hidden;
+}
+.player-entry .player-input {
+  border: 0;
+  background: transparent;
+}
+.player-gender {
+  display: grid;
+  gap: 7px;
+  padding: 0 14px 14px;
+}
+.player-gender > span {
+  color: #b8a3c7;
+  font-size: 11px;
+  font-weight: 600;
+}
+.player-gender select {
+  width: 100%;
+  min-width: 0;
+  min-height: 46px;
+  padding: 10px 12px;
+  color: #f3e9fc;
+  background: #30213c;
+  border: 1px solid #ffffff16;
+  border-radius: 10px;
+  font-size: var(--form-control-font-size);
+}
+.player-gender select:invalid {
+  color: #b8a3c7;
+}
+.player-gender select[aria-invalid="true"] {
+  border-color: #ffb799;
+}
+.player-input input[readonly] {
+  color: #c9b7d6;
+}
+.player-turn .turn-gender {
+  font-size: 11px;
+  color: #c2a8d0;
+  margin: -9px 0 14px;
+}

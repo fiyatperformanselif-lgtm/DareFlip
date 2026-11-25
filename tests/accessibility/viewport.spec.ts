@@ -1,4 +1,5 @@
 import { expect, test, type Locator, type Page } from "@playwright/test";
+import { chooseGenders } from "../helpers/players";
 
 // These checks cover prerequisites for avoiding iOS focus zoom and regressions in
 // the responsive layout. Desktop Chromium/WebKit do not reproduce an iPhone's
@@ -128,6 +129,7 @@ for (const viewport of [
     await second.focus();
     await second.fill("Deniz");
     await second.blur();
+    await chooseGenders(page, ["female", "undisclosed"]);
     await expectReadableControlText(page);
     await expectNoHorizontalOverflow(page);
     const start = page.getByRole("button", {

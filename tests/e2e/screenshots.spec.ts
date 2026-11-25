@@ -1,3 +1,4 @@
+import { chooseGenders } from '../helpers/players';
 import { expect, test } from '@playwright/test';
 import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
@@ -17,6 +18,7 @@ test('capture authentic device-size release reference screens', async ({ page },
   await page.getByRole('button', { name: /Party / }).click();
   await page.getByRole('textbox', { name: 'Player name 1', exact: true }).fill('Alex');
   await page.getByRole('textbox', { name: 'Player name 2', exact: true }).fill('Sam');
+  await chooseGenders(page);
   await capture('02-players');
   await page.getByRole('button', { name: 'Start the game', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Spin the bottle', exact: true })).toBeVisible();
@@ -26,7 +28,7 @@ test('capture authentic device-size release reference screens', async ({ page },
   await capture('04-truth');
   await page.getByRole('button', { name: 'Save card', exact: true }).click();
   await page.getByRole('button', { name: 'Take a break', exact: true }).click();
-  await page.getByRole('dialog').getByRole('button', { name: 'Continue your game', exact: true }).click();
+  await page.getByRole('dialog').getByRole('button', { name: 'Back', exact: true }).click();
   await page.getByRole('navigation').getByRole('button', { name: 'Saved', exact: true }).click();
   await expect(page.locator('.saved-card')).toHaveCount(1);
   await capture('05-saved');

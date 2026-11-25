@@ -1,3 +1,4 @@
+import { chooseGenders } from '../helpers/players';
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
@@ -25,6 +26,7 @@ test('WCAG automated scan of home, setup, game, settings and dialogs', async ({ 
   await scan('setup');
   await page.getByRole('textbox', { name: 'Player name 1' }).fill('Alex');
   await page.getByRole('textbox', { name: 'Player name 2' }).fill('Deniz');
+  await chooseGenders(page);
   await page.getByRole('button', { name: 'Start the game' }).click();
   await scan('game-choice');
   await page.getByRole('button', { name: 'Truth', exact: true }).click();

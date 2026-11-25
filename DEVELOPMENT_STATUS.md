@@ -1,12 +1,12 @@
 # DareFlip development status
 
-Date: 24 November 2026. Version: 0.1.0. This is a working development release aimed at a store-quality product; **it is not ready to submit to the stores**. No live ad IDs, developer-account details or publisher identity have been invented.
+Date: 25 November 2026. Version: 0.1.0. This is a working development release aimed at a store-quality product; **it is not ready to submit to the stores**. No live ad IDs, developer-account details or publisher identity have been invented.
 
 ## Implemented
 
 React/TypeScript/Vite application with Capacitor iOS/iPadOS and Android projects; original dark-purple/pink/orange visual identity, SVG icon, generated web/native icon and splash assets, animated opening, 3D card reveal, animated bottle, responsive phone/tablet layout, safe-area handling, reduced-motion support, optional sound and native haptics.
 
-All six modes, 2–20 unique named players, Easy/Medium/Bold, random next-player selection without adjacent repeats when possible, Truth/Dare choice, canonical no-repeat deck history, explicit exhausted-deck reset, unconditional skip, favorites, persisted resume, daily question, PNG share/download, bonus-pack reward flow, settings and local-data reset are implemented. App data remains on-device. No backend or login is required. Storage denial/corruption is handled; denied storage is visibly disclosed.
+All six modes, 2–20 unique named players with required explicit gender choices, Easy/Medium/Bold, random next-player selection without adjacent repeats when possible, Truth/Dare choice, canonical no-repeat deck history, explicit exhausted-deck reset, unconditional skip, favorites, persisted resume, daily question, PNG share/download, bonus-pack reward flow, settings and local-data reset are implemented. App data remains on-device. No backend or login is required. Storage denial/corruption is handled; denied storage is visibly disclosed.
 
 The English catalog has **192 original concepts: 180 core + 12 Afterglow**. There are **90 Turkish translations**, for **282 JSON records**. The 5,000-original target is unfinished; translated rows are not counted as originals. Cards contain ID, category, difficulty, type, language, pack and sensitivity. Semantic originality, cultural suitability and safety still require human editorial review beyond automated duplicate checks.
 
@@ -21,12 +21,12 @@ AdMob services are native-only and explicitly enabled. UMP `canRequestAds` gates
 | Clean dependency installation | `npm ci --no-audit --no-fund` passed against the committed lockfile |
 | TypeScript | `npm run typecheck` passed |
 | Lint | `npm run lint` passed; generated native/build/test reports excluded |
-| Unit tests | **50 passed** across domain/content/storage, state validation, i18n and mocked ad-service contracts |
-| Browser game matrix | **30/30 passed**, Chromium at iPhone/Android/iPad viewport sizes; covers all modes/difficulties, player limits, cards, exhaustion, skip, favorites, persistence, adult gate, settings/legal/privacy, no web ads, reward failure and real PNG export |
+| Unit tests | **62 passed** across domain/content/storage, player metadata, state validation/migration, i18n and mocked ad-service contracts |
+| Browser game matrix | **48/48 passed**, Chromium at iPhone/Android/iPad viewport sizes; covers all modes/difficulties, player limits, cards, exhaustion, skip, favorites, persistence, adult gate, settings/legal/privacy, no web ads, reward failure and real PNG export |
 | Targeted final copy regression | **6/6 passed** after clarifying the pause dialog’s Back button |
 | Screenshot regeneration | **3/3 passed**, 15 actual application PNGs under `artifacts/screenshots` |
 | Production offline checks | **2/2 passed**: service-worker cold reload/resume/play without network or third-party requests; storage-denied play with visible warning |
-| Accessibility | Six keyboard/focus/44px target/responsive checks passed; final axe scan passed across eight states with zero definite automated violations. Gradient contrast remains manual review; see `docs/ACCESSIBILITY.md` |
+| Accessibility | **11/11 accessibility tests passed**, including keyboard/focus/44px targets, viewport/form checks and the axe scan across eight states with zero definite automated violations. Gradient contrast remains manual review; see `docs/ACCESSIBILITY.md` |
 | Production web build | `npm run build` passed; local fonts, bundled JSON and hashed offline shell; native apps bundle the payload directly |
 | Capacitor | Both platforms generated and synced, including App, AdMob, Filesystem, Haptics and Share plugins |
 | Android compilation | Real debug APK built with verified JDK 21, Android API 36/build tools and Gradle 8.14.3; native plugin Java/Kotlin compilation, APK ZIP integrity, v2 debug signature and package/version metadata verified |
@@ -76,3 +76,11 @@ The user reported that the TestFlight screen zoomed in while editing player name
 Editable fields/selectors now use a shared `max(16px, 1rem)` font size at every breakpoint. Text-size adjustment is stable across orientation changes, while the viewport retains user scaling. `ios.zoomEnabled` is explicitly true so intentional pinch zoom/recovery remains available. Application touch handling uses `manipulation` to retain scrolling and pinch while avoiding accidental double-tap zoom. No `user-scalable=no`, scale cap, or forced viewport reset was added.
 
 Verification: TypeScript, lint, production beta build/iOS sync passed; generated native configuration contains `zoomEnabled: true`. Four new viewport/form regressions and six existing keyboard/accessibility checks passed in Chromium at phone/tablet/landscape sizes. WebKit is not installed in this environment; Chromium does not emulate the real iPhone software keyboard focus zoom. The changed native configuration and bundled CSS require a new Codemagic/TestFlight build, followed by checking name focus/keyboard dismissal and pinch recovery on the iPhone. No physical-device verification of the correction is claimed.
+
+## Required player gender choices — 25 November 2026
+
+Every player row now requires an explicit Woman, Man, Non-binary, or Prefer not to say choice before a new game can start. No default is selected and no gender is guessed from names. The choices stay aligned when players are added/removed, persist locally with the session, and are shown with the current player. All 20 interface catalogues include the eight new setup/gender strings; the other untranslated UI/card content is still marked incomplete.
+
+Legacy v1 saves missing gender metadata are migrated without resetting the active card, seen history, current player, favorites or preferences. Resume opens a completion form with the original roster locked; choosing the missing options returns to the same game. Explicit unanswered values remain pending rather than being silently treated as undisclosed. Invalid/misaligned stored metadata is rejected by the same defensive state validator.
+
+Latest verification: 62 unit tests, 48 phone/tablet browser E2E tests, 11 accessibility tests and 2 production offline tests passed; TypeScript, lint, production beta build and iOS synchronization passed. This includes all four choices, per-player required validation, player removal, 20-player setup, Turkish labels, reload persistence and exact legacy-game recovery. Updated screenshots include the new controls. The input/select 16px minimum and native pinch recovery configuration are preserved. Actual new-feature behavior on iPhone/TestFlight still requires installing a newly built Codemagic beta. The earlier Android debug APK remains a historical development artifact and has not been rebuilt for this feature.

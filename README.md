@@ -29,7 +29,7 @@ The built web application precaches its own files on its first online visit and 
 
 Choose Couples, Party, Flirty 18+, Deep Talk, Crazy Fun or Random. Add 2–20 distinct names and select Easy, Medium or Bold. Flirty and Random (which includes Flirty) require confirmation that everyone is a consenting adult. Spin the bottle to select a player, then choose Truth or Dare. Cards reveal with a 3D animation. Skip or take the next turn freely. The previous player is excluded when possible; every other player is equally likely.
 
-Favorites, preferences, unlocked bonus content and the current game save on this device. A full matching deck never silently repeats: explicitly restart it after exhaustion. Changing language preserves canonical seen IDs. Daily questions use the UTC calendar date. Shared PNGs exclude player names. Sound and haptics can be disabled; OS reduced-motion preference is respected. Clearing local data or uninstalling can erase progress. Storage failure is disclosed while play continues.
+Favorites, preferences, unlocked bonus content, player gender choices and the current game save on this device. Older saved games ask for missing gender choices before resuming without resetting the active card or progress. A full matching deck never silently repeats: explicitly restart it after exhaustion. Changing language preserves canonical seen IDs. Daily questions use the UTC calendar date. Shared PNGs exclude player names. Sound and haptics can be disabled; OS reduced-motion preference is respected. Clearing local data or uninstalling can erase progress. Storage failure is disclosed while play continues.
 
 ## Content and translation truth
 

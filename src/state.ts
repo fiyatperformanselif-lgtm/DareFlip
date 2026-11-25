@@ -2,9 +2,14 @@ import { cards } from "./content";
 import type { Card, Difficulty, Mode } from "./domain/types";
 import { detectLanguage, languages } from "./i18n";
 import type { Locale } from "./i18n";
+import { loadState } from "./domain/storage";
+import type { StorageLike } from "./domain/storage";
+import { validGenders } from "./domain/players";
+import type { Gender } from "./domain/players";
 
 export interface Session {
   players: string[];
+  genders: (Gender | null)[];
   mode: Mode;
   difficulty: Difficulty;
   seen: string[];
@@ -90,7 +95,7 @@ export function initialState(): State {
   };
 }
 
-/** Treat persisted data as untrusted; invalid payloads are handled by loadState's fallback. */
+/** Treat persisted data as untrusted, including incomplete migrated gender choices. */
 export function validState(value: unknown): value is State {
   if (!isRecord(value)) return false;
   if (
@@ -120,6 +125,7 @@ export function validState(value: unknown): value is State {
     ) ||
     new Set(session.players.map((player: string) => player.toLocaleLowerCase()))
       .size !== session.players.length ||
+    !validGenders(session.genders, session.players.length) ||
     typeof session.mode !== "string" ||
     !modes.includes(session.mode) ||
     typeof session.difficulty !== "string" ||
@@ -147,4 +153,33 @@ export function validState(value: unknown): value is State {
     (session.mode === "random" || session.card.category === session.mode) &&
     (session.card.pack === "core" || value.unlocked)
   );
+}
+
+/**
+ * Read both current and legacy v1 saves without losing the active card or progress.
+ * Only a missing field qualifies as legacy: malformed gender data is never repaired
+ * by guessing, and every other state/card invariant must still pass validation.
+ * The caller's normal save effect can persist the migration; reading never writes.
+ */
+export function loadAppState(storage?: StorageLike): State {
+  const fallback = initialState();
+  const saved = loadState<unknown>(null, undefined, storage);
+  if (validState(saved)) return saved;
+  if (
+    !isRecord(saved) ||
+    !isRecord(saved.session) ||
+    Object.hasOwn(saved.session, "genders") ||
+    !Array.isArray(saved.session.players) ||
+    saved.session.players.length < 2 ||
+    saved.session.players.length > 20
+  )
+    return fallback;
+  const migrated = {
+    ...saved,
+    session: {
+      ...saved.session,
+      genders: saved.session.players.map(() => null),
+    },
+  };
+  return validState(migrated) ? migrated : fallback;
 }

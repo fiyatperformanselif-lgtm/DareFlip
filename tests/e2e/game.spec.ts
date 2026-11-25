@@ -1,5 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
 import { readFile } from "node:fs/promises";
+import { chooseGenders, type GenderChoice } from "../helpers/players";
 
 async function home(page: Page) {
   await page.goto("/");
@@ -13,6 +14,7 @@ async function setup(page: Page, mode = "Party") {
   await page
     .getByRole("textbox", { name: "Player name 2", exact: true })
     .fill("Sam");
+  await chooseGenders(page);
 }
 async function begin(page: Page) {
   await setup(page);
@@ -154,6 +156,16 @@ test("validates blank and duplicate names and enforces 20-player limit", async (
     await page
       .getByRole("textbox", { name: `Player name ${i}`, exact: true })
       .fill(`Player ${i}`);
+  await chooseGenders(
+    page,
+    Array.from(
+      { length: 20 },
+      (_, i) =>
+        (["female", "male", "nonbinary", "undisclosed"] as GenderChoice[])[
+          i % 4
+        ],
+    ),
+  );
   await page
     .getByRole("button", { name: "Start the game", exact: true })
     .click();

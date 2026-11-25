@@ -1,3 +1,4 @@
+import { chooseGenders } from '../helpers/players';
 import { expect, test, type Page } from '@playwright/test';
 
 async function home(page: Page) {
@@ -10,6 +11,7 @@ async function startGame(page: Page) {
   await page.locator('.hero-play').click();
   await page.getByRole('textbox', { name: 'Player name 1' }).fill('Alex');
   await page.getByRole('textbox', { name: 'Player name 2' }).fill('Deniz');
+  await chooseGenders(page);
   await page.getByRole('button', { name: 'Start the game' }).click();
 }
 
@@ -34,6 +36,7 @@ test('visible controls have accessible names and at least 44px targets across th
   await checkControls(page);
   await page.getByRole('textbox', { name: 'Player name 1' }).fill('Alex');
   await page.getByRole('textbox', { name: 'Player name 2' }).fill('Deniz');
+  await chooseGenders(page);
   await page.getByRole('button', { name: 'Start the game' }).click();
   await expect(page.getByRole('heading', { level: 1 })).toBeFocused();
   await checkControls(page);
