@@ -4,7 +4,11 @@ const config: CapacitorConfig = {
   appName: "DareFlip",
   webDir: "dist",
   backgroundColor: "#140c26",
-  ios: { contentInset: "never", preferredContentMode: "mobile" },
+  ios: {
+    contentInset: "never",
+    preferredContentMode: "mobile",
+    zoomEnabled: true,
+  },
   android: { backgroundColor: "#140c26" },
 };
 export default config;

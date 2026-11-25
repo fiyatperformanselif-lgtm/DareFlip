@@ -18,6 +18,11 @@
   --pink: #ff74b4;
   --orange: #ffb27c;
   --border: #ffffff10;
+  --form-control-font-size: max(16px, 1rem);
+}
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 * {
   box-sizing: border-box;
@@ -28,8 +33,15 @@ body {
 }
 button,
 input,
-select {
+select,
+textarea {
   font: inherit;
+}
+/* iOS zooms focused text controls below 16px, even inside a native WKWebView. */
+input:not([type="checkbox"]):not([type="radio"]),
+select,
+textarea {
+  font-size: var(--form-control-font-size);
 }
 button,
 a,
@@ -97,6 +109,7 @@ button:active:not(:disabled) {
 }
 .app {
   min-height: 100dvh;
+  touch-action: manipulation;
   background:
     radial-gradient(ellipse at 83% 2%, #54243c18, transparent 35%), var(--bg);
   padding: env(safe-area-inset-top) 0 calc(100px + env(safe-area-inset-bottom));
@@ -790,7 +803,7 @@ button:active:not(:disabled) {
   border: 0;
   color: #f3e9fc;
   padding: 14px 5px;
-  font-size: 13px;
+  font-size: var(--form-control-font-size);
   outline-offset: 0;
 }
 .player-input input::placeholder {
@@ -1449,7 +1462,7 @@ button:active:not(:disabled) {
   background: #30213c;
   border: 1px solid #ffffff12;
   border-radius: 8px;
-  font-size: 11px;
+  font-size: var(--form-control-font-size);
   padding: 9px;
   max-width: 48%;
 }
@@ -2256,7 +2269,7 @@ button:active:not(:disabled) {
     gap: 11px;
   }
   .settings-row select {
-    font-size: 10px;
+    font-size: var(--form-control-font-size);
     padding: 8px;
     max-width: 48%;
   }
@@ -2529,4 +2542,6 @@ button:active:not(:disabled) {
 .main h1:focus {
   outline: none;
 }
-.offline-caption{color:#b8a3c7}
+.offline-caption {
+  color: #b8a3c7;
+}

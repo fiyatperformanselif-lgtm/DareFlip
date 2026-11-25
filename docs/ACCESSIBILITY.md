@@ -32,3 +32,7 @@ An automated pass does not establish full WCAG conformance. In particular, axe c
 Before release, test VoiceOver on iPhone/iPad, TalkBack on Android, Switch Control, external keyboards, OS large text and zoom, motion preferences without emulation, landscape and split-screen use, and real safe areas. Confirm native consent/ATT forms, banner spacing, rewarded/interstitial controls, and the native share sheet with assistive technology. These native behaviors were not validated by the browser suite. Language-specific pronunciation and the remaining partial UI translations also need native-speaker and assistive-technology review.
 
 No native screen-reader compatibility or accessibility certification is claimed.
+
+## iOS focus zoom regression — 25 November 2026
+
+A TestFlight report identified zoom after focusing player-name fields. Controls now have a minimum 16px text size; the native iOS configuration allows pinch zoom/recovery and the page viewport remains scalable. `tests/accessibility/viewport.spec.ts` adds four mobile-context flows at 320×740, 390×844, 844×390 and 768×1024. They check computed control font sizes, form focus/fill/blur, no horizontal document/app/main overflow, reachable game controls, language selection and return navigation. All four passed, as did the six existing keyboard/focus/target/responsive checks. Native iPhone keyboard behavior and pinch recovery must be verified in the newly packaged TestFlight build; desktop Chromium does not reproduce those OS gestures.
