@@ -19,7 +19,7 @@ All copy below describes the intended app. Publish only claims verified against 
 | Support URL | https://dareflip.izargames.com/dareflip/support.html |
 | Terms URL | https://dareflip.izargames.com/dareflip/terms.html |
 
-The publisher confirmed that the privacy, support and terms pages open in their browser after the Plesk permission correction. These addresses are now configured in the application source; they have not been entered into App Store Connect by this agent. Independent origin/TLS verification from this environment remains proxy-blocked. The copy below is still a draft, including the private-mode framing and advertising profile, and is not a claim of store approval.
+The publisher confirmed that the privacy, support and terms pages open in their browser after the Plesk permission correction. These addresses are now configured in the application source; they have not been entered into App Store Connect by this agent. Independent origin/TLS verification from this environment remains proxy-blocked. The draft below describes the selected advertising-enabled candidate and its private two-person mode. It still requires publisher/account review and is not a claim of store approval. [App Review notes](APP_REVIEW_NOTES.md) disclose the private content for the reviewer.
 
 ## Apple promotional text
 
@@ -33,15 +33,15 @@ Truth or Dare for couples and friends. Spin, flip, laugh, and go deeper.
 
 Flip a card. Reveal a secret.
 
-DareFlip brings a fresh spark to date nights, get-togethers, and conversations that deserve more than small talk. Gather 2–20 players, spin the bottle, and choose Truth or Dare.
+DareFlip brings a fresh spark to date nights, get-togethers, and conversations that deserve more than small talk. Gather 2–20 players in social modes, spin the bottle, and choose Truth or Dare. Private Flirty requires exactly two adult partners, with a separate age and participation confirmation from each person.
 
 Find your mood:
 • Couples — make room for connection and little surprises.
 • Party — playful icebreakers for your whole group.
-• Flirty 18+ — respectful sparks for consenting adults.
+• Flirty 18+ — a private mode containing sexual prompts and tasks for exactly two consenting adult partners.
 • Deep Talk — thoughtful prompts for a closer conversation.
 • Crazy Fun — lighthearted performances and creative challenges.
-• Random — let the evening choose for you.
+• Random — let the evening choose for you; private Flirty cards are excluded.
 
 Choose Easy, Medium, or Bold. Save favorite cards, pick up where you left off, and share a beautifully styled card. A daily question brings a fresh conversation starter.
 

@@ -1,6 +1,6 @@
 # App Store yayını için teknik hazırlık
 
-Bu hazırlık iki açık yayın profili sunar. Hiçbir profil otomatik seçilmez; mevcut `ios-testflight` akışı test reklamlarıyla devam eder. Yeni `ios-app-store` akışı da elle başlatılır ve hazır adayı yükler; App Review gönderimi veya herkese açık yayın otomatik yapılmaz.
+Bu hazırlık iki açık yayın profili sunar. Yayıncının sağladığı dört iOS AdMob kimliğiyle `ios-app-store` akışında `production-ads` açıkça seçildi; mevcut `ios-testflight` akışı test reklamlarıyla devam eder. Her iki akış da elle başlatılır; App Review gönderimi veya herkese açık yayın otomatik yapılmaz.
 
 ## Tamamlanması gereken gerçek bilgiler
 
@@ -8,7 +8,7 @@ Bu hazırlık iki açık yayın profili sunar. Hiçbir profil otomatik seçilmez
 
 Doğrulanan yayıncı adı **IzarGames**, destek e-postası **info@izargames.com** olarak yapılandırıldı. Kullanıcı, Plesk'te dosya izinlerini düzelttikten sonra gizlilik, destek ve koşullar sayfalarının tarayıcısında açıldığını doğruladı. `https://dareflip.izargames.com/dareflip/` ana sayfa adresi ile bu dizindeki `privacy.html` ve `support.html` artık uygulama yapılandırmasında yer alır. Bu ortamın bağımsız HTTPS isteği proxy tarafından origin'e ulaşmadan engellendi; kullanıcı doğrulaması bağımsız HTTP/TLS ölçümü olarak sunulmaz. Kaydı ve Plesk yükleme adımlarını [sunucu kılavuzu](../site/IZARGAMES_SERVER.md) içerir.
 
-Kullanıcı DareFlip için AdMob iOS uygulamasını ve üç reklam birimini henüz oluşturmadığını belirtti. Reklamlı mağaza sürümü için gerçek iOS App ID ve Banner/Interstitial/Rewarded kimlikleri bekleniyor; betanın test reklamları bu bilgiler yerine üretim kimliği olarak kullanılmaz. [Türkçe AdMob kurulum adımları](ADMOB_SETUP_TR.md) hangi dört değerin nereden alınacağını ve Codemagic eşlemesini açıklar.
+Kullanıcı DareFlip için AdMob iOS uygulamasını ve Banner/Interstitial/Rewarded birimlerini oluşturup dört kimliği ekran görüntüleriyle sağladı. Bunlar yalnızca `ios-app-store` akışının herkese açık ortam değişkenlerine eklendi; ek bir değişken grubu veya elle tekrar giriş gerekmez. Ekranda mağaza bağlantısı boş ve AdMob onayı **İnceleme gerekli** görünüyor. Kimlikler ve biçimleri doğrulandı; gerçek reklam sunumu, hesap onayı veya UMP panel yapılandırması bu işlemle doğrulanmış sayılmaz. [Türkçe AdMob kılavuzu](ADMOB_SETUP_TR.md) güncel eşlemeyi içerir.
 
 Uygulama destek ekranı bu yapılandırmadan çalışan e-posta, destek ve gizlilik bağlantılarını oluşturur. Yapılandırılmamış durumda eksikliği açıkça gösterir. Uygulamadaki EN/TR gizlilik/koşul metni ve üretilebilen web sayfaları aynı içerik kaynağını kullanır. Reklamsız ve reklamlı sürümler için farklı, gerçeğe uygun veri işleme açıklaması seçilir.
 
@@ -23,9 +23,9 @@ Geliştirme/test modu üretim build'ine sızamaz: çelişen `NODE_ENV` değerler
 
 ## İçerik kararı
 
-Gönderilen Flirty-v3 kartları bu teknik hazırlık sırasında değiştirilmedi. App Store için içerik kapsamı hâlâ yayıncının yanıtını bekliyor. Önceki [yayın değerlendirmesi](APP_STORE_READINESS.md) bu destenin politika riskini açıklar.
+Gönderilen Flirty-v3 kartları bu teknik hazırlık sırasında değiştirilmedi. Kullanıcı kartların korunmasını ve Apple uygun görürse yayına geçilmesini zaten istemişti; aynı içerik seçimi için yeniden izin beklenmez. Önceki [yayın değerlendirmesi](APP_STORE_READINESS.md) bu destenin ciddi 1.1.4 riskini açıklar; gerçek Apple kararı henüz yoktur.
 
-`src/config/store-review.json` şu anda `pending` durumundadır. İçerik değerlendirmesi seçilen aktif katalog ve uygulamadan erişilebilen iki arşivin birlikte hash'ine bağlıdır; katalog veya arşiv değişirse eski değerlendirme geçerli sayılmaz. Bu kayıt Apple onayı değildir. İncelemeciye farklı içerik gösteren veya onay sonrasında gizli içeriği açan bir mekanizma eklenmedi.
+`src/config/store-review.json` artık bu mevcut talep ve tamamlanmış teknik/politika değerlendirmesi için `reviewed` durumundadır. Aktif katalog ve iki arşivin hash'i denetlenmiş sürümle aynıdır; katalog veya arşiv değişirse kayıt geçersiz olur. Değerlendirme notu ciddi içerik riskini build çıktısına taşır; bu durum uygunluk sertifikası veya Apple onayı değildir. [App Review notları](APP_REVIEW_NOTES.md) özel modun cinsel amacını açıkça belirtir. İncelemeciye farklı içerik gösteren veya onay sonrasında gizli içeriği açan bir mekanizma eklenmedi.
 
 `src/config/store-listing.json` gerçek mağaza iddialarını denetler. 5.000 kart hedefi ve eksik diğer diller yol haritası uyarılarıdır; Apple minimumları olarak sunulmaz. Tamamlanmış dil veya erişilebilir kart sayısı hakkında yanlış iddia yapılırsa kontrol durur.
 
@@ -40,7 +40,7 @@ npm run release:ios -- --profile ad-free
 
 Bu komutlar tek başına profil/kimlik değerlerini tamamlamaz. Eksik veya çelişen ayarlar varsa derleme başlamadan durur. İlk aşama amaçlanan yapılandırmayı doğrular; sync sonrasındaki ikinci aşama üretilen gerçek plist, SPM ve plugin listesini denetler. Android ayarları iOS kontrolünün ön koşulu yapılmaz; Android için doğrulanmamış sonuç iddia edilmez.
 
-Codemagic'teki yeni `dareflip_release` değişken grubu seçilen profil ve reklam ayarlarını içerir. Önceden kullanılan Apple takım/app kimliği ve entegrasyon kurulumu korunur. [Codemagic kılavuzundaki](CODEMAGIC_TESTFLIGHT.md) `ios-app-store` akışını kullanın. Build sonrasında gerçek sürüm/build numarasıyla App Store Connect metadata, yaş/gizlilik/ihracat soruları, ekran görüntüleri ve cihaz kontrolleri tamamlanmalıdır.
+Codemagic'teki `ios-app-store.environment.vars` seçilen profil ve gerçek iOS reklam kimliklerini içerir. Önceden kullanılan `dareflip_beta` grubundaki Apple takım/app kimliği ve entegrasyon kurulumu korunur; artık kullanılmayan `dareflip_release` grubuna bağımlılık yoktur. [Codemagic kılavuzundaki](CODEMAGIC_TESTFLIGHT.md) `ios-app-store` akışı yayın ön kontrolünü geçtikten sonra adayı derler. Build sonrasında gerçek sürüm/build numarasıyla App Store Connect metadata, yaş/gizlilik/ihracat soruları, ekran görüntüleri ve cihaz kontrolleri tamamlanmalıdır.
 
 ## Gizlilik ve destek sayfaları
 

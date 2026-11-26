@@ -168,6 +168,26 @@ run(
     );
   },
 );
+run(
+  "a completed risk assessment stays visible without claiming Apple approval",
+  (f) => {
+    const note =
+      "Serious content-policy risk remains; manual review candidate only.";
+    f.put("src/config/store-review.json", {
+      status: "reviewed",
+      inventorySha256: contentInventory(f.root).sha256,
+      note,
+    });
+    const result = checkRelease({ ...f, profile: "ad-free" });
+    assert.deepEqual(result.issues, []);
+    assert.ok(
+      result.warnings.includes(
+        `Content assessment (not Apple approval): ${note}`,
+      ),
+    );
+  },
+);
+
 run("unfinished roadmap is a warning while false store claims block", (f) => {
   f.put("src/config/store-listing.json", {
     advertisedCardCount: 5000,

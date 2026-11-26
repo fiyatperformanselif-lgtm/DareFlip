@@ -62,7 +62,7 @@ workflows:
         submit_to_app_store: false
 
   # Release preparation is intentionally separate from the test-inventory beta flow.
-  # Choose the product profile explicitly in dareflip_release; there is no default.
+  # Publisher-selected production advertising uses the public iOS IDs below.
   ios-app-store:
     name: DareFlip · App Store candidate upload (manual)
     instance_type: mac_mini_m2
@@ -72,12 +72,18 @@ workflows:
     environment:
       groups:
         - dareflip_beta # Existing APPLE_TEAM_ID and APP_STORE_APPLE_ID
-        - dareflip_release # Explicit profile/ads flag; production IDs only if ads are chosen
       vars:
         BUNDLE_ID: *bundle_id
         XCODE_PROJECT: ios/App/App.xcodeproj
         XCODE_SCHEME: App
+        DAREFLIP_RELEASE_PROFILE: "production-ads"
+        VITE_ADS_ENABLED: "true"
         VITE_ADMOB_TESTING: "false"
+        # Public client identifiers supplied by the publisher; never account credentials.
+        ADMOB_IOS_APP_ID: "ca-app-pub-2587621108337963~5176201712"
+        VITE_ADMOB_IOS_BANNER: "ca-app-pub-2587621108337963/7046978749"
+        VITE_ADMOB_IOS_INTERSTITIAL: "ca-app-pub-2587621108337963/2295400859"
+        VITE_ADMOB_IOS_REWARDED: "ca-app-pub-2587621108337963/8669237517"
       ios_signing:
         distribution_type: app_store
         bundle_identifier: *bundle_id
@@ -96,8 +102,8 @@ workflows:
       - name: Validate iOS release before compiling
         script: |
           set -euo pipefail
-          : "${DAREFLIP_RELEASE_PROFILE:?Choose ad-free or production-ads explicitly in dareflip_release}"
-          : "${VITE_ADS_ENABLED:?Set false for ad-free or true for production-ads}"
+          : "${DAREFLIP_RELEASE_PROFILE:?Set the intended profile in this workflow's variables}"
+          : "${VITE_ADS_ENABLED:?Set false for ad-free or true for production-ads in this workflow}"
           npm ci
           node scripts/check-release.mjs --platform ios --profile "$DAREFLIP_RELEASE_PROFILE"
           npm run lint

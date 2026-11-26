@@ -224,6 +224,10 @@ export function checkRelease({
       add(
         "Record the scope and limits of the content assessment; it is not Apple approval.",
       );
+    else if (review.status === "reviewed")
+      warnings.push(
+        `Content assessment (not Apple approval): ${review.note.trim()}`,
+      );
   } catch {
     add(
       "Content inventory/review/listing configuration is missing or invalid.",

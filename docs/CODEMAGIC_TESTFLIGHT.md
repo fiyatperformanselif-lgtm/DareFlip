@@ -76,7 +76,7 @@ Resmi kaynaklar: [Codemagic App Store Connect publishing](https://docs.codemagic
 
 `ios-testflight` test reklamlı beta akışı olarak kalır. Mağaza adayı için `ios-app-store` akışını **elle** başlatın. Bu akış da yalnızca imzalı adayı App Store Connect'e yükler: beta incelemesine, App Store incelemesine veya herkese açık yayına otomatik göndermez.
 
-Önce Codemagic'te `dareflip_release` adlı değişken grubunu oluşturun. Reklam modeli için varsayılan seçim yoktur; yayıncı şu iki açık profilden birini seçmelidir:
+Yayıncı gerçek iOS AdMob kimliklerini sağladıktan sonra `codemagic.yaml` içindeki `ios-app-store.environment.vars` doğrudan `production-ads` profilini ve dört kimliği içerir. `dareflip_release` adlı ek grup oluşturmanız veya bu değerleri tekrar girmeniz gerekmez. Aşağıdaki tablo iki desteklenen profilin anlamını açıklar; mevcut manuel mağaza akışında sağdaki profil seçilidir:
 
 | Değişken | Reklamsız aday | Gerçek reklamlı aday |
 | --- | --- | --- |

@@ -4,7 +4,9 @@ Assessed application source: `6042750f23a4d58d2c37455edc91c996627da27b`.
 
 This is the assessment snapshot for that beta artifact. Later technical preparation adds explicit store profiles and configurable legal/support pages; see [RELEASE_SETUP.md](RELEASE_SETUP.md). No production profile, publisher identity or final content decision is implied by adding that infrastructure.
 
-**Decision: hold public submission.** Passing software tests and producing a signed beta IPA do not establish App Store readiness. No App Store submission, Apple approval or public release was performed during this assessment. The active card texts were not changed.
+Subsequent preparation update: the publisher supplied the public contact/pages and all four real iOS AdMob IDs. Their existing request already authorizes preserving the supplied deck and preparing a candidate for manual Apple review. The former pending publisher-choice gate was an inference in this audit, not a missing permission or an Apple requirement. The unchanged active/archived inventory now has a completed hash-bound assessment with a prominent serious-1.1.4-risk note. This permits technical candidate preparation while preserving the risk disclosure; it does not certify suitability, approve public release or change Apple's role. [App Review notes](APP_REVIEW_NOTES.md) disclose the mode's actual purpose. The original snapshot and its findings below remain historical evidence for `6042750`.
+
+**Snapshot decision: hold public submission. Current scope: prepare the publisher-authorized candidate for manual review, with the serious content risk explicitly disclosed.** Passing software tests and producing a signed beta IPA do not establish App Store readiness. No App Store submission, Apple approval or public release was performed during this assessment. The active card texts were not changed.
 
 ## Evidence and its limits
 

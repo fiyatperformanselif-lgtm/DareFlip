@@ -1,6 +1,8 @@
 # DareFlip iOS için AdMob kurulumu
 
-Kullanıcı DareFlip için AdMob uygulamasını ve reklam birimlerini henüz oluşturmadığını bildirdi. Bu kılavuz mevcut reklam entegrasyonuna gerçek yayıncı kimliklerini sağlamak içindir; hesap açmaz veya reklam yayını başlatmaz. TestFlight betası resmi Google test kimliklerini kullanmaya devam eder.
+Kullanıcı DareFlip için iOS AdMob uygulamasını ve üç reklam birimini oluşturup kimliklerini ekran görüntüleriyle sağladı. Kimlikler yalnızca `codemagic.yaml` içindeki manuel `ios-app-store` akışına bağlandı. Bu işlem hesap açmaz, reklam gösterimi başlatmaz veya mağaza yayını yapmaz. TestFlight betası resmi Google test kimliklerini kullanmaya devam eder.
+
+Son AdMob ekranında mağaza bağlantısı boş, uygulama onayı **İnceleme gerekli**, uygulama doğrulaması ise **Zorunlu değil** görünüyor. Bunlar ekranın o andaki durumlarıdır; kimliklerin oluşturulması reklam sunma veya mağaza onayı anlamına gelmez. Gizlilik/UMP mesajlarının gerçek hesapta yayımlanması ve cihaz testi ayrıca tamamlanmalıdır.
 
 ## 1. iOS uygulamasını ekle
 
@@ -20,18 +22,18 @@ Uygulamanın **Reklam birimleri / Ad units → Reklam birimi ekle / Add ad unit*
 
 Her birim ayrı bir kimlik verir. Birim kimlikleri `ca-app-pub-` ile başlar ve içinde `/` bulunur. Bir reklam biriminin oluşturulması, hesabın veya uygulamanın reklam sunmaya onaylandığı anlamına gelmez; paneldeki gerçek durum ayrıca kontrol edilmelidir.
 
-## 3. Kimlikleri Codemagic'e tanımla
+## 3. Codemagic'e bağlanan gerçek iOS kimlikleri
 
-Uygulamanın Codemagic **Environment variables** bölümündeki `dareflip_release` grubuna gerçek değerler eklenir:
+Bu değerler `ios-app-store.environment.vars` içinde yer alır. Aynı değerleri tekrar UI'da girmek veya `dareflip_release` grubu oluşturmak gerekmez:
 
 | Değişken | İçerik |
 | --- | --- |
-| `ADMOB_IOS_APP_ID` | AdMob iOS uygulama kimliği (`~` içerir) |
-| `VITE_ADMOB_IOS_BANNER` | Banner birim kimliği (`/` içerir) |
-| `VITE_ADMOB_IOS_INTERSTITIAL` | Interstitial birim kimliği (`/` içerir) |
-| `VITE_ADMOB_IOS_REWARDED` | Rewarded birim kimliği (`/` içerir) |
+| `ADMOB_IOS_APP_ID` | `ca-app-pub-2587621108337963~5176201712` |
+| `VITE_ADMOB_IOS_BANNER` | `ca-app-pub-2587621108337963/7046978749` |
+| `VITE_ADMOB_IOS_INTERSTITIAL` | `ca-app-pub-2587621108337963/2295400859` |
+| `VITE_ADMOB_IOS_REWARDED` | `ca-app-pub-2587621108337963/8669237517` |
 
-Reklamlı mağaza adayı için aynı grupta `DAREFLIP_RELEASE_PROFILE=production-ads`, `VITE_ADS_ENABLED=true` ve `VITE_ADMOB_TESTING=false` açıkça seçilir. Bunlar mevcut beta grubunu değiştirmek için kullanılmaz. `ios-app-store` akışı yayın adayı yükler; içerik değerlendirmesi ve diğer yayın hazırlıkları tamamlanmadan kontrolü geçmez. App Review gönderimi veya herkese açık yayın otomatik değildir.
+Reklamlı mağaza adayı için aynı akışta `DAREFLIP_RELEASE_PROFILE=production-ads`, `VITE_ADS_ENABLED=true` ve `VITE_ADMOB_TESTING=false` açıkça seçildi. Betanın ayarları değiştirilmedi. Kullanıcının sağlanan kartları koruyarak Apple incelemesine aday hazırlama talebi mevcut olduğundan hash'e bağlı içerik değerlendirmesi kaydedilir; ciddi 1.1.4 riski build çıktısında ve inceleme notlarında belirtilir. Bu kayıt Apple onayı değildir. `ios-app-store` yalnızca yayın adayı yükler; App Review gönderimi veya herkese açık yayın otomatik değildir.
 
 AdMob uygulama/birim kimlikleri istemciye derlenen yapılandırmadır; hesap şifresi, OAuth bilgisi, `.p8`, servis hesabı veya imzalama anahtarı değildir. Hesap sırlarını sohbet veya uygulama kaynağına eklemeyin. Bu dört kimlik üretilmeden gerçekmiş gibi örnek kimlik girilmez.
 
@@ -45,8 +47,14 @@ Kullanıcı aşağıdaki gizlilik/destek/koşul sayfalarının tarayıcıda aç�
 - Koşullar: `https://dareflip.izargames.com/dareflip/terms.html`
 - Destek e-postası: `info@izargames.com`
 
-AdMob **Privacy & messaging / Gizlilik ve mesajlaşma** bölümünde hedef bölgeler için gereken mesajlar gerçek yayın ayarlarıyla hazırlanıp yayımlanmalıdır. Uygulama gerekli UMP izni olmadan reklam isteği yapmaz; izin formunun AdMob tarafında yapılandırılması gerekir. Yayın cihazında izin/ret ve geri çekme davranışı ayrıca test edilmelidir.
+Kullanıcı DareFlip'i kapsayan GDPR mesajını henüz yayımlamadığını belirtti; sunucuya yüklenen gizlilik politikası bu AdMob mesajını yayımlamaz. AdMob **Privacy & messaging / Gizlilik ve mesajlaşma → Avrupa düzenlemeleri → Mesaj oluştur** bölümünden DareFlip seçilmeli, gerçek gizlilik adresi girilmeli ve uygun dil/kabul/ret/tercih seçenekleriyle mesaj ön izlenip yayımlanmalıdır. Hedef diğer bölgeler için gereken mesajlar da gerçek yayın ayarlarıyla hazırlanır. Uygulama gerekli UMP izni olmadan reklam isteği yapmaz; izin formunun AdMob tarafında yapılandırılması gerekir. Yayın cihazında izin/ret ve geri çekme davranışı ayrıca test edilmelidir. Bu hesap işlemi ajan tarafından yapılmadı.
 
-AdMob `app-ads.txt` doğrulaması isterse panelin verdiği gerçek yayıncı satırını ve hedef alan adını kullanın. Bu satır henüz sağlanmadığı için tahmini yayıncı numarasıyla bir dosya hazırlanmadı. Gerçek satır alındığında mevcut diğer uygulamaların kayıtlarını koruyarak ilgili web kökündeki `app-ads.txt` dosyasına eklenir ve panelden doğrulanır.
+Sağlanan uygulama kimliğinden doğrulanan yayıncı numarası `pub-2587621108337963` için Google'ın standart doğrudan satıcılık kaydıyla yerel `artifacts/admob/app-ads.txt` dosyası hazırlandı:
+
+```text
+google.com, pub-2587621108337963, DIRECT, f08c47fec0942fa0
+```
+
+Yüklemeden önce satırı AdMob **app-ads.txt** ekranındaki öneriyle karşılaştırın ve panelin belirttiği geliştirici alan adını esas alın. Dosya o sitenin web kökünde `app-ads.txt` olarak sunulmalıdır; bir uygulama alt klasörü içinde bırakılmaz. Örneğin hedef `dareflip.izargames.com` ise adres `https://dareflip.izargames.com/app-ads.txt` olur. Mevcut bir `app-ads.txt` varsa bu tek satırlık dosyayla üzerine yazmayın; diğer uygulamaların kayıtlarını koruyarak satırı ekleyin. Yerel dosya sunucuya yüklenmedi ve Google tarayıcısının doğrulaması henüz alınmadı. Store bağlantısı ve panelin gerekli inceleme adımları gerçek yayın durumuna göre tamamlanır.
 
 Teknik ayrıntılar [ADMOB.md](ADMOB.md), yayın profilleri [RELEASE_SETUP.md](RELEASE_SETUP.md) içinde yer alır.

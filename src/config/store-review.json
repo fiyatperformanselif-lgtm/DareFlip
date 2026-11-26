@@ -1,5 +1,5 @@
 {
-  "status": "pending",
-  "inventorySha256": "",
-  "note": "Public-release content scope is awaiting the publisher's choice. This is not an Apple approval."
+  "status": "reviewed",
+  "inventorySha256": "77f30a651a57d3007b2e10249db47f4c5d57862c19d04e6cc6d9e65678e4d58c",
+  "note": "The publisher explicitly requested preserving the supplied private deck and preparing an Apple review candidate. Active content and both archives remain unchanged from the documented audit. Serious App Review Guideline 1.1.4 risk remains due to the private deck's sexual purpose and tasks. Assessment completed for manual candidate preparation only; no suitability certification, Apple approval or public release is claimed."
 }
