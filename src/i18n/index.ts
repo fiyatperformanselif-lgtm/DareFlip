@@ -237,20 +237,51 @@ export function hasTranslation(locale: Locale, key: Key): boolean {
   return Object.prototype.hasOwnProperty.call(dictionaries[locale], key);
 }
 
-/** Missing interface strings visibly fall back to English; metadata discloses this. */
-export function t(
+export type TranslationValues = Readonly<Record<string, string | number>>;
+
+export interface ResolvedTranslation {
+  text: string;
+  lang: Locale;
+  dir: "ltr" | "rtl";
+  fallback: boolean;
+}
+
+/** Report the language actually used, rather than inheriting the requested locale. */
+export function resolveTranslation(
   locale: Locale,
   key: Key,
-  vars: Record<string, string | number> = {},
-): string {
-  const template = dictionaries[locale]?.[key] ?? en[key];
-  return template.replace(
+  vars: TranslationValues = {},
+): ResolvedTranslation {
+  const localized = dictionaries[locale]?.[key];
+  const fallback = localized === undefined;
+  const lang = fallback ? "en" : locale;
+  const template = localized ?? en[key];
+  const text = template.replace(
     /\{([a-zA-Z][a-zA-Z0-9]*)\}/g,
     (placeholder, name: string) =>
       Object.prototype.hasOwnProperty.call(vars, name)
         ? String(vars[name])
         : placeholder,
   );
+  return { text, lang, dir: localeInfo(lang).dir, fallback };
+}
+
+/** Spread onto the element containing the translated text, including form controls. */
+export function translationAttrs(
+  locale: Locale,
+  key: Key,
+): Pick<ResolvedTranslation, "lang" | "dir"> {
+  const { lang, dir } = resolveTranslation(locale, key);
+  return { lang, dir };
+}
+
+/** Keep the original string API for attributes and callers that need plain text. */
+export function t(
+  locale: Locale,
+  key: Key,
+  vars: TranslationValues = {},
+): string {
+  return resolveTranslation(locale, key, vars).text;
 }
 
 export function translationProgress(locale: Locale): {

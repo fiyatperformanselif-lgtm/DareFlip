@@ -2,18 +2,18 @@
 
 Kullanıcı mevcut içerikle yayına geçilmesini açıkça istedi. İçerik kalitesi değişiklikleri sonraki güncellemelere bırakıldı. Bu paket App Store Connect alanlarına girebileceğiniz metinleri hazırlar; Apple hesabında kayıt veya gönderim işlemi yapmaz.
 
-## Gönderilecek aday
+## Yeni tasarım için yeni build gerekiyor
 
-- Sürüm: **0.1.0**
-- Build: **3**
+**Önceki `0.1.0 (3)` bu premium tasarım güncellemesini içermiyor.** Önceki imzalı kaynak `3748094`; cihazdaki isim/skip/devam bildirimi de o adaya ait. Sürüm numarası `0.1.0` kalır; gerçek sonraki build numarasını Codemagic, App Store Connect'teki son değerden belirler. Yeni numara bu pakette uydurulmadı.
+
 - Bundle ID: `com.dareflip.app`
 - App Store Connect Apple ID: `6838894449`
-- İmzalı bulut build kaynağı: `3748094`
-- Kanıt: kullanıcının Codemagic/TestFlight ekranları ve cihazda isim girişi, kart geçme, devam etme kontrollerinin sorunsuz olduğuna ilişkin bildirimi. Cihaz modeli/iOS sürümü verilmedi; bu kayıt bağımsız native test veya Apple onayı değildir.
+- Yeni kaynak için imzalı build, kurulum ve cihaz kontrolleri henüz yapılmadı.
+- [Tasarım ve doğrulama raporu](../../docs/PREMIUM_UX_2026_11_27.md)
 
 ## Distribution alanları
 
-App Store Connect → DareFlip → **Distribution** bölümünde mağaza sürümü `0.1.0` ile eşleşmeli, seçili build `0.1.0 (3)` olmalıdır. Önceden açılmış ilk taslak hâlâ `1.0` gösteriyorsa düzenlenebilir Version alanını `0.1.0` yapıp kaydedin. Test edilmiş binary'yi kullanmak için yeniden build almak gerekmez. Kullanıcı son yanıtta `0.1.0 (3)` bilgisini doğruladı; panel bu ajan tarafından doğrudan incelenmedi.
+Manuel Codemagic iş akışıyla yeni adayı yükleyip cihazda test ettikten sonra Distribution sürümü `0.1.0` ile eşleşen **yeni build** seçilmelidir. Yeni mağaza görsellerini o sürümden alın. Önceki kullanıcı onayı yayın niyetini kaydeder; bu paket yeni binary'nin test edildiğini veya hesabın gönderildiğini iddia etmez.
 
 English (U.S.) için alan eşlemesi:
 

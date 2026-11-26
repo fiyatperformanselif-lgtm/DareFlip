@@ -1,5 +1,7 @@
 # App Store release assessment — 26 November 2026
 
+Premium UX update — 27 November 2026: the newer source changes animation, sharing and responsive layout. Previous candidate `0.1.0 (3)` / `3748094` is historical evidence and does not include this work. Prepare/install a fresh signed build before selecting the updated candidate for review; see [the UX handoff](PREMIUM_UX_2026_11_27.md).
+
 Assessed application source: `6042750f23a4d58d2c37455edc91c996627da27b`.
 
 This is the assessment snapshot for that beta artifact. Later technical preparation adds explicit store profiles and configurable legal/support pages; see [RELEASE_SETUP.md](RELEASE_SETUP.md). No production profile, publisher identity or final content decision is implied by adding that infrastructure.

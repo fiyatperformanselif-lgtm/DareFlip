@@ -1,5 +1,5 @@
 import { Capacitor } from "@capacitor/core";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
   Bookmark,
@@ -30,21 +30,38 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { lookupCard, persistedCards } from "./content";
-import { dailyCard, drawCard, pickPlayer } from "./domain/engine";
-import type { Card, Difficulty, Mode } from "./domain/types";
+import {
+  dailyCard,
+  drawCard,
+  eligibleCards,
+  pickPlayer,
+} from "./domain/engine";
+import type { Card, Difficulty, Kind, Mode } from "./domain/types";
 import { saveState } from "./domain/storage";
 import { GENDERS, hasCompleteGenders } from "./domain/players";
 import type { Gender } from "./domain/players";
-import { detectLanguage, languages, localeInfo, t } from "./i18n";
+import {
+  detectLanguage,
+  languages,
+  localeInfo,
+  t,
+  translationAttrs,
+} from "./i18n";
 import type { Key, Locale } from "./i18n";
 import { initialState, isPrivateSessionReady, loadAppState } from "./state";
 import type { Session, State } from "./state";
 import { ads, advertisingEnabled } from "./services/ads";
 import { feedback } from "./services/feedback";
 import { shareCard } from "./services/share";
-import { useNativeBack, exitNativeApp } from "./ui/useNativeBack";
+import {
+  useNativeBack,
+  useAppInactive,
+  exitNativeApp,
+} from "./ui/useNativeBack";
 import { publisher, publisherReady } from "./config/publisher";
 import { LegalText } from "./ui/LegalText";
+import { GameView } from "./ui/GameView";
+import { TranslatedText } from "./ui/TranslatedText";
 
 type Tab = "play" | "favorites" | "packs" | "settings";
 type Overlay =
@@ -102,11 +119,14 @@ export default function App() {
     false,
     false,
   ]);
-  const [error, setError] = useState("");
-  const [toast, setToast] = useState("");
+  const [error, setError] = useState<Key | "">("");
+  const [toast, setToast] = useState<{
+    key: Key;
+    values?: Record<string, string | number>;
+  } | null>(null);
   const [spinning, setSpinning] = useState(false);
   const [spinAngle, setSpinAngle] = useState(24);
-  const [exhausted, setExhausted] = useState(false);
+  const [exhausted, setExhausted] = useState<Kind | null>(null);
   const [busy, setBusy] = useState(false);
   const [adStatus, setAdStatus] = useState("");
   useEffect(
@@ -122,22 +142,53 @@ export default function App() {
   const [ready, setReady] = useState(false);
   const [storageProblem, setStorageProblem] = useState(false);
   const spinTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const spinFrame = useRef<number | null>(null);
+  const spinGeneration = useRef(0);
+  const spinBusy = useRef(false);
+  const drawBusy = useRef(false);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isGame = screen === "game" && state.session !== null;
   const session = state.session;
   const privateReady = isPrivateSessionReady(session);
   const privateBlocked = isGame && session?.mode === "flirty" && !privateReady;
   const cardId = session?.card?.id;
+  const focusedDestination = useRef("");
+  const cancelTurn = useCallback(() => {
+    spinGeneration.current += 1;
+    if (spinTimer.current) clearTimeout(spinTimer.current);
+    if (spinFrame.current !== null) cancelAnimationFrame(spinFrame.current);
+    spinTimer.current = null;
+    spinFrame.current = null;
+    spinBusy.current = false;
+    drawBusy.current = false;
+    setSpinning(false);
+  }, []);
+  useAppInactive(cancelTurn);
   useEffect(() => {
+    if (overlay || spinning) return;
+    const destination = `${screen}/${tab}/${cardId ?? ""}`;
+    // Closing a dialog restores its trigger; only navigation or a new card
+    // should move focus to the main content.
+    if (focusedDestination.current === destination) return;
     const target = document.querySelector<HTMLElement>(
       isGame && cardId ? ".card-prompt" : ".main h1",
     );
-    if (target) {
+    if (!target) return;
+    focusedDestination.current = destination;
+    const delay =
+      isGame &&
+      cardId &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? 550
+        : 0;
+    const timer = setTimeout(() => {
       target.tabIndex = -1;
       target.focus({ preventScroll: true });
-    }
-  }, [screen, tab, isGame, cardId]);
+    }, delay);
+    return () => clearTimeout(timer);
+  }, [screen, tab, isGame, cardId, overlay, spinning]);
   useNativeBack(() => {
+    cancelTurn();
     if (overlay) setOverlay(null);
     else if (isGame) setOverlay("pause");
     else if (screen === "setup") setScreen("home");
@@ -146,10 +197,10 @@ export default function App() {
   });
   const tr = (key: Key, vars?: Record<string, string | number>) =>
     t(state.locale, key, vars);
-  const notify = (message: string) => {
-    setToast(message);
+  const notify = (key: Key, values?: Record<string, string | number>) => {
+    setToast({ key, values });
     if (toastTimer.current) clearTimeout(toastTimer.current);
-    toastTimer.current = setTimeout(() => setToast(""), 4200);
+    toastTimer.current = setTimeout(() => setToast(null), 2800);
   };
   const feel = (kind: "tap" | "flip" | "success" = "tap") => {
     void feedback(kind, { sound: state.sound, haptics: state.haptics });
@@ -197,7 +248,9 @@ export default function App() {
   }, [isGame, screen, chosen, tab, overlay, session, state.favorites]);
   useEffect(
     () => () => {
+      spinGeneration.current += 1;
       if (spinTimer.current) clearTimeout(spinTimer.current);
+      if (spinFrame.current !== null) cancelAnimationFrame(spinFrame.current);
       if (toastTimer.current) clearTimeout(toastTimer.current);
     },
     [],
@@ -254,12 +307,14 @@ export default function App() {
   const update = (patch: Partial<State>) =>
     setState((s) => ({ ...s, ...patch }));
   const goTab = (next: Tab) => {
+    cancelTurn();
     feel();
     setTab(next);
     setScreen("home");
     setError("");
   };
   const selectMode = (mode: Mode) => {
+    cancelTurn();
     feel();
     setChosen(mode);
     setDifficulty(session?.difficulty ?? "easy");
@@ -278,9 +333,10 @@ export default function App() {
   };
   const resumeGame = () => {
     if (!session) return;
+    cancelTurn();
     feel();
     setError("");
-    setExhausted(false);
+    setExhausted(null);
     if (
       (session.mode === "flirty" && session.players.length !== 2) ||
       (hasCompleteGenders(session.genders) &&
@@ -302,30 +358,31 @@ export default function App() {
     setScreen("setup");
   };
   const begin = () => {
+    cancelTurn();
     const names = players.map((player) => player.name.trim());
     if (names.length < 2 || names.some((n) => !n)) {
-      setError(tr("setup.minPlayers"));
+      setError("setup.minPlayers");
       return;
     }
     if (chosen === "flirty" && names.length !== 2) {
-      setError(tr("setup.privatePlayersRequired"));
+      setError("setup.privatePlayersRequired");
       return;
     }
     if (
       new Set(names.map((n) => n.toLocaleLowerCase())).size !== names.length
     ) {
-      setError(tr("setup.uniqueNames"));
+      setError("setup.uniqueNames");
       return;
     }
     const genders = players.map((player) => player.gender);
     if (!hasCompleteGenders(genders)) {
-      setError(tr("setup.genderRequired"));
+      setError("setup.genderRequired");
       const missing = genders.findIndex((gender) => gender === null);
       document.getElementById(`player-gender-${missing}`)?.focus();
       return;
     }
     if (chosen === "flirty" && !partnerChecks.every(Boolean)) {
-      setError(tr("setup.partnerConsentRequired"));
+      setError("setup.partnerConsentRequired");
       return;
     }
     feel("success");
@@ -344,23 +401,36 @@ export default function App() {
     });
     setScreen("game");
     setResuming(false);
-    setExhausted(false);
+    setExhausted(null);
   };
   const nextTurn = () => {
-    if (!session || spinning) return;
+    if (!session || spinBusy.current || overlay) return;
+    const sourceSession = session;
+    const winner = pickPlayer(session.players, session.player)!;
+    const targetIndex = session.players.indexOf(winner);
+    const targetAngle =
+      (360 - (360 / session.players.length) * targetIndex) % 360;
+    const generation = ++spinGeneration.current;
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    spinBusy.current = true;
     feel();
     setSpinning(true);
-    setExhausted(false);
-    setSpinAngle((a) => a + 1440 + Math.floor(Math.random() * 360));
-    // Interstitials are attempted only on an explicit break, never while drawing a card.
-    spinTimer.current = setTimeout(() => {
+    setExhausted(null);
+    const settle = () => {
+      if (generation !== spinGeneration.current) return;
+      spinTimer.current = null;
+      spinFrame.current = null;
+      spinBusy.current = false;
+      drawBusy.current = false;
       setState((s) =>
-        s.session
+        s.session === sourceSession
           ? {
               ...s,
               session: {
                 ...s.session,
-                player: pickPlayer(s.session.players, s.session.player)!,
+                player: winner,
                 card: null,
               },
             }
@@ -368,10 +438,24 @@ export default function App() {
       );
       setSpinning(false);
       feel("success");
-    }, 1100);
+    };
+    // A mounted, initially visible frame gives the bottle a real start pose.
+    // The saved card is retained until settle, so interruption preserves resume.
+    spinFrame.current = requestAnimationFrame(() => {
+      if (generation !== spinGeneration.current) return;
+      spinFrame.current = requestAnimationFrame(() => {
+        if (generation !== spinGeneration.current) return;
+        setSpinAngle(
+          (angle) => angle + 1440 + ((targetAngle - (angle % 360) + 360) % 360),
+        );
+        if (reducedMotion) settle();
+        else spinTimer.current = setTimeout(settle, 1120);
+      });
+    });
   };
   const draw = (type: "truth" | "dare") => {
-    if (!session || spinning) return;
+    if (!session || session.card || spinBusy.current || drawBusy.current)
+      return;
     if (session.mode === "flirty" && !isPrivateSessionReady(session)) return;
     const result = drawCard({
       mode: session.mode,
@@ -383,9 +467,10 @@ export default function App() {
       unlockedPacks: state.unlocked ? ["core", "afterglow"] : ["core"],
     });
     if (!result.card) {
-      setExhausted(true);
+      setExhausted(type);
       return;
     }
+    drawBusy.current = true;
     feel("flip");
     update({
       session: {
@@ -395,7 +480,49 @@ export default function App() {
         rounds: session.rounds + 1,
       },
     });
-    setExhausted(false);
+    setExhausted(null);
+  };
+  const pool = (type: Kind) =>
+    session
+      ? eligibleCards({
+          mode: session.mode,
+          difficulty: session.difficulty,
+          type,
+          language: state.locale,
+          seen: session.seen,
+          privateSession: privateReady,
+          unlockedPacks: state.unlocked ? ["core", "afterglow"] : ["core"],
+        })
+      : [];
+  const remaining = {
+    truth: pool("truth").filter((card) => !session?.seen.includes(card.id))
+      .length,
+    dare: pool("dare").filter((card) => !session?.seen.includes(card.id))
+      .length,
+  };
+  const changeDifficulty = (value: Difficulty) => {
+    if (!session || value === session.difficulty) return;
+    cancelTurn();
+    update({ session: { ...session, difficulty: value, card: null } });
+    setDifficulty(value);
+    setExhausted(null);
+    setOverlay(null);
+    feel();
+    notify("game.difficultyChanged");
+  };
+  const restartDeck = () => {
+    if (!session) return;
+    const resetIds = new Set(
+      [...pool("truth"), ...pool("dare")].map((card) => card.id),
+    );
+    update({
+      session: {
+        ...session,
+        seen: session.seen.filter((id) => !resetIds.has(id)),
+      },
+    });
+    setExhausted(null);
+    feel();
   };
   const resolveCard = (id: string) => lookupCard(id, state.locale);
   const toggleFavorite = (id: string) => {
@@ -406,22 +533,26 @@ export default function App() {
         ? state.favorites.filter((x) => x !== id)
         : [...state.favorites, id],
     });
-    notify(tr(saved ? "game.unsaved" : "game.saved"));
+    notify(saved ? "game.unsaved" : "game.saved");
   };
   const share = async (card: Card) => {
     try {
       const result = await shareCard({
         text: card.text,
         type: card.type,
+        language: card.language,
+        category: card.category,
+        difficulty: card.difficulty,
         title: "DareFlip",
       });
-      if (result === "downloaded") notify(tr("game.download"));
+      if (result === "downloaded") notify("game.download");
     } catch {
-      notify(tr("game.shareUnavailable"));
+      notify("game.shareUnavailable");
     }
   };
   const daily = dailyCard(state.locale);
   const pause = () => {
+    cancelTurn();
     feel();
     setOverlay("pause");
   };
@@ -431,16 +562,14 @@ export default function App() {
       const status = await ads.enableAds({ attOptIn: false });
       setAdStatus(status);
       notify(
-        tr(
-          status === "web"
-            ? "consent.noAdsWeb"
-            : status === "available"
-              ? "common.done"
-              : "consent.unavailable",
-        ),
+        status === "web"
+          ? "consent.noAdsWeb"
+          : status === "available"
+            ? "common.done"
+            : "consent.unavailable",
       );
     } catch {
-      notify(tr("consent.unavailable"));
+      notify("consent.unavailable");
     } finally {
       setBusy(false);
     }
@@ -451,17 +580,20 @@ export default function App() {
       const rewarded = await ads.rewarded();
       if (rewarded) {
         update({ unlocked: true });
-        notify(tr("packs.rewarded"));
-      } else notify(tr("packs.unavailable"));
+        notify("packs.rewarded");
+      } else notify("packs.unavailable");
     } catch {
-      notify(tr("packs.unavailable"));
+      notify("packs.unavailable");
     } finally {
       setBusy(false);
     }
   };
   const fallback = (card: Card) =>
     state.locale !== card.language ? (
-      <p className="fallback">
+      <p
+        className="fallback"
+        {...translationAttrs(state.locale, "settings.contentFallback")}
+      >
         <Globe2 size={13} />
         {tr("settings.contentFallback")}
       </p>
@@ -502,14 +634,18 @@ export default function App() {
         ? tr(`mode.${session!.mode}`)
         : "DareFlip";
   return (
-    <div className={`app ${adStatus === "available" ? "ads-enabled" : ""}`}>
+    <div
+      className={`app ${isGame ? "game-active" : ""} ${adStatus === "available" ? "ads-enabled" : ""}`}
+    >
       {!ready && (
         <div className="splash" aria-label="DareFlip">
           <img src="/icon.svg" alt="" />
           <strong>
             DareFlip<span>✦</span>
           </strong>
-          <p>{tr("brand.slogan")}</p>
+          <p {...translationAttrs(state.locale, "brand.slogan")}>
+            {tr("brand.slogan")}
+          </p>
         </div>
       )}
       <header className="topbar">
@@ -565,7 +701,11 @@ export default function App() {
         </div>
       </header>
       {storageProblem && (
-        <div className="storage-notice" role="status">
+        <div
+          className="storage-notice"
+          role="status"
+          {...translationAttrs(state.locale, "common.storageUnavailable")}
+        >
           <ShieldCheck size={16} />
           {tr("common.storageUnavailable")}
         </div>
@@ -574,7 +714,10 @@ export default function App() {
         {screen === "home" && tab === "play" && (
           <div className="home-grid page-enter">
             <section className="welcome">
-              <p className="eyebrow">
+              <p
+                className="eyebrow"
+                {...translationAttrs(state.locale, "home.eyebrow")}
+              >
                 <span /> {tr("home.eyebrow")}
               </p>
               <h1>
@@ -586,25 +729,50 @@ export default function App() {
                     </span>
                   ))}
               </h1>
-              <p className="subtitle">{tr("home.subtitle")}</p>
+              <p
+                className="subtitle"
+                {...translationAttrs(state.locale, "home.subtitle")}
+              >
+                {tr("home.subtitle")}
+              </p>
             </section>
             <section className="hero-banner" aria-label={tr("brand.slogan")}>
               <div className="hero-copy">
-                <div className="pill">
+                <div
+                  className="pill"
+                  {...translationAttrs(state.locale, "home.heroLabel")}
+                >
                   <Sparkles size={12} />
                   {tr("home.heroLabel")}
                 </div>
                 <h2>
                   {tr("home.heroLine1Start")}{" "}
-                  <em>{tr("home.heroLine1Emphasis")}</em>
+                  <em
+                    {...translationAttrs(
+                      state.locale,
+                      "home.heroLine1Emphasis",
+                    )}
+                  >
+                    {tr("home.heroLine1Emphasis")}
+                  </em>
                   <br />
                   {tr("home.heroLine2Start")}{" "}
-                  <em>{tr("home.heroLine2Emphasis")}</em>
+                  <em
+                    {...translationAttrs(
+                      state.locale,
+                      "home.heroLine2Emphasis",
+                    )}
+                  >
+                    {tr("home.heroLine2Emphasis")}
+                  </em>
                 </h2>
-                <p>{tr("brand.slogan")}</p>
+                <p {...translationAttrs(state.locale, "brand.slogan")}>
+                  {tr("brand.slogan")}
+                </p>
                 <button
                   className="hero-play"
                   onClick={() => selectMode("party")}
+                  {...translationAttrs(state.locale, "home.play")}
                 >
                   {tr("home.play")}
                   <ArrowRight size={18} />
@@ -616,25 +784,40 @@ export default function App() {
                 <span className="art-star star-one">✦</span>
                 <span className="art-star star-two">✦</span>
                 <div className="art-card truth-art">
-                  <span>{tr("game.truth")}</span>
+                  <span {...translationAttrs(state.locale, "game.truth")}>
+                    {tr("game.truth")}
+                  </span>
                   <Heart fill="currentColor" />
-                  <small>{tr("home.heroTruthHint")}</small>
+                  <small
+                    {...translationAttrs(state.locale, "home.heroTruthHint")}
+                  >
+                    {tr("home.heroTruthHint")}
+                  </small>
                 </div>
                 <div className="art-card dare-art">
-                  <span>{tr("game.dare")}</span>
+                  <span {...translationAttrs(state.locale, "game.dare")}>
+                    {tr("game.dare")}
+                  </span>
                   <Zap fill="currentColor" />
-                  <small>{tr("home.heroDareHint")}</small>
+                  <small
+                    {...translationAttrs(state.locale, "home.heroDareHint")}
+                  >
+                    {tr("home.heroDareHint")}
+                  </small>
                 </div>
                 <span className="mini-spark">✧</span>
               </div>
             </section>
             <section className="mode-section">
               <div className="section-heading">
-                <h2>
+                <h2 {...translationAttrs(state.locale, "home.chooseMode")}>
                   {tr("home.chooseMode")}
                   <span>✦</span>
                 </h2>
-                <span className="mode-total">
+                <span
+                  className="mode-total"
+                  {...translationAttrs(state.locale, "home.modeCount")}
+                >
                   {tr("home.modeCount", { number: "06" })}
                 </span>
               </div>
@@ -665,8 +848,17 @@ export default function App() {
                       </span>
                     </div>
                     <div className="mode-info">
-                      <h3>{tr(`mode.${id}`)}</h3>
-                      <p>{tr(`mode.${id}.description`)}</p>
+                      <h3 {...translationAttrs(state.locale, `mode.${id}`)}>
+                        {tr(`mode.${id}`)}
+                      </h3>
+                      <p
+                        {...translationAttrs(
+                          state.locale,
+                          `mode.${id}.description`,
+                        )}
+                      >
+                        {tr(`mode.${id}.description`)}
+                      </p>
                     </div>
                     <ArrowRight className="tile-arrow" size={17} />
                   </button>
@@ -680,8 +872,15 @@ export default function App() {
                     <Play size={20} fill="currentColor" />
                   </div>
                   <span>
-                    <strong>{tr("home.resume")}</strong>
-                    <small>
+                    <strong {...translationAttrs(state.locale, "home.resume")}>
+                      {tr("home.resume")}
+                    </strong>
+                    <small
+                      {...translationAttrs(
+                        state.locale,
+                        `mode.${session.mode}`,
+                      )}
+                    >
                       {tr(`mode.${session.mode}`)} · {session.players.length}{" "}
                       {tr("setup.players").toLocaleLowerCase()}
                     </small>
@@ -700,23 +899,37 @@ export default function App() {
                   <span className="daily-icon">
                     <Sparkles size={18} />
                   </span>
-                  <span>{tr("home.daily")}</span>
-                  <span className="daily-tag">{tr("home.dailyTag")}</span>
+                  <span {...translationAttrs(state.locale, "home.daily")}>
+                    {tr("home.daily")}
+                  </span>
+                  <span
+                    className="daily-tag"
+                    {...translationAttrs(state.locale, "home.dailyTag")}
+                  >
+                    {tr("home.dailyTag")}
+                  </span>
                 </div>
                 <p lang={daily?.language} dir="auto">
                   {daily?.text}
                 </p>
                 {daily && fallback(daily)}
                 <div className="daily-bottom">
-                  <span>{tr("home.dailyHint")}</span>
+                  <span {...translationAttrs(state.locale, "home.dailyHint")}>
+                    {tr("home.dailyHint")}
+                  </span>
                   <ArrowRight size={19} />
                 </div>
               </button>
               <div className="comfort">
                 <ShieldCheck size={19} />
-                <p>{tr("setup.rule")}</p>
+                <p {...translationAttrs(state.locale, "setup.rule")}>
+                  {tr("setup.rule")}
+                </p>
               </div>
-              <p className="offline-caption">
+              <p
+                className="offline-caption"
+                {...translationAttrs(state.locale, "home.offline")}
+              >
                 <span className="offline-dot" />
                 {tr("home.offline")}
               </p>
@@ -733,12 +946,36 @@ export default function App() {
                 })()}
               </span>
               <div>
-                <span className="eyebrow">{tr(`mode.${chosen}`)}</span>
-                <p>{tr(`mode.${chosen}.description`)}</p>
+                <span
+                  className="eyebrow"
+                  {...translationAttrs(state.locale, `mode.${chosen}`)}
+                >
+                  {tr(`mode.${chosen}`)}
+                </span>
+                <p
+                  {...translationAttrs(
+                    state.locale,
+                    `mode.${chosen}.description`,
+                  )}
+                >
+                  {tr(`mode.${chosen}.description`)}
+                </p>
               </div>
             </div>
-            <h1>{tr("setup.title")}</h1>
-            <p className="subtitle">
+            <h1 {...translationAttrs(state.locale, "setup.title")}>
+              {tr("setup.title")}
+            </h1>
+            <p
+              className="subtitle"
+              {...translationAttrs(
+                state.locale,
+                resuming && !hasCompleteGenders(session?.genders ?? [])
+                  ? "setup.completeGenders"
+                  : chosen === "flirty"
+                    ? "setup.privateSubtitle"
+                    : "setup.subtitle",
+              )}
+            >
               {tr(
                 resuming && !hasCompleteGenders(session?.genders ?? [])
                   ? "setup.completeGenders"
@@ -748,12 +985,21 @@ export default function App() {
               )}
             </p>
             {chosen === "flirty" && (
-              <p className="private-guidance" id="private-setup-guide">
-                {tr("setup.privateHowTo")}
+              <p
+                className="private-guidance"
+                id="private-setup-guide"
+                {...translationAttrs(state.locale, "setup.privateHowTo")}
+              >
+                <TranslatedText
+                  locale={state.locale}
+                  translationKey="setup.privateHowTo"
+                />
               </p>
             )}
             <div className="player-heading">
-              <h2>{tr("setup.players")}</h2>
+              <h2 {...translationAttrs(state.locale, "setup.players")}>
+                {tr("setup.players")}
+              </h2>
               <span>
                 {players.length}/{chosen === "flirty" ? 2 : 20}
               </span>
@@ -801,7 +1047,9 @@ export default function App() {
                     className="player-gender"
                     htmlFor={`player-gender-${i}`}
                   >
-                    <span>{tr("setup.gender")}</span>
+                    <span {...translationAttrs(state.locale, "setup.gender")}>
+                      {tr("setup.gender")}
+                    </span>
                     <select
                       id={`player-gender-${i}`}
                       aria-label={`${tr("setup.gender")} ${i + 1}`}
@@ -824,11 +1072,25 @@ export default function App() {
                         )
                       }
                     >
-                      <option value="" disabled>
+                      <option
+                        value=""
+                        disabled
+                        {...translationAttrs(
+                          state.locale,
+                          "setup.genderPlaceholder",
+                        )}
+                      >
                         {tr("setup.genderPlaceholder")}
                       </option>
                       {GENDERS.map((gender) => (
-                        <option value={gender} key={gender}>
+                        <option
+                          value={gender}
+                          key={gender}
+                          {...translationAttrs(
+                            state.locale,
+                            `gender.${gender}`,
+                          )}
+                        >
                           {tr(`gender.${gender}`)}
                         </option>
                       ))}
@@ -845,12 +1107,18 @@ export default function App() {
                   feel();
                   setPlayers((p) => [...p, { name: "", gender: null }]);
                 }}
+                {...translationAttrs(state.locale, "setup.add")}
               >
                 <Plus size={17} />
                 {tr("setup.add")}
               </button>
             )}
-            <h2 className="energy-heading">{tr("setup.difficulty")}</h2>
+            <h2
+              className="energy-heading"
+              {...translationAttrs(state.locale, "setup.difficulty")}
+            >
+              {tr("setup.difficulty")}
+            </h2>
             <div className="difficulty">
               {(["easy", "medium", "bold"] as const).map((d, i) => (
                 <button
@@ -862,6 +1130,7 @@ export default function App() {
                     setDifficulty(d);
                   }}
                   key={d}
+                  {...translationAttrs(state.locale, `setup.${d}`)}
                 >
                   <span>{["✧", "✦", "ϟ"][i]}</span>
                   {tr(`setup.${d}`)}
@@ -889,12 +1158,23 @@ export default function App() {
                         );
                       }}
                     />
-                    <span>
-                      {tr("setup.partnerConfirm", {
-                        name:
-                          players[index]?.name.trim() ||
-                          tr("setup.playerPlaceholder", { number: index + 1 }),
-                      })}
+                    <span
+                      {...translationAttrs(
+                        state.locale,
+                        "setup.partnerConfirm",
+                      )}
+                    >
+                      <TranslatedText
+                        locale={state.locale}
+                        translationKey="setup.partnerConfirm"
+                        values={{
+                          name:
+                            players[index]?.name.trim() ||
+                            tr("setup.playerPlaceholder", {
+                              number: index + 1,
+                            }),
+                        }}
+                      />
                     </span>
                   </label>
                 ))}
@@ -902,224 +1182,93 @@ export default function App() {
             )}
             <div className="comfort">
               <ShieldCheck size={20} />
-              <p>
+              <p
+                {...translationAttrs(
+                  state.locale,
+                  chosen === "flirty" ? "setup.privateRule" : "setup.rule",
+                )}
+              >
                 {tr(chosen === "flirty" ? "setup.privateRule" : "setup.rule")}
               </p>
             </div>
             {error && (
-              <p role="alert" className="error">
-                {error}
+              <p
+                role="alert"
+                className="error"
+                {...translationAttrs(state.locale, error)}
+              >
+                <TranslatedText locale={state.locale} translationKey={error} />
               </p>
             )}
-            <button className="primary wide" onClick={begin}>
+            <button
+              className="primary wide"
+              onClick={begin}
+              {...translationAttrs(
+                state.locale,
+                resuming ? "game.resume" : "setup.start",
+              )}
+            >
               {tr(resuming ? "game.resume" : "setup.start")}
               <ArrowRight size={19} />
             </button>
           </section>
         )}
         {isGame && session && (
-          <section className="game-screen page-enter">
-            <div className="game-meta">
-              <span className="pill">{tr(`setup.${session.difficulty}`)}</span>
-              <span>{tr("game.cardCount", { number: session.rounds })}</span>
-            </div>
-            {privateBlocked && (
-              <div className="private-notice" role="status">
-                <ShieldCheck size={22} />
-                <p>{tr("setup.legacyPrivateGroup")}</p>
-                <button
-                  className="secondary wide"
-                  onClick={() => selectMode("flirty")}
-                >
-                  {tr("setup.newPrivateGame")}
-                </button>
-              </div>
-            )}
-            <div className="player-turn">
-              <span className="eyebrow">{tr(`mode.${session.mode}`)}</span>
-              <h1 aria-live="polite">
-                {spinning
-                  ? tr("game.spinning")
-                  : tr("game.turn", { name: session.player })}
-              </h1>
-              {session.genders[session.players.indexOf(session.player)] && (
-                <p className="turn-gender">
-                  {tr(
-                    `gender.${session.genders[session.players.indexOf(session.player)]!}`,
-                  )}
-                </p>
-              )}
-              {privateReady && (
-                <p className="turn-partner">
-                  {tr("game.partner", {
-                    name: session.players.find(
-                      (name) => name !== session.player,
-                    )!,
-                  })}
-                </p>
-              )}
-              <div className="player-dots">
-                {session.players.map((p, i) => (
-                  <span
-                    className={p === session.player ? "active" : ""}
-                    key={p}
-                    title={p}
-                  >
-                    {i + 1}
-                  </span>
-                ))}
-              </div>
-            </div>
-            {!session.card ? (
-              <>
-                <button
-                  className={`bottle-stage ${spinning ? "spinning" : ""}`}
-                  onClick={nextTurn}
-                  disabled={spinning || privateBlocked}
-                >
-                  <div className="bottle-ring" />
-                  <div
-                    className="bottle"
-                    aria-hidden="true"
-                    style={{ transform: `rotate(${spinAngle}deg)` }}
-                  >
-                    <span className="bottle-cap" />
-                    <span className="bottle-neck" />
-                    <span className="bottle-body">
-                      <span>
-                        DF<span>✦</span>
-                      </span>
-                    </span>
-                  </div>
-                  <span className="bottle-spark" aria-hidden="true">
-                    ✦
-                  </span>
-                  <span className="bottle-hint">
-                    <RotateCcw size={13} />
-                    {tr("game.spin")}
-                  </span>
-                </button>
-                <h2 className="choose-label">{tr("game.choose")}</h2>
-                <div className="choice-buttons">
-                  <button
-                    className="truth-choice"
-                    disabled={spinning || privateBlocked}
-                    onClick={() => draw("truth")}
-                  >
-                    <Heart size={25} />
-                    {tr("game.truth")}
-                    <ArrowRight size={17} />
-                  </button>
-                  <span>{tr("common.or")}</span>
-                  <button
-                    className="dare-choice"
-                    disabled={spinning || privateBlocked}
-                    onClick={() => draw("dare")}
-                  >
-                    <Zap size={25} />
-                    {tr("game.dare")}
-                    <ArrowRight size={17} />
-                  </button>
-                </div>
-                {exhausted && (
-                  <div className="exhausted" role="status">
-                    <p>{tr("game.exhausted")}</p>
-                    <p>{tr("game.exhaustedHint")}</p>
-                    <button
-                      className="secondary"
-                      onClick={() => {
-                        update({ session: { ...session, seen: [] } });
-                        setExhausted(false);
-                      }}
-                    >
-                      {tr("game.restartDeck")}
-                    </button>
-                  </div>
-                )}
-              </>
-            ) : (
-              <>
-                <div
-                  className={`play-card ${session.card.type}-card`}
-                  key={session.card.id}
-                >
-                  <div className="play-card-inner">
-                    <div className="card-top">
-                      <span>
-                        <Sparkles size={14} /> DAREFLIP
-                      </span>
-                      <span>{tr(`game.${session.card.type}`)}</span>
-                    </div>
-                    <div className="card-glyph">
-                      {session.card.type === "truth" ? (
-                        <Heart size={42} />
-                      ) : (
-                        <Zap size={42} />
-                      )}
-                    </div>
-                    <p
-                      className="card-prompt"
-                      data-testid="card-prompt"
-                      lang={session.card.language}
-                      dir="auto"
-                    >
-                      {session.card.text}
-                    </p>
-                    <div className="card-footer">
-                      <span>
-                        {tr(`setup.${session.card.difficulty}`)}
-                        <span>✦</span>
-                        {tr(`mode.${session.card.category}`)}
-                      </span>
-                      {cardActions(session.card)}
-                    </div>
-                  </div>
-                </div>
-                {fallback(session.card)}
-                <button
-                  className="primary wide next-button"
-                  disabled={spinning}
-                  onClick={nextTurn}
-                >
-                  {tr("game.next")}
-                  <ArrowRight size={19} />
-                </button>
-                <button
-                  className="skip-button"
-                  disabled={spinning}
-                  onClick={() => {
-                    nextTurn();
-                    notify(tr("game.skipNotice"));
-                  }}
-                >
-                  {tr("game.skip")}
-                  <ChevronRight size={16} />
-                </button>
-              </>
-            )}
-            <p className="game-rule">
-              <ShieldCheck size={14} />
-              {tr(
-                session.mode === "flirty" ? "setup.privateRule" : "setup.rule",
-              )}
-            </p>
-          </section>
+          <GameView
+            locale={state.locale}
+            session={session}
+            spinning={spinning}
+            spinAngle={spinAngle}
+            exhausted={exhausted}
+            privateReady={privateReady}
+            privateBlocked={!!privateBlocked}
+            remaining={remaining}
+            onSpin={nextTurn}
+            onDraw={draw}
+            onSkip={() => {
+              nextTurn();
+              notify("game.skipNotice");
+            }}
+            onDifficulty={changeDifficulty}
+            onRestart={restartDeck}
+            onNewPrivate={() => selectMode("flirty")}
+            renderActions={cardActions}
+            renderFallback={fallback}
+          />
         )}
         {screen === "home" && tab === "favorites" && (
           <section className="collection page-enter">
-            <p className="eyebrow">
+            <p
+              className="eyebrow"
+              {...translationAttrs(state.locale, "nav.favorites")}
+            >
               <Heart size={14} /> {tr("nav.favorites")}
             </p>
-            <h1>{tr("favorites.title")}</h1>
-            <p className="subtitle">{tr("favorites.subtitle")}</p>
+            <h1 {...translationAttrs(state.locale, "favorites.title")}>
+              {tr("favorites.title")}
+            </h1>
+            <p
+              className="subtitle"
+              {...translationAttrs(state.locale, "favorites.subtitle")}
+            >
+              {tr("favorites.subtitle")}
+            </p>
             {state.favorites.length === 0 ? (
               <div className="empty-state">
                 <div className="empty-cards">
                   <Heart size={44} />
                 </div>
-                <h2>{tr("favorites.empty")}</h2>
-                <p>{tr("favorites.emptyHint")}</p>
-                <button className="primary" onClick={() => goTab("play")}>
+                <h2 {...translationAttrs(state.locale, "favorites.empty")}>
+                  {tr("favorites.empty")}
+                </h2>
+                <p {...translationAttrs(state.locale, "favorites.emptyHint")}>
+                  {tr("favorites.emptyHint")}
+                </p>
+                <button
+                  className="primary"
+                  onClick={() => goTab("play")}
+                  {...translationAttrs(state.locale, "favorites.play")}
+                >
                   {tr("favorites.play")}
                   <ArrowRight size={18} />
                 </button>
@@ -1151,28 +1300,50 @@ export default function App() {
         )}
         {screen === "home" && tab === "packs" && (
           <section className="packs-screen page-enter">
-            <p className="eyebrow">
+            <p
+              className="eyebrow"
+              {...translationAttrs(state.locale, "nav.packs")}
+            >
               <Gift size={14} />
               {tr("nav.packs")}
             </p>
-            <h1>{tr("packs.title")}</h1>
-            <p className="subtitle">{tr("packs.subtitle")}</p>
+            <h1 {...translationAttrs(state.locale, "packs.title")}>
+              {tr("packs.title")}
+            </h1>
+            <p
+              className="subtitle"
+              {...translationAttrs(state.locale, "packs.subtitle")}
+            >
+              {tr("packs.subtitle")}
+            </p>
             <div className="pack-grid">
               <article className="pack-card core-pack">
                 <div className="pack-art">
                   <img src="/icon.svg" alt="" />
-                  <span>{tr("packs.coreArt")}</span>
+                  <span {...translationAttrs(state.locale, "packs.coreArt")}>
+                    {tr("packs.coreArt")}
+                  </span>
                 </div>
                 <div className="pack-body">
-                  <div className="pill">
+                  <div
+                    className="pill"
+                    {...translationAttrs(state.locale, "packs.included")}
+                  >
                     <Check size={13} />
                     {tr("packs.included")}
                   </div>
-                  <h2>{tr("packs.core")}</h2>
-                  <p>{tr("packs.coreDescription")}</p>
+                  <h2 {...translationAttrs(state.locale, "packs.core")}>
+                    {tr("packs.core")}
+                  </h2>
+                  <p
+                    {...translationAttrs(state.locale, "packs.coreDescription")}
+                  >
+                    {tr("packs.coreDescription")}
+                  </p>
                   <button
                     className="secondary wide"
                     onClick={() => goTab("play")}
+                    {...translationAttrs(state.locale, "home.play")}
                   >
                     {tr("home.play")}
                     <ArrowRight size={18} />
@@ -1183,10 +1354,20 @@ export default function App() {
                 <article className="pack-card afterglow-pack">
                   <div className="pack-art">
                     <span className="afterglow-orb">✦</span>
-                    <span>{tr("packs.afterglow")}</span>
+                    <span
+                      {...translationAttrs(state.locale, "packs.afterglow")}
+                    >
+                      {tr("packs.afterglow")}
+                    </span>
                   </div>
                   <div className="pack-body">
-                    <div className="pill">
+                    <div
+                      className="pill"
+                      {...translationAttrs(
+                        state.locale,
+                        state.unlocked ? "packs.unlocked" : "common.optional",
+                      )}
+                    >
                       {state.unlocked ? (
                         <Check size={13} />
                       ) : (
@@ -1196,8 +1377,17 @@ export default function App() {
                         state.unlocked ? "packs.unlocked" : "common.optional",
                       )}
                     </div>
-                    <h2>{tr("packs.afterglow")}</h2>
-                    <p>{tr("packs.afterglowDescription")}</p>
+                    <h2 {...translationAttrs(state.locale, "packs.afterglow")}>
+                      {tr("packs.afterglow")}
+                    </h2>
+                    <p
+                      {...translationAttrs(
+                        state.locale,
+                        "packs.afterglowDescription",
+                      )}
+                    >
+                      {tr("packs.afterglowDescription")}
+                    </p>
                     <button
                       className="primary wide"
                       disabled={busy}
@@ -1212,7 +1402,15 @@ export default function App() {
                           : tr("packs.unlock")}
                       {!state.unlocked && <Play size={16} />}
                     </button>
-                    <p className="fine-print">
+                    <p
+                      className="fine-print"
+                      {...translationAttrs(
+                        state.locale,
+                        advertisingEnabled
+                          ? "packs.rewardExplain"
+                          : "packs.adFree",
+                      )}
+                    >
                       {tr(
                         advertisingEnabled
                           ? "packs.rewardExplain"
@@ -1225,7 +1423,16 @@ export default function App() {
             </div>
             <div className="comfort">
               <ShieldCheck size={20} />
-              <p>
+              <p
+                {...translationAttrs(
+                  state.locale,
+                  !advertisingEnabled
+                    ? "packs.adFree"
+                    : Capacitor.isNativePlatform()
+                      ? "packs.rewardExplain"
+                      : "consent.noAdsWeb",
+                )}
+              >
                 {tr(
                   !advertisingEnabled
                     ? "packs.adFree"
@@ -1239,6 +1446,7 @@ export default function App() {
               <button
                 className="text-link"
                 onClick={() => setOverlay("consent")}
+                {...translationAttrs(state.locale, "settings.adPrivacy")}
               >
                 {tr("settings.adPrivacy")}
                 <ChevronRight size={15} />
@@ -1248,14 +1456,19 @@ export default function App() {
         )}
         {screen === "home" && tab === "settings" && (
           <section className="settings-screen page-enter">
-            <p className="eyebrow">
+            <p
+              className="eyebrow"
+              {...translationAttrs(state.locale, "nav.settings")}
+            >
               <Settings2 size={14} />
               {tr("nav.settings")}
             </p>
-            <h1>{tr("settings.title")}</h1>
+            <h1 {...translationAttrs(state.locale, "settings.title")}>
+              {tr("settings.title")}
+            </h1>
             <div className="settings-group">
               <label className="settings-row language-row">
-                <span>
+                <span {...translationAttrs(state.locale, "settings.language")}>
                   <Globe2 size={20} />
                   {tr("settings.language")}
                 </span>
@@ -1277,6 +1490,7 @@ export default function App() {
               <button
                 className="settings-row subtle-row"
                 onClick={() => update({ locale: detectLanguage() })}
+                {...translationAttrs(state.locale, "settings.deviceLanguage")}
               >
                 {tr("settings.deviceLanguage")}
                 <ChevronRight size={16} />
@@ -1285,10 +1499,21 @@ export default function App() {
                 <Globe2 size={15} />
                 <div>
                   {!localeInfo(state.locale).uiComplete && (
-                    <p>{tr("settings.partialUi")}</p>
+                    <p
+                      {...translationAttrs(state.locale, "settings.partialUi")}
+                    >
+                      {tr("settings.partialUi")}
+                    </p>
                   )}
                   {localeInfo(state.locale).contentStatus !== "available" && (
-                    <p>
+                    <p
+                      {...translationAttrs(
+                        state.locale,
+                        localeInfo(state.locale).contentStatus === "partial"
+                          ? "settings.partialCards"
+                          : "settings.englishCards",
+                      )}
+                    >
                       {tr(
                         localeInfo(state.locale).contentStatus === "partial"
                           ? "settings.partialCards"
@@ -1296,7 +1521,12 @@ export default function App() {
                       )}
                     </p>
                   )}
-                  <p>
+                  <p
+                    {...translationAttrs(
+                      state.locale,
+                      "settings.translationStatus",
+                    )}
+                  >
                     {tr("settings.translationStatus")}:{" "}
                     {localeInfo(state.locale).uiComplete
                       ? tr("settings.completeUi")
@@ -1322,7 +1552,7 @@ export default function App() {
                     feel();
                   }}
                 >
-                  <span>
+                  <span {...translationAttrs(state.locale, `settings.${key}`)}>
                     <Icon size={20} />
                     {tr(`settings.${key}`)}
                   </span>
@@ -1348,7 +1578,14 @@ export default function App() {
                     key={key}
                     onClick={() => setOverlay(key)}
                   >
-                    <span>
+                    <span
+                      {...translationAttrs(
+                        state.locale,
+                        key === "consent"
+                          ? "settings.adPrivacy"
+                          : `settings.${key}`,
+                      )}
+                    >
                       <Icon size={20} />
                       {tr(
                         key === "consent"
@@ -1362,20 +1599,35 @@ export default function App() {
             </div>
             <div className="local-note">
               <ShieldCheck size={20} />
-              <p>
+              <p {...translationAttrs(state.locale, "settings.offline")}>
                 {tr("settings.offline")}
                 <br />
-                <span>{tr("settings.localDataNotice")}</span>
+                <span
+                  {...translationAttrs(
+                    state.locale,
+                    "settings.localDataNotice",
+                  )}
+                >
+                  {tr("settings.localDataNotice")}
+                </span>
               </p>
             </div>
-            <button className="danger-text" onClick={() => setOverlay("reset")}>
+            <button
+              className="danger-text"
+              onClick={() => setOverlay("reset")}
+              {...translationAttrs(state.locale, "settings.reset")}
+            >
               {tr("settings.reset")}
             </button>
             <div className="settings-footer">
               <img src="/icon.svg" alt="" />
               <strong>DareFlip</strong>
-              <span>{tr("settings.version", { version: "0.1.0" })}</span>
-              <small>{tr("brand.slogan")}</small>
+              <span {...translationAttrs(state.locale, "settings.version")}>
+                {tr("settings.version", { version: "0.1.0" })}
+              </span>
+              <small {...translationAttrs(state.locale, "brand.slogan")}>
+                {tr("brand.slogan")}
+              </small>
             </div>
           </section>
         )}
@@ -1402,7 +1654,9 @@ export default function App() {
                   fill={id === "play" && tab === id ? "currentColor" : "none"}
                 />
               </span>
-              <small>{tr(`nav.${id}`)}</small>
+              <small {...translationAttrs(state.locale, `nav.${id}`)}>
+                {tr(`nav.${id}`)}
+              </small>
               {tab === id && <i />}
             </button>
           ))}
@@ -1433,8 +1687,18 @@ export default function App() {
                 <span className="modal-symbol">
                   <Sparkles size={27} />
                 </span>
-                <p className="eyebrow">{tr("home.daily")}</p>
-                <h2 id="dialog-title">{tr("home.dailyHint")}</h2>
+                <p
+                  className="eyebrow"
+                  {...translationAttrs(state.locale, "home.daily")}
+                >
+                  {tr("home.daily")}
+                </p>
+                <h2
+                  id="dialog-title"
+                  {...translationAttrs(state.locale, "home.dailyHint")}
+                >
+                  {tr("home.dailyHint")}
+                </h2>
                 <p className="daily-prompt" lang={daily.language} dir="auto">
                   {daily.text}
                 </p>
@@ -1447,15 +1711,52 @@ export default function App() {
                 <span className="modal-symbol">
                   <Pause size={27} />
                 </span>
-                <h2 id="dialog-title">{tr("game.pause")}</h2>
-                <p>{tr("setup.rule")}</p>
+                <h2
+                  id="dialog-title"
+                  {...translationAttrs(state.locale, "game.pause")}
+                >
+                  {tr("game.pause")}
+                </h2>
+                <p {...translationAttrs(state.locale, "setup.rule")}>
+                  {tr("setup.rule")}
+                </p>
                 <button
                   className="primary wide"
                   onClick={() => setOverlay(null)}
+                  {...translationAttrs(state.locale, "game.resume")}
                 >
                   {tr("game.resume")}
                   <Play size={18} />
                 </button>
+                {session && (
+                  <div className="pause-difficulty">
+                    <p
+                      {...translationAttrs(
+                        state.locale,
+                        "game.changeDifficulty",
+                      )}
+                    >
+                      {tr("game.changeDifficulty")}
+                    </p>
+                    <div
+                      className="difficulty-picker"
+                      role="group"
+                      aria-label={tr("game.changeDifficulty")}
+                    >
+                      {(["easy", "medium", "bold"] as const).map((value) => (
+                        <button
+                          key={value}
+                          aria-pressed={session.difficulty === value}
+                          disabled={session.difficulty === value}
+                          onClick={() => changeDifficulty(value)}
+                          {...translationAttrs(state.locale, `setup.${value}`)}
+                        >
+                          {tr(`setup.${value}`)}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
                 <button
                   className="secondary wide"
                   onClick={() => {
@@ -1463,6 +1764,7 @@ export default function App() {
                     setTab("play");
                     setOverlay(null);
                   }}
+                  {...translationAttrs(state.locale, "common.back")}
                 >
                   {tr("common.back")}
                   <ChevronLeft size={18} />
@@ -1475,6 +1777,7 @@ export default function App() {
                     setTab("play");
                     setOverlay(null);
                   }}
+                  {...translationAttrs(state.locale, "game.end")}
                 >
                   {tr("game.end")}
                 </button>
@@ -1482,7 +1785,15 @@ export default function App() {
             )}
             {(overlay === "privacy" || overlay === "terms") && (
               <>
-                <h2 id="dialog-title">
+                <h2
+                  id="dialog-title"
+                  {...translationAttrs(
+                    state.locale,
+                    overlay === "privacy"
+                      ? "legal.privacyTitle"
+                      : "legal.termsTitle",
+                  )}
+                >
                   {tr(
                     overlay === "privacy"
                       ? "legal.privacyTitle"
@@ -1505,6 +1816,7 @@ export default function App() {
                     href={publisher.privacyUrl}
                     target="_blank"
                     rel="noopener noreferrer"
+                    {...translationAttrs(state.locale, "legal.publicPrivacy")}
                   >
                     {tr("legal.publicPrivacy")}
                   </a>
@@ -1516,9 +1828,18 @@ export default function App() {
                 <span className="modal-symbol">
                   <HelpCircle size={28} />
                 </span>
-                <h2 id="dialog-title">{tr("legal.supportTitle")}</h2>
-                <p>{tr("legal.rules")}</p>
-                <p>{tr("legal.supportBody")}</p>
+                <h2
+                  id="dialog-title"
+                  {...translationAttrs(state.locale, "legal.supportTitle")}
+                >
+                  {tr("legal.supportTitle")}
+                </h2>
+                <p {...translationAttrs(state.locale, "legal.rules")}>
+                  {tr("legal.rules")}
+                </p>
+                <p {...translationAttrs(state.locale, "legal.supportBody")}>
+                  {tr("legal.supportBody")}
+                </p>
                 {publisher.name && (
                   <p className="publisher-name">{publisher.name}</p>
                 )}
@@ -1526,12 +1847,19 @@ export default function App() {
                   <a
                     className="secondary wide support-link"
                     href={`mailto:${encodeURIComponent(publisher.supportEmail).replaceAll("%40", "@")}`}
+                    {...translationAttrs(state.locale, "legal.emailSupport")}
                   >
                     {tr("legal.emailSupport")}
                     <span>{publisher.supportEmail}</span>
                   </a>
                 ) : (
-                  <p className="translation-note">
+                  <p
+                    className="translation-note"
+                    {...translationAttrs(
+                      state.locale,
+                      "legal.supportUnavailable",
+                    )}
+                  >
                     {tr("legal.supportUnavailable")}
                   </p>
                 )}
@@ -1541,6 +1869,7 @@ export default function App() {
                     href={publisher.supportUrl}
                     target="_blank"
                     rel="noopener noreferrer"
+                    {...translationAttrs(state.locale, "legal.supportWebsite")}
                   >
                     {tr("legal.supportWebsite")}
                   </a>
@@ -1548,6 +1877,7 @@ export default function App() {
                 <button
                   className="secondary wide"
                   onClick={() => setOverlay("privacy")}
+                  {...translationAttrs(state.locale, "settings.privacy")}
                 >
                   {tr("settings.privacy")}
                   <ArrowRight size={16} />
@@ -1559,19 +1889,34 @@ export default function App() {
                 <span className="modal-symbol">
                   <ShieldCheck size={28} />
                 </span>
-                <h2 id="dialog-title">{tr("consent.title")}</h2>
+                <h2
+                  id="dialog-title"
+                  {...translationAttrs(state.locale, "consent.title")}
+                >
+                  {tr("consent.title")}
+                </h2>
                 {!advertisingEnabled ? (
-                  <p>{tr("packs.adFree")}</p>
+                  <p {...translationAttrs(state.locale, "packs.adFree")}>
+                    {tr("packs.adFree")}
+                  </p>
                 ) : (
                   <>
-                    <p>{tr("consent.body")}</p>
+                    <p {...translationAttrs(state.locale, "consent.body")}>
+                      {tr("consent.body")}
+                    </p>
                     {!Capacitor.isNativePlatform() && (
-                      <p className="fine-print">{tr("consent.noAdsWeb")}</p>
+                      <p
+                        className="fine-print"
+                        {...translationAttrs(state.locale, "consent.noAdsWeb")}
+                      >
+                        {tr("consent.noAdsWeb")}
+                      </p>
                     )}
                     <button
                       className="primary wide"
                       disabled={busy}
                       onClick={() => void enableAds()}
+                      {...translationAttrs(state.locale, "consent.open")}
                     >
                       {tr("consent.open")}
                       <ArrowRight size={16} />
@@ -1583,11 +1928,12 @@ export default function App() {
                         try {
                           await ads.privacyOptions();
                           setAdStatus("off");
-                          notify(tr("common.done"));
+                          notify("common.done");
                         } catch {
-                          notify(tr("consent.unavailable"));
+                          notify("consent.unavailable");
                         }
                       }}
+                      {...translationAttrs(state.locale, "settings.adPrivacy")}
                     >
                       {tr("settings.adPrivacy")}
                     </button>
@@ -1596,13 +1942,25 @@ export default function App() {
                       onClick={async () => {
                         await ads.disableAds();
                         setAdStatus("off");
-                        notify(tr("common.done"));
+                        notify("common.done");
                       }}
+                      {...translationAttrs(state.locale, "common.off")}
                     >
                       {tr("common.off")}
                     </button>
                     {adStatus && (
-                      <p className="fine-print" role="status">
+                      <p
+                        className="fine-print"
+                        role="status"
+                        {...translationAttrs(
+                          state.locale,
+                          adStatus === "web"
+                            ? "consent.noAdsWeb"
+                            : adStatus === "available"
+                              ? "common.on"
+                              : "common.off",
+                        )}
+                      >
                         {tr(
                           adStatus === "web"
                             ? "consent.noAdsWeb"
@@ -1621,8 +1979,15 @@ export default function App() {
                 <span className="modal-symbol">
                   <RotateCcw size={28} />
                 </span>
-                <h2 id="dialog-title">{tr("settings.reset")}</h2>
-                <p>{tr("settings.resetConfirm")}</p>
+                <h2
+                  id="dialog-title"
+                  {...translationAttrs(state.locale, "settings.reset")}
+                >
+                  {tr("settings.reset")}
+                </h2>
+                <p {...translationAttrs(state.locale, "settings.resetConfirm")}>
+                  {tr("settings.resetConfirm")}
+                </p>
                 <button
                   className="primary wide"
                   onClick={() => {
@@ -1631,14 +1996,16 @@ export default function App() {
                     setOverlay(null);
                     setScreen("home");
                     setTab("play");
-                    notify(tr("settings.resetDone"));
+                    notify("settings.resetDone");
                   }}
+                  {...translationAttrs(state.locale, "common.confirm")}
                 >
                   {tr("common.confirm")}
                 </button>
                 <button
                   className="secondary wide"
                   onClick={() => setOverlay(null)}
+                  {...translationAttrs(state.locale, "common.cancel")}
                 >
                   {tr("common.cancel")}
                 </button>
@@ -1648,9 +2015,17 @@ export default function App() {
         </div>
       )}
       {toast && (
-        <div className="toast" role="status">
+        <div
+          className={`toast ${isGame ? "toast-game" : ""}`}
+          role="status"
+          {...translationAttrs(state.locale, toast.key)}
+        >
           <Check size={17} />
-          {toast}
+          <TranslatedText
+            locale={state.locale}
+            translationKey={toast.key}
+            values={toast.values}
+          />
         </div>
       )}
     </div>

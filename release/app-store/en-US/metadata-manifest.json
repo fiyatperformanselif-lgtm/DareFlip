@@ -79,7 +79,8 @@
       "player-name keyboard zoom",
       "skip",
       "resume"
-    ]
+    ],
+    "scope": "Historical 0.1.0 (3), before the premium UX update. Listing copy remains reusable; updated application needs a fresh signed build and device checks."
   },
   "disclosures": {
     "privateMode": "Description explicitly identifies sexual prompts/tasks for exactly two consenting adult partners and separate confirmations.",
