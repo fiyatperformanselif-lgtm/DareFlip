@@ -1,5 +1,6 @@
 import {
   mkdir,
+  chmod,
   readFile,
   readdir,
   rename,
@@ -219,6 +220,9 @@ export async function buildPublicPages({
     }
     const temporary = `${file}.tmp`;
     await writeFile(temporary, html, { encoding: "utf8", flag: "wx" });
+    // These four files are public web pages. ZIP tools preserve POSIX modes,
+    // so a private build umask must not leave Plesk serving owner-only files.
+    await chmod(temporary, 0o644);
     await rename(temporary, file);
   }
   const manifest = {

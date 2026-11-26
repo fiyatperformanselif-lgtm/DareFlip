@@ -33,6 +33,8 @@ Komut yerel HTML'leri ve yerel `build-manifest.json` dosyasını üretir; sunucu
 
 ## Yükleme sonrası
 
+Son Plesk ekranı dört HTML dosyasının artık doğru `dareflip` klasöründe bulunduğunu, ancak izinlerin `rw-------` (`600`) olduğunu gösterdi. Önceki arşiv yerel derlemenin özel dosya izinlerini taşımıştı. Üretici ve yerel ZIP düzeltildi; sunucuya daha önce açılmış dosyalar için Plesk'teki **Permissions / İzinler / Change Permissions** ekranından yalnızca bu dört HTML'yi `rw-r--r--` (`644`) yapın: sahip okuyup yazabilir, grup ve diğerleri yalnızca okuyabilir. Çalıştırma izni gerekmez. Klasör izni ekranda `755` görünüyor; başka dosya, dizin veya alt alan adlarına toplu/özyinelemeli izin değişikliği uygulamayın.
+
 Tarayıcıdan şu dört hedefi ayrı ayrı kontrol edin:
 
 - `https://dareflip.izargames.com/dareflip/`

@@ -7,6 +7,7 @@ import {
   readFile,
   readdir,
   rm,
+  stat,
   writeFile,
 } from "node:fs/promises";
 import { spawnSync } from "node:child_process";
@@ -125,6 +126,41 @@ test("generation emits four standalone pages with both policy languages and real
   );
   assert.equal(result.manifest.deploymentVerified, false);
 });
+
+test(
+  "public HTML remains server-readable when the build uses a private umask",
+  {
+    skip: process.platform === "win32",
+  },
+  async () => {
+    const options = await scenario();
+    const moduleUrl = new URL(
+      "../scripts/build-public-pages.mjs",
+      import.meta.url,
+    );
+    const result = spawnSync(
+      process.execPath,
+      [
+        "--input-type=module",
+        "--eval",
+        `process.umask(0o077); const { buildPublicPages } = await import(${JSON.stringify(moduleUrl.href)}); await buildPublicPages(JSON.parse(process.argv[1]));`,
+        JSON.stringify({ ...options, adsEnabled: "true" }),
+      ],
+      { encoding: "utf8" },
+    );
+    assert.equal(result.status, 0, result.stderr);
+    for (const name of [
+      "index.html",
+      "privacy.html",
+      "support.html",
+      "terms.html",
+    ])
+      assert.equal(
+        (await stat(path.join(options.outDir, name))).mode & 0o777,
+        0o644,
+      );
+  },
+);
 
 test("publisher text is HTML-escaped and email cannot inject mailto headers", async () => {
   const result = await buildPublicPages({
