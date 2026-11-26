@@ -356,6 +356,77 @@ describe("native banner dimensions and reward revocation", () => {
 });
 
 describe("consent refresh", () => {
+  it("keeps Off authoritative when a refresh is waiting for native banner removal", async () => {
+    const { ads, plugin } = setup();
+    await ads.enableAds();
+    await ads.updatePlacement({ menu: true, sensitive: false });
+    let finishRemoval!: () => void;
+    plugin.removeBanner.mockImplementationOnce(
+      () =>
+        new Promise<void>((resolve) => {
+          finishRemoval = resolve;
+        }),
+    );
+    const refreshing = ads.enableAds();
+    expect(plugin.removeBanner).toHaveBeenCalledOnce();
+    await ads.disableAds();
+    expect(ads.state).toBe("off");
+    finishRemoval();
+    expect(await refreshing).toBe("off");
+    expect(plugin.requestConsentInfo).toHaveBeenCalledTimes(1);
+    expect(plugin.initialize).toHaveBeenCalledTimes(1);
+    expect(plugin.showBanner).toHaveBeenCalledTimes(1);
+    expect(await ads.rewarded()).toBe(false);
+    // A future explicit opt-in remains possible after the cancelled operation.
+    expect(await ads.enableAds()).toBe("available");
+    expect(plugin.requestConsentInfo).toHaveBeenCalledTimes(2);
+  });
+
+  for (const outcome of ["allowed", "failed"] as const) {
+    it(`does not override Off when an earlier consent request later ${outcome === "allowed" ? "allows ads" : "fails"}`, async () => {
+      const { ads, plugin } = setup();
+      let finish!: () => void;
+      plugin.requestConsentInfo.mockImplementationOnce(
+        () =>
+          new Promise((resolve, reject) => {
+            finish =
+              outcome === "allowed"
+                ? () =>
+                    resolve({
+                      canRequestAds: true,
+                      status: AdmobConsentStatus.NOT_REQUIRED,
+                    })
+                : () => reject(new Error("consent request failed"));
+          }),
+      );
+      const enabling = ads.enableAds();
+      await Promise.resolve();
+      expect(plugin.requestConsentInfo).toHaveBeenCalledOnce();
+      await ads.disableAds();
+      finish();
+      expect(await enabling).toBe("off");
+      expect(ads.state).toBe("off");
+      expect(plugin.initialize).not.toHaveBeenCalled();
+      expect(plugin.showBanner).not.toHaveBeenCalled();
+      expect(await ads.rewarded()).toBe(false);
+    });
+  }
+
+  it("does not prepare an interstitial for a stale context after entering a sensitive screen or leaving a break", async () => {
+    for (const placement of [
+      { menu: false, sensitive: true, naturalBreak: true },
+      { menu: false, sensitive: false, naturalBreak: false },
+    ]) {
+      const { ads, plugin, advance } = setup();
+      await ads.enableAds();
+      advance(120_000);
+      await ads.updatePlacement(placement);
+      expect(await ads.maybeInterstitial(context)).toBe(false);
+      expect(plugin.prepareInterstitial).not.toHaveBeenCalled();
+      expect(plugin.showInterstitial).not.toHaveBeenCalled();
+    }
+  });
+
   it("revokes existing ad permission when a fresh UMP result denies requests", async () => {
     const { ads, plugin } = setup();
     await ads.enableAds();
@@ -369,5 +440,100 @@ describe("consent refresh", () => {
     await ads.updatePlacement({ menu: true, sensitive: false });
     expect(plugin.showBanner).toHaveBeenCalledOnce();
     expect(await ads.rewarded()).toBe(false);
+  });
+});
+
+describe("cancelled privacy prompts", () => {
+  it("does not open privacy options after Off while native cleanup was pending", async () => {
+    const { ads, plugin } = setup();
+    await ads.enableAds();
+    await ads.updatePlacement({ menu: true, sensitive: false });
+    let finishRemoval!: () => void;
+    plugin.removeBanner.mockImplementationOnce(
+      () =>
+        new Promise<void>((resolve) => {
+          finishRemoval = resolve;
+        }),
+    );
+    const opening = ads.privacyOptions();
+    await ads.disableAds();
+    finishRemoval();
+    expect(await opening).toBe("off");
+    expect(plugin.showPrivacyOptionsForm).not.toHaveBeenCalled();
+    // A later explicit request should still open the user's privacy choices.
+    expect(await ads.privacyOptions()).toBe("off");
+    expect(plugin.showPrivacyOptionsForm).toHaveBeenCalledOnce();
+  });
+
+  it("does not open a consent form after Off while consent information was pending", async () => {
+    const { ads, plugin } = setup();
+    let finishConsent!: () => void;
+    plugin.requestConsentInfo.mockImplementationOnce(
+      () =>
+        new Promise((resolve) => {
+          finishConsent = () =>
+            resolve({
+              canRequestAds: false,
+              status: AdmobConsentStatus.REQUIRED,
+              isConsentFormAvailable: true,
+            });
+        }),
+    );
+    const enabling = ads.enableAds();
+    await vi.waitFor(() =>
+      expect(plugin.requestConsentInfo).toHaveBeenCalledOnce(),
+    );
+    await ads.disableAds();
+    finishConsent();
+    expect(await enabling).toBe("off");
+    expect(plugin.showConsentForm).not.toHaveBeenCalled();
+    expect(plugin.requestConsentInfo).toHaveBeenCalledTimes(1);
+    expect(plugin.initialize).not.toHaveBeenCalled();
+  });
+
+  it("does not make a new consent request after Off while an already-open form was resolving", async () => {
+    const { ads, plugin } = setup();
+    plugin.requestConsentInfo.mockResolvedValueOnce({
+      canRequestAds: false,
+      status: AdmobConsentStatus.REQUIRED,
+      isConsentFormAvailable: true,
+    });
+    let finishForm!: () => void;
+    plugin.showConsentForm.mockImplementationOnce(
+      () =>
+        new Promise<void>((resolve) => {
+          finishForm = resolve;
+        }),
+    );
+    const enabling = ads.enableAds();
+    await vi.waitFor(() =>
+      expect(plugin.showConsentForm).toHaveBeenCalledOnce(),
+    );
+    await ads.disableAds();
+    finishForm();
+    expect(await enabling).toBe("off");
+    expect(plugin.showConsentForm).toHaveBeenCalledTimes(1);
+    expect(plugin.requestConsentInfo).toHaveBeenCalledTimes(1);
+    expect(plugin.initialize).not.toHaveBeenCalled();
+  });
+
+  it("does not request ATT after Off while tracking status was pending", async () => {
+    const { ads, plugin } = setup(true, "ios");
+    let finishStatus!: () => void;
+    plugin.trackingAuthorizationStatus.mockImplementationOnce(
+      () =>
+        new Promise((resolve) => {
+          finishStatus = () => resolve({ status: "notDetermined" });
+        }),
+    );
+    const enabling = ads.enableAds({ attOptIn: true });
+    await vi.waitFor(() =>
+      expect(plugin.trackingAuthorizationStatus).toHaveBeenCalledOnce(),
+    );
+    await ads.disableAds();
+    finishStatus();
+    expect(await enabling).toBe("off");
+    expect(plugin.requestTrackingAuthorization).not.toHaveBeenCalled();
+    expect(plugin.initialize).not.toHaveBeenCalled();
   });
 });

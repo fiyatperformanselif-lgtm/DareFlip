@@ -107,22 +107,28 @@ export class AdsManager {
     if (this.busy) return this.state;
     if (!this.validUnits()) return (this.state = "unavailable");
     this.busy = true;
-    await this.disableAds();
     const token = ++this.generation;
     try {
+      await this.revokePermission();
+      // A later Off/privacy action also cancels this attempt while native banner
+      // cleanup is pending, before any fresh consent or advertising request.
+      if (token !== this.generation) return this.state;
       let info = await this.plugin.requestConsentInfo();
+      if (token !== this.generation) return this.state;
       if (
         info.status === AdmobConsentStatus.REQUIRED &&
         info.isConsentFormAvailable
       ) {
         await this.plugin.showConsentForm();
+        if (token !== this.generation) return this.state;
         info = await this.plugin.requestConsentInfo();
       }
-      if (!info.canRequestAds || token !== this.generation)
-        return (this.state = "off");
+      if (token !== this.generation) return this.state;
+      if (!info.canRequestAds) return (this.state = "off");
       // ATT is a separate optional permission. Declining it never prevents play.
       if (this.platform === "ios" && attOptIn) {
         const tracking = await this.plugin.trackingAuthorizationStatus();
+        if (token !== this.generation) return this.state;
         if (tracking.status === "notDetermined")
           await this.plugin.requestTrackingAuthorization();
       }
@@ -148,8 +154,10 @@ export class AdsManager {
       this.lastShown = this.clock();
       await this.updatePlacement(this.placement);
     } catch {
-      this.permitted = false;
-      this.state = "unavailable";
+      if (token === this.generation) {
+        this.permitted = false;
+        this.state = "unavailable";
+      }
     } finally {
       this.busy = false;
     }
@@ -157,6 +165,9 @@ export class AdsManager {
   }
   async disableAds(): Promise<void> {
     ++this.generation;
+    await this.revokePermission();
+  }
+  private async revokePermission(): Promise<void> {
     this.permitted = false;
     this.state = "off";
     this.publishBannerSize(0);
@@ -173,11 +184,14 @@ export class AdsManager {
   async privacyOptions(): Promise<AdState> {
     if (!this.enabled) return (this.state = "off");
     if (this.platform === "web") return (this.state = "web");
-    await this.disableAds();
+    const token = ++this.generation;
+    await this.revokePermission();
+    if (token !== this.generation) return this.state;
     try {
       await this.plugin.showPrivacyOptionsForm();
     } catch {
-      return (this.state = "unavailable");
+      if (token === this.generation) this.state = "unavailable";
+      return this.state;
     }
     // Remain opted out. User may enable ads again after changing consent.
     return this.state;
@@ -233,6 +247,8 @@ export class AdsManager {
       !this.enabled ||
       !this.permitted ||
       this.busy ||
+      this.placement.sensitive ||
+      !this.placement.naturalBreak ||
       !interstitialEligible(context, this.clock(), this.lastShown)
     )
       return false;
