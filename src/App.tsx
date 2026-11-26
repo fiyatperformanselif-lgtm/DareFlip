@@ -37,7 +37,7 @@ import { GENDERS, hasCompleteGenders } from "./domain/players";
 import type { Gender } from "./domain/players";
 import { detectLanguage, languages, localeInfo, t } from "./i18n";
 import type { Key, Locale } from "./i18n";
-import { initialState, loadAppState } from "./state";
+import { initialState, isPrivateSessionReady, loadAppState } from "./state";
 import type { Session, State } from "./state";
 import { ads } from "./services/ads";
 import { feedback } from "./services/feedback";
@@ -86,6 +86,7 @@ const makeSession = (
   player: pickPlayer(players)!,
   card: null,
   rounds: 0,
+  ...(mode === "flirty" ? { privateAcknowledged: true as const } : {}),
 });
 
 export default function App() {
@@ -97,7 +98,10 @@ export default function App() {
   const [difficulty, setDifficulty] = useState<Difficulty>("easy");
   const [players, setPlayers] = useState<DraftPlayer[]>(blankPlayers);
   const [resuming, setResuming] = useState(false);
-  const [age, setAge] = useState(false);
+  const [partnerChecks, setPartnerChecks] = useState<[boolean, boolean]>([
+    false,
+    false,
+  ]);
   const [error, setError] = useState("");
   const [toast, setToast] = useState("");
   const [spinning, setSpinning] = useState(false);
@@ -121,6 +125,8 @@ export default function App() {
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isGame = screen === "game" && state.session !== null;
   const session = state.session;
+  const privateReady = isPrivateSessionReady(session);
+  const privateBlocked = isGame && session?.mode === "flirty" && !privateReady;
   const cardId = session?.card?.id;
   useEffect(() => {
     const target = document.querySelector<HTMLElement>(
@@ -255,7 +261,7 @@ export default function App() {
     setChosen(mode);
     setDifficulty(session?.difficulty ?? "easy");
     setPlayers(
-      session
+      session && (mode !== "flirty" || session.players.length === 2)
         ? session.players.map((name, index) => ({
             name,
             gender: session.genders[index],
@@ -263,7 +269,7 @@ export default function App() {
         : blankPlayers(),
     );
     setResuming(false);
-    setAge(state.ageConfirmed);
+    setPartnerChecks([false, false]);
     setScreen("setup");
     setError("");
   };
@@ -272,7 +278,11 @@ export default function App() {
     feel();
     setError("");
     setExhausted(false);
-    if (hasCompleteGenders(session.genders)) {
+    if (
+      (session.mode === "flirty" && session.players.length !== 2) ||
+      (hasCompleteGenders(session.genders) &&
+        (session.mode !== "flirty" || isPrivateSessionReady(session)))
+    ) {
       setScreen("game");
       return;
     }
@@ -284,7 +294,7 @@ export default function App() {
         gender: session.genders[index],
       })),
     );
-    setAge(state.ageConfirmed);
+    setPartnerChecks([false, false]);
     setResuming(true);
     setScreen("setup");
   };
@@ -292,6 +302,10 @@ export default function App() {
     const names = players.map((player) => player.name.trim());
     if (names.length < 2 || names.some((n) => !n)) {
       setError(tr("setup.minPlayers"));
+      return;
+    }
+    if (chosen === "flirty" && names.length !== 2) {
+      setError(tr("setup.privatePlayersRequired"));
       return;
     }
     if (
@@ -307,17 +321,23 @@ export default function App() {
       document.getElementById(`player-gender-${missing}`)?.focus();
       return;
     }
-    if ((chosen === "flirty" || chosen === "random") && !age) {
-      setError(tr("setup.ageRequired"));
+    if (chosen === "flirty" && !partnerChecks.every(Boolean)) {
+      setError(tr("setup.partnerConsentRequired"));
       return;
     }
     feel("success");
     update({
       session:
         resuming && session
-          ? { ...session, genders }
+          ? {
+              ...session,
+              genders,
+              ...(chosen === "flirty"
+                ? { privateAcknowledged: true as const }
+                : {}),
+            }
           : makeSession(names, genders, chosen, difficulty),
-      ageConfirmed: state.ageConfirmed || age,
+      ageConfirmed: state.ageConfirmed || chosen === "flirty",
     });
     setScreen("game");
     setResuming(false);
@@ -349,12 +369,14 @@ export default function App() {
   };
   const draw = (type: "truth" | "dare") => {
     if (!session || spinning) return;
+    if (session.mode === "flirty" && !isPrivateSessionReady(session)) return;
     const result = drawCard({
       mode: session.mode,
       difficulty: session.difficulty,
       type,
       language: state.locale,
       seen: session.seen,
+      privateSession: isPrivateSessionReady(session),
       unlockedPacks: state.unlocked ? ["core", "afterglow"] : ["core"],
     });
     if (!result.card) {
@@ -714,11 +736,24 @@ export default function App() {
             </div>
             <h1>{tr("setup.title")}</h1>
             <p className="subtitle">
-              {tr(resuming ? "setup.completeGenders" : "setup.subtitle")}
+              {tr(
+                resuming && !hasCompleteGenders(session?.genders ?? [])
+                  ? "setup.completeGenders"
+                  : chosen === "flirty"
+                    ? "setup.privateSubtitle"
+                    : "setup.subtitle",
+              )}
             </p>
+            {chosen === "flirty" && (
+              <p className="private-guidance" id="private-setup-guide">
+                {tr("setup.privateHowTo")}
+              </p>
+            )}
             <div className="player-heading">
               <h2>{tr("setup.players")}</h2>
-              <span>{players.length}/20</span>
+              <span>
+                {players.length}/{chosen === "flirty" ? 2 : 20}
+              </span>
             </div>
             <div className="players">
               {players.map((player, i) => (
@@ -735,15 +770,17 @@ export default function App() {
                       value={player.name}
                       readOnly={resuming}
                       maxLength={24}
-                      onChange={(e) =>
+                      onChange={(e) => {
                         setPlayers((p) =>
                           p.map((entry, j) =>
                             j === i
                               ? { ...entry, name: e.target.value }
                               : entry,
                           ),
-                        )
-                      }
+                        );
+                        if (chosen === "flirty")
+                          setPartnerChecks([false, false]);
+                      }}
                     />
                     {!resuming && players.length > 2 && (
                       <button
@@ -797,7 +834,7 @@ export default function App() {
                 </div>
               ))}
             </div>
-            {!resuming && (
+            {!resuming && chosen !== "flirty" && (
               <button
                 className="add-player"
                 disabled={players.length >= 20}
@@ -828,19 +865,43 @@ export default function App() {
                 </button>
               ))}
             </div>
-            {(chosen === "flirty" || chosen === "random") && (
-              <label className="age-check">
-                <input
-                  type="checkbox"
-                  checked={age}
-                  onChange={(e) => setAge(e.target.checked)}
-                />
-                <span>{tr("setup.ageConfirm")}</span>
-              </label>
+            {chosen === "flirty" && (
+              <div
+                className="partner-checks"
+                role="group"
+                aria-label={tr("mode.flirty")}
+                aria-describedby="private-setup-guide"
+              >
+                {([0, 1] as const).map((index) => (
+                  <label className="age-check" key={index}>
+                    <input
+                      type="checkbox"
+                      checked={partnerChecks[index]}
+                      onChange={(event) => {
+                        const checked = event.target.checked;
+                        setPartnerChecks((checks) =>
+                          index === 0
+                            ? [checked, checks[1]]
+                            : [checks[0], checked],
+                        );
+                      }}
+                    />
+                    <span>
+                      {tr("setup.partnerConfirm", {
+                        name:
+                          players[index]?.name.trim() ||
+                          tr("setup.playerPlaceholder", { number: index + 1 }),
+                      })}
+                    </span>
+                  </label>
+                ))}
+              </div>
             )}
             <div className="comfort">
               <ShieldCheck size={20} />
-              <p>{tr("setup.rule")}</p>
+              <p>
+                {tr(chosen === "flirty" ? "setup.privateRule" : "setup.rule")}
+              </p>
             </div>
             {error && (
               <p role="alert" className="error">
@@ -859,6 +920,18 @@ export default function App() {
               <span className="pill">{tr(`setup.${session.difficulty}`)}</span>
               <span>{tr("game.cardCount", { number: session.rounds })}</span>
             </div>
+            {privateBlocked && (
+              <div className="private-notice" role="status">
+                <ShieldCheck size={22} />
+                <p>{tr("setup.legacyPrivateGroup")}</p>
+                <button
+                  className="secondary wide"
+                  onClick={() => selectMode("flirty")}
+                >
+                  {tr("setup.newPrivateGame")}
+                </button>
+              </div>
+            )}
             <div className="player-turn">
               <span className="eyebrow">{tr(`mode.${session.mode}`)}</span>
               <h1 aria-live="polite">
@@ -871,6 +944,15 @@ export default function App() {
                   {tr(
                     `gender.${session.genders[session.players.indexOf(session.player)]!}`,
                   )}
+                </p>
+              )}
+              {privateReady && (
+                <p className="turn-partner">
+                  {tr("game.partner", {
+                    name: session.players.find(
+                      (name) => name !== session.player,
+                    )!,
+                  })}
                 </p>
               )}
               <div className="player-dots">
@@ -890,7 +972,7 @@ export default function App() {
                 <button
                   className={`bottle-stage ${spinning ? "spinning" : ""}`}
                   onClick={nextTurn}
-                  disabled={spinning}
+                  disabled={spinning || privateBlocked}
                 >
                   <div className="bottle-ring" />
                   <div
@@ -918,7 +1000,7 @@ export default function App() {
                 <div className="choice-buttons">
                   <button
                     className="truth-choice"
-                    disabled={spinning}
+                    disabled={spinning || privateBlocked}
                     onClick={() => draw("truth")}
                   >
                     <Heart size={25} />
@@ -928,7 +1010,7 @@ export default function App() {
                   <span>{tr("common.or")}</span>
                   <button
                     className="dare-choice"
-                    disabled={spinning}
+                    disabled={spinning || privateBlocked}
                     onClick={() => draw("dare")}
                   >
                     <Zap size={25} />
@@ -1014,7 +1096,9 @@ export default function App() {
             )}
             <p className="game-rule">
               <ShieldCheck size={14} />
-              {tr("setup.rule")}
+              {tr(
+                session.mode === "flirty" ? "setup.privateRule" : "setup.rule",
+              )}
             </p>
           </section>
         )}

@@ -24,10 +24,10 @@ UI transitions stay in React. Game selection rules live in pure functions so tes
 ## Game and persistence flow
 
 1. Detect a supported device language or load a valid saved choice. Set document direction from language metadata.
-2. Select a mode, collect 2–20 unique player names and an explicit gender option for each, choose a difficulty, and require adult confirmation for Flirty/Random.
+2. Select a mode, collect 2–20 unique player names and an explicit gender option for each, and choose a difficulty. Private Flirty is restricted to exactly two adult partners, with separate named acknowledgements for a new session. Random excludes private cards and has no private-mode confirmation.
 3. Create a session with selected mode/difficulty, player roster, previous player, seen concept IDs, current card, and played-card count.
 4. Randomly choose the next eligible player, excluding the previous player when possible. Choose Truth or Dare.
-5. Filter canonical English concepts by category, difficulty, kind, and unlocked pack, then resolve a matching translation where available. Filter out seen IDs and draw uniformly from the remaining pool.
+5. Filter canonical English concepts by category, difficulty, kind, unlocked pack and private-session eligibility, then resolve a matching translation where available. Random excludes Flirty even if a private flag is passed. Filter out seen IDs and draw uniformly from the remaining pool.
 6. Persist each state change locally. Favorites reference stable concept IDs. If the pool is exhausted, show that state and let the user explicitly restart the deck; never silently repeat.
 7. Skipping uses the same next-turn flow without penalties, lost points, coercion, or advertising obligations.
 
@@ -37,9 +37,13 @@ Session gender choices align with the ordered player roster and use `female`, `m
 
 Storage uses a `dareflip:v1` key and a versioned JSON envelope. Corrupt data and storage exceptions fall back to a valid initial state. Persistence is device-local, subject to platform/browser clearing and OS backup behavior. It is not an encrypted vault; do not store sensitive answers or credentials. Answers are not collected.
 
+Private sessions add the optional literal `privateAcknowledged: true`. Readiness requires Flirty, exactly two players and complete player details; the older global age flag alone does not unlock private draws. New private cards and private seen-history IDs are rejected in Random, groups or unacknowledged sessions. A new session always starts with two unchecked named acknowledgements; renaming a draft player resets both. These UI acknowledgements do not record or replace ongoing consent to an activity.
+
+Legacy two-person Flirty saves open a completion form before entering the private flow, preserving their exact archived current card, favorites and history. Legacy larger Flirty groups retain their old card/history and can skip the old card; new private draws remain disabled. Starting a new pair opens a blank roster, without choosing partners from the old group, and replaces that session only when the new game explicitly starts.
+
 ## Content contract and scaling to 5,000
 
-Every card has `id`, `category`, `difficulty`, `type`, `language`, `text`, `pack`, and `sensitive`. Translations intentionally share their concept ID. The unique record key is `(id, language)`. Editorial revision 2 uses new `-v2` IDs; `persistedCards` combines current and immutable archived cards for strict save validation, and `lookupCard` keeps favorites on their own revision. Only the active `cards` collection feeds new draws and daily questions. Repeat prevention uses the concept ID, so changing language does not reset the seen history.
+Every card has `id`, `category`, `difficulty`, `type`, `language`, `text`, `pack`, and `sensitive`. Translations intentionally share their concept ID. The unique record key is `(id, language)`. Revision 2 uses `-v2` IDs; the supplied private catalog uses `flirty-v3-` IDs. `persistedCards` combines current cards, the immutable 282-row v1 archive and the exact 72-row Flirty-v2 archive for strict save validation. `lookupCard` keeps favorites on their own revision. Only the active `cards` collection feeds eligible new draws and daily questions. Repeat prevention uses the concept ID, so changing language does not reset the seen history.
 
 The current catalog is a curated seed, not 5,000 completed originals. Consult `contentStats` and `DEVELOPMENT_STATUS.md` for the actual count. Additional JSON can be split into editorial packs without changing the draw contract. For a substantially larger catalog, preindex records by ID/locale and eligibility bucket to replace repeated linear lookup; benchmark before changing behavior. Do not increase counts with templates, word swaps, duplicated concepts, or unreviewed machine translation.
 
@@ -47,7 +51,7 @@ Editorial additions must receive stable IDs, intentional difficulty/category/pac
 
 ## Localization contract
 
-Twenty languages are selectable. English and Turkish have complete keyed interface dictionaries; other dictionaries intentionally contain only a subset of UI strings. Every active revision-2 card has English and Turkish text. Other card languages visibly fall back to English; archived historical favorites can also lack a Turkish translation. Legal drafts remain English and are labeled accordingly. A selected locale, an RTL layout, or matching dictionary keys do not establish full editorial localization. Settings and per-card notices disclose missing content. Missing translations remain marked incomplete. Availability flags describe existing text, not native-speaker certification or release approval.
+Twenty languages are selectable. English and Turkish have complete keyed interface dictionaries; other dictionaries intentionally contain only a subset of UI strings. Every active revision-2 and revision-3 card has English and Turkish text. Other card languages visibly fall back to English; archived historical favorites can also lack a Turkish translation. Legal drafts remain English and are labeled accordingly. A selected locale, an RTL layout, or matching dictionary keys do not establish full editorial localization. Settings and per-card notices disclose missing content. Missing translations remain marked incomplete. Availability flags describe existing text, not native-speaker certification or release approval.
 
 ## Native advertising boundary
 

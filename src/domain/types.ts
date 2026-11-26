@@ -23,4 +23,6 @@ export interface DrawOptions {
   language: string;
   seen: readonly string[];
   unlockedPacks?: readonly Pack[];
+  /** True only after the two participating adults explicitly acknowledge a private session. */
+  privateSession?: boolean;
 }

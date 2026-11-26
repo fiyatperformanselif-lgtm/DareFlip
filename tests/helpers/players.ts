@@ -1,4 +1,4 @@
-import type { Page } from "@playwright/test";
+import { expect, type Page } from "@playwright/test";
 
 export type GenderChoice = "female" | "male" | "nonbinary" | "undisclosed";
 
@@ -13,4 +13,11 @@ export async function chooseGenders(
       .getByRole("combobox", { name: `${label} ${index + 1}`, exact: true })
       .selectOption(gender);
   }
+}
+
+/** Both named partners make their own current-session adult/voluntary choice. */
+export async function confirmPartners(page: Page) {
+  const confirmations = page.getByRole("checkbox");
+  await expect(confirmations).toHaveCount(2);
+  for (const checkbox of await confirmations.all()) await checkbox.check();
 }

@@ -11,13 +11,16 @@ function randomIndex(length: number, rng: () => number): number {
 }
 
 export function eligibleCards(options: DrawOptions): Card[] {
+  if (options.mode === "flirty" && options.privateSession !== true) return [];
   const language = contentLanguage(options.language);
   const packs = options.unlockedPacks ?? ["core"];
   return cards
     .filter(
       (card) =>
         card.language === "en" &&
-        (options.mode === "random" || card.category === options.mode) &&
+        (options.mode === "random"
+          ? card.category !== "flirty"
+          : card.category === options.mode) &&
         card.difficulty === options.difficulty &&
         card.type === options.type &&
         packs.includes(card.pack),

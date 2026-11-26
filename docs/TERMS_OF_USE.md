@@ -1,14 +1,18 @@
 # DareFlip Terms of Use
 
-Draft for publisher review. Last updated: 24 November 2026.
+Draft for publisher review. Last updated: 26 November 2026.
 
 Publisher/legal entity and support contact: **[REQUIRED BEFORE PUBLICATION]**
 
-DareFlip is a social party game intended for adults. By playing, you agree to use it voluntarily and respectfully. A player may skip any question or challenge, withdraw consent, or leave at any time without a game penalty. Never pressure another person to participate.
+DareFlip is intended for adults and includes social games and a separate private game for two adult partners. By playing, you agree to participate voluntarily and respectfully. A player may skip any question or activity, withdraw consent, or leave at any time without explanation or a game penalty. Never pressure another person to participate.
 
-Do not use the game for dangerous, unlawful, humiliating, discriminatory, or nonconsensual activities. Do not perform a challenge when your circumstances make it unsafe. No card overrides a participant's boundaries. Flirty mode is restricted to adults aged 18 or over.
+Flirty 18+ is exclusively for two partners who are each at least 18 and independently choose to play a private intimate card game together. It contains adult-partner content. Each partner must make their own confirmation before a new private game begins; these declarations are not identity or age verification. Agreeing to start the game does not mean agreeing to any particular activity. Every activity requires both partners to be willing at that moment, and either partner may stop immediately. First-person wording on private cards, such as “me” or “my,” refers to the other partner.
 
-The game and its artwork, branding, software, and content are protected by applicable intellectual-property law. You may share individual cards through the in-app share function for personal, noncommercial use. Ownership and licensing details must be finalized by the publisher before release. Third-party software remains subject to its respective licenses.
+Random excludes private Flirty cards. Choosing a social mode or a Random game does not opt anyone into private-partner content. Saved cards from an earlier edition retain their original wording; a preserved group game does not authorize access to new two-partner cards.
+
+Do not use the game for dangerous, unlawful, humiliating, discriminatory, or nonconsensual activities. Do not perform an activity when your circumstances make it unsafe. No card overrides a participant's boundaries or applicable law.
+
+The game and its artwork, branding, software, and content are protected by applicable intellectual-property law. You may share individual cards through the in-app share function for personal, noncommercial use. Share private content only with the agreement of both partners and respect the destination service's rules. Ownership and licensing details, including rights in supplied content, must be finalized by the publisher before release. Third-party software remains subject to its respective licenses.
 
 DareFlip does not require an account or internet access for core gameplay. Local progress and favorites may be lost after clearing device storage, uninstalling, or device failure. Optional advertising and rewarded packs depend on availability. Declining an ad or leaving before a reward is earned does not restrict the core game. This version includes no subscriptions or in-app purchases.
 

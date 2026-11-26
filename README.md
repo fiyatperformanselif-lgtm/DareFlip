@@ -27,19 +27,19 @@ The built web application precaches its own files on its first online visit and 
 
 ## Play
 
-Choose Couples, Party, Flirty 18+, Deep Talk, Crazy Fun or Random. Add 2–20 distinct names and select Easy, Medium or Bold. Flirty and Random (which includes Flirty) require confirmation that everyone is a consenting adult. Spin the bottle to select a player, then choose Truth or Dare. Cards reveal with a 3D animation. Skip or take the next turn freely. The previous player is excluded when possible; every other player is equally likely.
+Choose Couples, Party, Flirty 18+, Deep Talk, Crazy Fun or Random. Group modes support 2–20 distinct names. Flirty is a private game for exactly two adult partners, each with a separate voluntary acknowledgement for a new session; Random excludes private Flirty cards. Select Easy, Medium or Bold, spin the bottle, then choose Truth or Dare. Cards reveal with a 3D animation. Skip or take the next turn freely. The previous player is excluded when possible; every other player is equally likely.
 
 Favorites, preferences, unlocked bonus content, player gender choices and the current game save on this device. Older saved games ask for missing gender choices before resuming without resetting the active card or progress. A full matching deck never silently repeats: explicitly restart it after exhaustion. Changing language preserves canonical seen IDs. Daily questions use the UTC calendar date. Shared PNGs exclude player names. Sound and haptics can be disabled; OS reduced-motion preference is respected. Clearing local data or uninstalling can erase progress. Storage failure is disclosed while play continues.
 
 ## Content and translation truth
 
-- **192 revised English concepts:** 180 core cards + 12 Afterglow bonus cards, rewritten in editorial revision 2.
+- **192 English card IDs:** 180 core cards + 12 Afterglow bonus cards. The active catalog combines 156 revision-2 concepts with 36 publisher-supplied Flirty revision-3 concepts. Some imported concepts overlap semantically; ID uniqueness is not proof of originality.
 - **192 Turkish card translations:** every active concept, including Afterglow, has an EN/TR pair. Translation rows are not additional original cards.
 - Expandable JSON system with a **5,000-original target**, not 5,000 finished cards. Avoid generated near-duplicates. Human editorial/cultural review is still required.
 - Twenty selectable language codes: `en tr de fr es pt it nl ru ar hi ja ko zh id pl sv no da el`.
 - English and Turkish keyed UI dictionaries are complete. The other 18 UI dictionaries are partial. The active English/Turkish catalog is complete; other card languages use English fallback. Historical favorites keep their original edition and can still need a disclosed English fallback. Arabic uses RTL. Legal drafts remain English and are labeled as such.
 
-See [architecture](docs/ARCHITECTURE.md), [content guide](docs/CONTENT.md), [editorial revision notes](docs/EDITORIAL_REVIEW.md), and `src/content/cards.json`. The immutable v1 archive preserves earlier saved cards/favorites while all new draws use revision 2. Metadata includes unique concept ID, category, difficulty, type, language, pack and sensitivity. No answers are collected or saved.
+See [architecture](docs/ARCHITECTURE.md), [content guide](docs/CONTENT.md), [editorial revision notes](docs/EDITORIAL_REVIEW.md), and `src/content/cards.json`. Immutable v1 and Flirty-v2 archives preserve earlier saved cards/favorites. New eligible draws use active cards; private revision-3 cards require the two-partner session. Metadata includes unique concept ID, category, difficulty, type, language, pack and sensitivity. No answers are collected or saved.
 
 ## Quality commands
 

@@ -1,5 +1,7 @@
 # Application and Flirty 18+ review — 26 November 2026
 
+Historical report for the revision-2 catalog, before the user-supplied private Flirty replacement. Current revision-3 behavior and verification are documented in [CONTENT_IMPORT_V3.md](CONTENT_IMPORT_V3.md) and [DEVELOPMENT_STATUS.md](../DEVELOPMENT_STATUS.md).
+
 ## Scope
 
 This review tests the application from the current checkout in Chromium, using phone and tablet viewport/touch profiles. It does not operate the publisher's installed TestFlight build, use Safari/WebKit, compile a signed iOS archive or validate real native advertising SDK behavior.

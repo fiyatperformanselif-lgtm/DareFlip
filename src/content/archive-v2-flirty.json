@@ -1,0 +1,722 @@
+[
+  {
+    "id": "flirty-bold-dare-01-v2",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "en",
+    "text": "With a willing player, negotiate a second date without either character saying “date,” “again,” or “sometime.” You have thirty seconds to make a real plan.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-dare-01-v2",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "tr",
+    "text": "İsteyen bir oyuncuyla ikinci buluşmayı ayarlayın; ama “buluşma”, “tekrar” ve “bir ara” demek yok. Otuz saniyede ne yapacağınızı kararlaştırın.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-dare-02-v2",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "en",
+    "text": "Act out the difference between a polite goodbye and a goodbye that says “I really hope this continues.” Use your voice, not touch.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-dare-02-v2",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "tr",
+    "text": "Kibar bir vedayla “Bunun devamı gelsin istiyorum” diyen bir veda arasındaki farkı canlandır. Dokunmadan, yalnızca sesinle yap.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-dare-03-v2",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "en",
+    "text": "Give a twenty-second dating-profile pitch using one real, slightly inconvenient habit of yours. Make it appealing without pretending the inconvenience disappears.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-dare-03-v2",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "tr",
+    "text": "Kendindeki biraz uğraştırıcı, gerçek bir alışkanlığı kullanarak yirmi saniyelik bir flört profili konuşması yap. Zorluğunu yok saymadan çekici anlat.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-dare-04-v2",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "en",
+    "text": "Invite a willing player to ask you a dating question you would normally dodge with a joke. Try an honest one-sentence answer before you get funny.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-dare-04-v2",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "tr",
+    "text": "İsteyen bir oyuncuyu, normalde şakayla geçiştireceğin bir flört sorusu sormaya davet et. Espri yapmadan önce tek cümlelik dürüst bir cevap vermeyi dene.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-dare-05-v2",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "en",
+    "text": "Your fictional date says, “I can’t tell if you’re flirting.” Answer clearly in one sentence, then leave the next beat open instead of rescuing it with a joke.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-dare-05-v2",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "tr",
+    "text": "Hayali buluşmandaki kişi “Benimle flört mü ediyorsun, anlayamadım” dedi. Tek cümleyle açıkça cevap ver. Ardından oluşan sessizliği hemen bir şakayla doldurma.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-dare-06-v2",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "en",
+    "text": "Invite a willing player to hold your gaze for five seconds. Then say one sincere line about that moment, without commenting on their appearance.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-dare-06-v2",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "tr",
+    "text": "İsteyen bir oyuncuyla beş saniye göz göze gelin. Ardından o anla ilgili içinden gelen tek bir samimi cümle söyle; görünüşü hakkında yorum yapma.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-truth-01-v2",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "en",
+    "text": "Tell us about attraction that challenged your idea of “my type.” What mattered in person that was missing from your mental checklist?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-truth-01-v2",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "tr",
+    "text": "“Benim tipim değil” derken yine de hoşlandığın birini düşün. Kafandaki listede olmayan ama yüz yüzeyken fark yaratan şey neydi?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-truth-02-v2",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "en",
+    "text": "Have you ever enjoyed wondering whether someone liked you more than you enjoyed the actual answer? What did the uncertainty let you imagine?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-truth-02-v2",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "tr",
+    "text": "Birinin senden hoşlanıp hoşlanmadığını düşünmek, cevabı öğrenmekten daha hoşuna gitti mi? O belirsizlikte kafanda neler kurabiliyordun?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-truth-03-v2",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "en",
+    "text": "What version of yourself do you put on when you want someone to like you, even though you cannot keep it up for long? What gives you away first?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-truth-03-v2",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "tr",
+    "text": "Birinin senden hoşlanmasını isterken, uzun süre sürdüremeyeceğin nasıl birine dönüşüyorsun? Seni ilk ele veren şey ne oluyor?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-truth-04-v2",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "en",
+    "text": "Have you felt strong mutual chemistry at exactly the wrong time? What did you decide to do, and would you make the same choice now?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-truth-04-v2",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "tr",
+    "text": "Aranızdaki çekim karşılıklıyken zamanlamanın yanlış olduğu bir durum yaşadın mı? Ne yapmaya karar verdin; bugün olsa yine aynı kararı verir miydin?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-truth-05-v2",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "en",
+    "text": "After a genuinely good first date, what do you hope the next morning will prove? Be more specific than “that they like me.”",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-truth-05-v2",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "tr",
+    "text": "Gerçekten güzel geçen bir ilk buluşmanın ertesi sabahı neyin belli olmasını umarsın? “Benden hoşlandığı”ndan daha somut bir cevap ver.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-truth-06-v2",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "en",
+    "text": "When you discover someone likes you back, what new worry sometimes takes the place of “Do they like me?” Give us a real example.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-truth-06-v2",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "tr",
+    "text": "Birinin senden de hoşlandığını öğrenince, bazen “Acaba benden hoşlanıyor mu?” sorusunun yerini hangi yeni endişe alıyor? Yaşadığın bir örneği anlat.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-dare-01-v2",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "en",
+    "text": "Give two introductions at an imaginary friend’s dinner: your safe, polite version first, then the version that might actually start a conversation.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-dare-01-v2",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "tr",
+    "text": "Hayali bir arkadaş yemeğinde kendini iki kez tanıt: önce risksiz, kibar hâlinle; sonra gerçekten sohbet açabilecek hâlinle.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-dare-02-v2",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "en",
+    "text": "Turn “We should hang out sometime” into an invitation with an actual plan. Say it as if you are interested, not scheduling a meeting.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-dare-02-v2",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "tr",
+    "text": "“Bir ara görüşelim” cümlesini, ne yapacağınız belli olan bir davete çevir. Toplantı ayarlıyormuş gibi değil, gerçekten hevesliymiş gibi söyle.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-dare-03-v2",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "en",
+    "text": "Offer a willing player a one-sentence compliment about something you noticed them do tonight. Skip appearance and personality labels; name the moment.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-dare-03-v2",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "tr",
+    "text": "İsteyen bir oyuncuya, bu akşam yaptığı ve dikkatini çeken bir şey için tek cümlelik iltifat et. Görünüşü ya da sıfatları değil, o anı söyle.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-dare-04-v2",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "en",
+    "text": "Say “Another five minutes?” three ways: as a polite host, as someone catching feelings, and as someone who has just noticed they are catching feelings.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-dare-04-v2",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "tr",
+    "text": "“Beş dakika daha?” de: önce kibar bir ev sahibi gibi, sonra hoşlanmaya başlamış biri gibi, son olarak da hoşlandığını yeni fark etmiş biri gibi.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-dare-05-v2",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "en",
+    "text": "Make “That is a terrible idea” sound like the start of a charming conversation. The imaginary idea is taking a very bad dance class together.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-dare-05-v2",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "tr",
+    "text": "“Bu berbat bir fikir” diyerek tatlı bir flört sohbeti başlat. Hayali fikir, birlikte çok kötü bir dans dersine katılmak olsun.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-dare-06-v2",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "en",
+    "text": "Rescue an imaginary first-date silence using one object you can see. You have twenty seconds to turn it into a question you would genuinely want answered.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-dare-06-v2",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "tr",
+    "text": "Hayali bir ilk buluşmada sessizlik oldu. Gördüğün bir eşyadan yola çıkıp gerçekten cevabını merak edeceğin bir soruyla sohbeti yirmi saniyede kurtar.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-truth-01-v2",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "en",
+    "text": "Tell us about someone becoming more attractive to you while doing something completely unglamorous. What were they doing?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-truth-01-v2",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "tr",
+    "text": "Birinin hiç de havalı olmayan bir şey yaparken gözüne daha çekici geldiği oldu mu? Ne yapıyordu?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-truth-02-v2",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "en",
+    "text": "What compliment made you think, “Oh, you were actually paying attention”? Tell us the detail they noticed.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-truth-02-v2",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "tr",
+    "text": "Sana söylenen bir iltifat hiç “Demek gerçekten dikkat etmiş” dedirtti mi? Fark ettiği ayrıntı neydi?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-truth-03-v2",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "en",
+    "text": "When did you only realize later that someone had been flirting with you? What finally gave it away?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-truth-03-v2",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "tr",
+    "text": "Birinin seninle flört ettiğini ancak sonradan anladığın bir anı anlat. Sonunda jetonun düşmesini sağlayan ne oldu?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-truth-04-v2",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "en",
+    "text": "When you like someone, are you smoother in your head or out loud? Give us a real moment when the two versions did not match.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-truth-04-v2",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "tr",
+    "text": "Birinden hoşlanınca kafandaki konuşman mı daha iyi, ağzından çıkan mı? İkisinin hiç tutmadığı gerçek bir anı anlat.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-truth-05-v2",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "en",
+    "text": "What is the smallest first move you have made that actually led somewhere? How did the other person pick it up?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-truth-05-v2",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "tr",
+    "text": "Yaptığın minicik bir ilk adımın gerçekten karşılık bulduğu oldu mu? Karşı taraf ne yaptı da işe yaradığını anladın?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-truth-06-v2",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "en",
+    "text": "Have you discovered that you both love something hardly anyone else seems interested in? Which detail made the conversation unexpectedly hard to end?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-truth-06-v2",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "tr",
+    "text": "Çok az kişinin ilgilendiği bir şeye ikinizin de meraklı olduğu ortaya çıktı mı? Sohbeti beklemediğin kadar uzatan ayrıntı neydi?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-dare-01-v2",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "en",
+    "text": "Invite a willing player into a pretend coffee date. For three exchanges, every question you ask must pick up one specific word from their last answer.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-dare-01-v2",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "tr",
+    "text": "İsteyen bir oyuncuyla hayali bir kahve buluşması yap. Üç soru boyunca sorularını, onun son cevabındaki belli bir kelimeye bağlayarak sor.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-dare-02-v2",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "en",
+    "text": "Practice receiving a fictional compliment twice: first with your usual escape joke, then with a simple thank-you and a genuine response. Notice which is harder.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-dare-02-v2",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "tr",
+    "text": "Hayali bir iltifat aldığını iki kez canlandır: önce alıştığın kaçış şakasıyla, sonra teşekkür edip içinden gelen bir cevapla. Bakalım hangisi daha zor.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-dare-03-v2",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "en",
+    "text": "With a willing player, improvise two people meeting again after a promising first conversation. Neither character can quite remember how they said goodbye.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-dare-03-v2",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "tr",
+    "text": "İsteyen bir oyuncuyla doğaçla: Güzel başlayan ilk sohbetten sonra yeniden karşılaşan iki kişisiniz. Nasıl vedalaştığınızı ikiniz de tam hatırlamıyorsunuz.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-dare-04-v2",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "en",
+    "text": "Record nothing: perform a fifteen-second voice message after an imaginary date. Mention a tiny moment that makes it clear you want another one.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-dare-04-v2",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "tr",
+    "text": "Hiçbir şey kaydetmeden, hayali bir buluşmanın ardından bırakacağın on beş saniyelik sesli mesajı canlandır. Küçük bir anı anarak yeniden görüşmek istediğini belli et.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-dare-05-v2",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "en",
+    "text": "Your imaginary date admits they rehearsed their opening line. Respond warmly, then offer one equally small confession of your own. Play both parts.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-dare-05-v2",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "tr",
+    "text": "Hayali buluşmandaki kişi, ilk cümlesini önceden prova ettiğini itiraf etti. Sıcak bir cevap verip sen de benzer küçüklükte bir itirafta bulun. İki tarafı da canlandır.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-dare-06-v2",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "en",
+    "text": "Invite a willing player into a pretend first date. For twenty seconds, neither of you can ask a question. Keep the conversation alive with observations.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-dare-06-v2",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "tr",
+    "text": "İsteyen bir oyuncuyla hayali bir ilk buluşmaya başlayın. Yirmi saniye boyunca ikiniz de soru soramazsınız. Gözlemlerinizden söz ederek sohbeti sürdürün.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-truth-01-v2",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "en",
+    "text": "Have you ever kept a flirty conversation going after your interest faded because the attention was nice? When did you notice you were doing it?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-truth-01-v2",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "tr",
+    "text": "İlgi görmek hoşuna gittiği için, hevesin geçmesine rağmen flörtöz bir sohbeti sürdürdüğün oldu mu? Ne yaptığını ne zaman fark ettin?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-truth-02-v2",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "en",
+    "text": "Have you liked someone more in a group than one-to-one, or the other way around? What changed when the audience changed?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-truth-02-v2",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "tr",
+    "text": "Birinden kalabalıkta daha çok, baş başayken daha az hoşlandığın oldu mu; ya da tam tersi? Ortam değişince aranızda ne değişmişti?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-truth-03-v2",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "en",
+    "text": "Tell us about a message you polished so much it stopped sounding like you. What were you trying not to reveal? Retell it; do not open your phone.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-truth-03-v2",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "tr",
+    "text": "Bir mesajı düzeltip dururken kendin gibi konuşmayı bıraktığın oldu mu? Neyi belli etmemeye çalışıyordun? Telefondan açmadan, hatırladığın kadarıyla anlat.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-truth-04-v2",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "en",
+    "text": "When has “playing it cool” made you look uninterested? What would a more honest version of you have done?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-truth-04-v2",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "tr",
+    "text": "Rahat görünmeye çalışırken ilgisiz göründüğün oldu mu? O an daha dürüst davransan ne yapardın?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-truth-05-v2",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "en",
+    "text": "Has a small first-date mistake made you like someone more? What did their reaction tell you that a perfect date would not have?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-truth-05-v2",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "tr",
+    "text": "İlk buluşmada küçük bir aksilik, karşındakinden daha çok hoşlanmanı sağladı mı? O tepkisinden, kusursuz bir buluşmada öğrenemeyeceğin ne öğrendin?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-truth-06-v2",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "en",
+    "text": "Do you expect the other person to initiate something you rarely initiate yourself? Name the move, and explain your double standard.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-truth-06-v2",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "tr",
+    "text": "Kendin pek yapmadığın hâlde karşı taraftan beklediğin bir ilk adım var mı? Neyi bekliyorsun; sıra sana gelince ne değişiyor?",
+    "pack": "core",
+    "sensitive": true
+  }
+]

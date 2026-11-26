@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { createHash } from "node:crypto";
 import {
   archivedCards,
+  archivedFlirtyCards,
   cards,
   contentLanguage,
   contentStats,
@@ -28,6 +29,15 @@ describe("content integrity", () => {
     ).toBe("5492a2cb17093a56061c3325a2a247b25518b8385ef99c610917b1ad6037a6a5");
   });
 
+  it("keeps every replaced Flirty v2 row unchanged for saved-card restoration", () => {
+    expect(archivedFlirtyCards).toHaveLength(72);
+    expect(
+      createHash("sha256")
+        .update(JSON.stringify(archivedFlirtyCards))
+        .digest("hex"),
+    ).toBe("186db245b88d20233450dc4f8ded20cf0d329f38ffe4f74706e73441ca4a33f4");
+  });
+
   it("has unique localized IDs and distinct prompt text", () => {
     const keys = cards.map((card) => `${card.id}:${card.language}`);
     expect(new Set(keys).size).toBe(cards.length);
@@ -52,7 +62,11 @@ describe("content integrity", () => {
       expect(["easy", "medium", "bold"]).toContain(card.difficulty);
       expect(["truth", "dare"]).toContain(card.type);
       expect(["core", "afterglow"]).toContain(card.pack);
-      expect(card.id).toMatch(/-v2$/);
+      if (card.category === "flirty")
+        expect(card.id).toMatch(
+          /^flirty-v3-(easy|medium|bold)-(truth|dare)-0[1-6]$/,
+        );
+      else expect(card.id).toMatch(/-v2$/);
       if (card.language === "en") {
         const translated = cards.find(
           (candidate) =>
@@ -82,8 +96,14 @@ describe("content integrity", () => {
         for (const difficulty of ["easy", "medium", "bold"] as const) {
           for (const type of ["truth", "dare"] as const) {
             expect(
-              eligibleCards({ ...options, language, mode, difficulty, type })
-                .length,
+              eligibleCards({
+                ...options,
+                language,
+                mode,
+                difficulty,
+                type,
+                privateSession: mode === "flirty",
+              }).length,
             ).toBeGreaterThanOrEqual(6);
             expect(
               eligibleCards({
@@ -92,6 +112,7 @@ describe("content integrity", () => {
                 mode,
                 difficulty,
                 type,
+                privateSession: mode === "flirty",
               }).every((card) => card.language === language),
             ).toBe(true);
           }
@@ -108,7 +129,14 @@ describe("content integrity", () => {
         (card) => !card.id.endsWith("-v2") && !activeIds.has(card.id),
       ),
     ).toBe(true);
-    expect(persistedCards).toHaveLength(cards.length + archivedCards.length);
+    expect(
+      archivedFlirtyCards.every(
+        (card) => card.id.endsWith("-v2") && !activeIds.has(card.id),
+      ),
+    ).toBe(true);
+    expect(persistedCards).toHaveLength(
+      cards.length + archivedCards.length + archivedFlirtyCards.length,
+    );
     expect(
       new Set(persistedCards.map((card) => `${card.id}:${card.language}`)).size,
     ).toBe(persistedCards.length);
@@ -203,7 +231,11 @@ describe("draw engine", () => {
 
   it("never draws archived cards even when a restored session contains old seen IDs", () => {
     const activeIds = new Set(cards.map((card) => card.id));
-    const oldSeen = [...new Set(archivedCards.map((card) => card.id))];
+    const oldSeen = [
+      ...new Set(
+        [...archivedCards, ...archivedFlirtyCards].map((card) => card.id),
+      ),
+    ];
     for (const language of ["en", "tr"]) {
       for (const type of ["truth", "dare"] as const) {
         const config = {
@@ -242,6 +274,89 @@ describe("draw engine", () => {
         seen: translated.map((card) => card.id),
       }).exhausted,
     ).toBe(true);
+  });
+
+  it("requires an explicit private-session flag for every Flirty pool", () => {
+    for (const language of ["en", "tr"]) {
+      for (const difficulty of ["easy", "medium", "bold"] as const) {
+        for (const type of ["truth", "dare"] as const) {
+          const config = {
+            ...options,
+            mode: "flirty" as const,
+            language,
+            difficulty,
+            type,
+          };
+          expect(eligibleCards(config)).toEqual([]);
+          expect(eligibleCards({ ...config, privateSession: false })).toEqual(
+            [],
+          );
+          expect(drawCard(config)).toEqual({ card: null, exhausted: true });
+          const privatePool = eligibleCards({
+            ...config,
+            privateSession: true,
+          });
+          expect(privatePool).toHaveLength(6);
+          expect(
+            privatePool.every(
+              (card) =>
+                card.category === "flirty" &&
+                card.language === language &&
+                card.id.startsWith("flirty-v3-"),
+            ),
+          ).toBe(true);
+        }
+      }
+    }
+  });
+
+  it("always excludes private cards from Random even when a private flag is supplied", () => {
+    for (const privateSession of [undefined, false, true]) {
+      for (const language of ["en", "tr"]) {
+        for (const difficulty of ["easy", "medium", "bold"] as const) {
+          for (const type of ["truth", "dare"] as const) {
+            const pool = eligibleCards({
+              ...options,
+              mode: "random",
+              language,
+              difficulty,
+              type,
+              privateSession,
+              unlockedPacks: ["core", "afterglow"],
+            });
+            expect(pool.length).toBeGreaterThan(0);
+            expect(
+              pool.every(
+                (card) =>
+                  card.category !== "flirty" &&
+                  !card.id.startsWith("flirty-v3-"),
+              ),
+            ).toBe(true);
+          }
+        }
+      }
+    }
+  });
+
+  it("deals only the new private revision and respects its seen IDs across languages", () => {
+    const seen = [...new Set(archivedFlirtyCards.map((card) => card.id))];
+    const config = {
+      ...options,
+      mode: "flirty" as const,
+      privateSession: true,
+    };
+    const pool = eligibleCards(config);
+    for (let index = 0; index < pool.length; index++) {
+      const result = drawCard(
+        { ...config, language: index % 2 ? "tr" : "en", seen },
+        () => 0,
+      );
+      expect(result.card).not.toBeNull();
+      expect(result.card!.id).toMatch(/^flirty-v3-/);
+      expect(seen).not.toContain(result.card!.id);
+      seen.push(result.card!.id);
+    }
+    expect(drawCard({ ...config, seen }).exhausted).toBe(true);
   });
 
   it("falls back explicitly to English for unavailable locales", () => {

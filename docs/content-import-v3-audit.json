@@ -1,0 +1,267 @@
+{
+  "edition": "flirty-v3",
+  "source": "Complete user-supplied TXT upload, 26 November 2026",
+  "source_file_sha256": "02ef99955a8b52e7b71767cfe75aabb8f504c741eca6e65d8b057fbc93880fdb",
+  "source_records": 72,
+  "active_private_records": 72,
+  "concept_ids": 36,
+  "languages": ["en", "tr"],
+  "missing_records": [],
+  "english_records_preserved_exactly": true,
+  "ids_and_metadata_preserved_exactly": true,
+  "turkish_text_corrections": 23,
+  "unrelated_active_records_preserved_exactly": 312,
+  "previous_flirty_records_archived_exactly": 72,
+  "active_catalog_records": 384,
+  "checksums": {
+    "normalization": "UTF-8 JSON, sorted object keys, no separator whitespace, Unicode unescaped",
+    "english_source": "9986000db16841d502334b5a41b0a3b5c47e678bbb185e82ed568cd5218add72",
+    "english_imported": "9986000db16841d502334b5a41b0a3b5c47e678bbb185e82ed568cd5218add72",
+    "unchanged_other_records": "ed787f20c33af27951286d1e1173936668d015caaeb45876eeacc3d730a34395",
+    "previous_flirty_archive": "c433f21b1bde5eb6c24cb7a353ba722d884640f3669808807b357daaaed70be0"
+  },
+  "corrections": [
+    {
+      "id": "flirty-v3-easy-truth-01",
+      "language": "tr",
+      "field": "text",
+      "kind": "spelling",
+      "reason": "Correct misspelled Turkish verb."
+    },
+    {
+      "id": "flirty-v3-easy-truth-06",
+      "language": "tr",
+      "field": "text",
+      "kind": "meaning",
+      "reason": "Restore the English speaker/listener relationship: the listener smiles."
+    },
+    {
+      "id": "flirty-v3-easy-dare-02",
+      "language": "tr",
+      "field": "text",
+      "kind": "meaning",
+      "reason": "Restore the English ownership of the lip and the imitation action."
+    },
+    {
+      "id": "flirty-v3-easy-dare-03",
+      "language": "tr",
+      "field": "text",
+      "kind": "naturalness",
+      "reason": "Use a natural Turkish equivalent of tracing gently; preserve location and duration."
+    },
+    {
+      "id": "flirty-v3-easy-dare-04",
+      "language": "tr",
+      "field": "text",
+      "kind": "meaning",
+      "reason": "Restore the English distinction between the chosen voice tone and the whispered words."
+    },
+    {
+      "id": "flirty-v3-easy-dare-05",
+      "language": "tr",
+      "field": "text",
+      "kind": "naturalness",
+      "reason": "Replace the unnatural Turkish smile construction without changing the action."
+    },
+    {
+      "id": "flirty-v3-easy-dare-06",
+      "language": "tr",
+      "field": "text",
+      "kind": "meaning",
+      "reason": "Restore the English fingers-through-hair action rather than unspecified combing."
+    },
+    {
+      "id": "flirty-v3-medium-truth-02",
+      "language": "tr",
+      "field": "text",
+      "kind": "meaning",
+      "reason": "Restore whose touch affects whom; the original Turkish reversed the action."
+    },
+    {
+      "id": "flirty-v3-medium-truth-03",
+      "language": "tr",
+      "field": "text",
+      "kind": "naturalness",
+      "reason": "Replace an unnatural possession construction with shared experience."
+    },
+    {
+      "id": "flirty-v3-medium-truth-04",
+      "language": "tr",
+      "field": "text",
+      "kind": "meaning",
+      "reason": "Match the English imagined-past question and use natural Turkish terminology."
+    },
+    {
+      "id": "flirty-v3-medium-truth-05",
+      "language": "tr",
+      "field": "text",
+      "kind": "naturalness",
+      "reason": "Remove an unnecessary comparative word."
+    },
+    {
+      "id": "flirty-v3-medium-truth-06",
+      "language": "tr",
+      "field": "text",
+      "kind": "meaning",
+      "reason": "Make the English recipient of the reminder explicit in Turkish."
+    },
+    {
+      "id": "flirty-v3-medium-dare-02",
+      "language": "tr",
+      "field": "text",
+      "kind": "grammar",
+      "reason": "Repair malformed proximity and dance comparisons; retain the English action and duration."
+    },
+    {
+      "id": "flirty-v3-medium-dare-03",
+      "language": "tr",
+      "field": "text",
+      "kind": "naturalness",
+      "reason": "Express the same English action and order directly in grammatical Turkish."
+    },
+    {
+      "id": "flirty-v3-medium-dare-04",
+      "language": "tr",
+      "field": "text",
+      "kind": "meaning",
+      "reason": "Specify whose eyes are closed, matching the English."
+    },
+    {
+      "id": "flirty-v3-medium-dare-05",
+      "language": "tr",
+      "field": "text",
+      "kind": "grammar",
+      "reason": "Repair location and case markers; preserve the English target and action."
+    },
+    {
+      "id": "flirty-v3-medium-dare-06",
+      "language": "tr",
+      "field": "text",
+      "kind": "naturalness",
+      "reason": "Replace a literal technical application construction with idiomatic Turkish for the same action."
+    },
+    {
+      "id": "flirty-v3-bold-truth-02",
+      "language": "tr",
+      "field": "text",
+      "kind": "meaning",
+      "reason": "Repair the misspelling and match the English not-fully-explored meaning, rather than inability to finish."
+    },
+    {
+      "id": "flirty-v3-bold-truth-05",
+      "language": "tr",
+      "field": "text",
+      "kind": "grammar",
+      "reason": "Repair the beneficiary case and use natural Turkish equivalents of the supplied English."
+    },
+    {
+      "id": "flirty-v3-bold-truth-06",
+      "language": "tr",
+      "field": "text",
+      "kind": "naturalness",
+      "reason": "Use idiomatic Turkish for the supplied English current and unexplored qualifiers."
+    },
+    {
+      "id": "flirty-v3-bold-dare-03",
+      "language": "tr",
+      "field": "text",
+      "kind": "grammar",
+      "reason": "Repair the Turkish object and imperative construction to match the English."
+    },
+    {
+      "id": "flirty-v3-bold-dare-04",
+      "language": "tr",
+      "field": "text",
+      "kind": "meaning",
+      "reason": "Correct the reversed emotional adjective: the English describes a thrilling, not disappointing, moment."
+    },
+    {
+      "id": "flirty-v3-bold-dare-06",
+      "language": "tr",
+      "field": "text",
+      "kind": "meaning",
+      "reason": "Use a natural Turkish rendering of the supplied English teasing action, without adding an action or intensifying it."
+    }
+  ],
+  "remaining_editorial_notes": [
+    {
+      "severity": "moderate",
+      "kind": "repeated_concept",
+      "ids": [
+        "flirty-v3-medium-truth-01",
+        "flirty-v3-bold-truth-01",
+        "flirty-v3-bold-truth-03",
+        "flirty-v3-bold-truth-06"
+      ],
+      "note": "Repeated untried-fantasy concept, differentiated mainly by qualifiers. Preserved to avoid authoring new content."
+    },
+    {
+      "severity": "moderate",
+      "kind": "repeated_concept",
+      "ids": ["flirty-v3-medium-truth-04", "flirty-v3-bold-truth-05"],
+      "note": "Same imagined role-play concept with a question-versus-description variation. Preserved."
+    },
+    {
+      "severity": "moderate",
+      "kind": "repeated_concept",
+      "ids": ["flirty-v3-medium-dare-04", "flirty-v3-bold-dare-01"],
+      "note": "Same closed-recipient-eyes kissing mechanic, with duration/intensity wording differences. Preserved."
+    },
+    {
+      "severity": "moderate",
+      "kind": "repeated_concept",
+      "ids": ["flirty-v3-medium-dare-05", "flirty-v3-bold-dare-02"],
+      "note": "Same favorite-location kissing mechanic, with duration/adjective differences. Preserved."
+    },
+    {
+      "severity": "minor",
+      "kind": "repeated_concept",
+      "ids": ["flirty-v3-easy-truth-04", "flirty-v3-easy-truth-05"],
+      "note": "Similar fantasy-recall questions, anchored to first meeting and first date. Preserved."
+    },
+    {
+      "severity": "minor",
+      "kind": "source_assumption",
+      "ids": [
+        "flirty-v3-easy-truth-01",
+        "flirty-v3-easy-truth-02",
+        "flirty-v3-easy-truth-03",
+        "flirty-v3-easy-truth-04",
+        "flirty-v3-easy-truth-05",
+        "flirty-v3-easy-truth-06",
+        "flirty-v3-easy-dare-01",
+        "flirty-v3-easy-dare-02",
+        "flirty-v3-easy-dare-03",
+        "flirty-v3-easy-dare-04",
+        "flirty-v3-easy-dare-05",
+        "flirty-v3-easy-dare-06",
+        "flirty-v3-medium-truth-01",
+        "flirty-v3-medium-truth-02",
+        "flirty-v3-medium-truth-03",
+        "flirty-v3-medium-truth-04",
+        "flirty-v3-medium-truth-05",
+        "flirty-v3-medium-truth-06",
+        "flirty-v3-medium-dare-01",
+        "flirty-v3-medium-dare-02",
+        "flirty-v3-medium-dare-03",
+        "flirty-v3-medium-dare-04",
+        "flirty-v3-medium-dare-05",
+        "flirty-v3-medium-dare-06",
+        "flirty-v3-bold-truth-01",
+        "flirty-v3-bold-truth-02",
+        "flirty-v3-bold-truth-03",
+        "flirty-v3-bold-truth-04",
+        "flirty-v3-bold-truth-05",
+        "flirty-v3-bold-truth-06",
+        "flirty-v3-bold-dare-01",
+        "flirty-v3-bold-dare-02",
+        "flirty-v3-bold-dare-03",
+        "flirty-v3-bold-dare-04",
+        "flirty-v3-bold-dare-05",
+        "flirty-v3-bold-dare-06"
+      ],
+      "note": "The source addresses a specific partner in first person and often assumes a shared dating/physical history. Text editing does not resolve participant targeting or establish consent."
+    }
+  ],
+  "new_explicit_card_text_authored": false
+}

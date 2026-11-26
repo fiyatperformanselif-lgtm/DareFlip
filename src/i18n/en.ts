@@ -32,10 +32,25 @@ export const en = {
   "mode.random": "Random",
   "mode.couples.description": "A spark for your connection",
   "mode.party.description": "Turn strangers into stories",
-  "mode.flirty.description": "Playful sparks, on your terms",
+  "mode.flirty.description": "A private game for two adult partners",
   "mode.deep.description": "Go beyond the small talk",
   "mode.crazy.description": "Big laughs. Zero pressure.",
   "mode.random.description": "A little bit of everything",
+  "setup.privateSubtitle":
+    "Just the two of you. Both partners must be 18 or older and choose to play.",
+  "setup.privateHowTo":
+    "On private cards, words such as “me” and “my” refer to your partner.",
+  "setup.privatePlayersRequired": "Flirty needs exactly two adult partners.",
+  "setup.partnerConfirm":
+    "{name}: I am at least 18 and want to play this private intimate card game.",
+  "setup.partnerConsentRequired":
+    "Both partners must personally confirm that they are 18 or older and want to play.",
+  "setup.privateRule":
+    "Every activity needs both partners to be willing at that moment. Either of you can stop or skip, without an explanation or penalty.",
+  "setup.legacyPrivateGroup":
+    "Your saved group game is preserved. The new private cards require a new game with two adult partners.",
+  "setup.newPrivateGame": "Start a two-person game",
+  "game.partner": "Your partner: {name}",
   "setup.title": "Who’s playing?",
   "setup.subtitle": "Gather 2–20 people. Make it your night.",
   "setup.players": "Players",
@@ -57,8 +72,10 @@ export const en = {
   "setup.medium": "Medium",
   "setup.bold": "Bold",
   "setup.start": "Start the game",
-  "setup.ageConfirm": "All players are 18 or older and agree to play.",
-  "setup.ageRequired": "Flirty is only for consenting adults aged 18 and over.",
+  "setup.ageConfirm":
+    "Both partners are 18 or older and choose to play Flirty together.",
+  "setup.ageRequired":
+    "Flirty requires two adult partners who each confirm they are at least 18 and want to play.",
   "setup.minPlayers": "Add at least 2 players.",
   "setup.maxPlayers": "You can play with up to 20 people.",
   "setup.uniqueNames": "Give each player a different name.",
@@ -169,7 +186,7 @@ export const en = {
   "legal.rules":
     "Play with consent. Respect everyone’s boundaries. Skip any card at any time.",
   "legal.adult":
-    "Flirty is for adults aged 18 and over. The app contains no explicit sexual content.",
+    "Flirty contains private adult-partner content and is only for two consenting adults aged 18 or older. Every card is optional, and consent can be withdrawn at any time.",
   "common.or": "or",
   "common.back": "Back",
   "common.close": "Close",

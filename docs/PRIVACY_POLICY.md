@@ -1,6 +1,6 @@
 # DareFlip Privacy Policy
 
-Draft for publisher review. Last updated: 25 November 2026.
+Draft for publisher review. Last updated: 26 November 2026.
 
 Publisher/legal entity: **[REQUIRED BEFORE PUBLICATION]**
 Privacy contact: **[REQUIRED BEFORE PUBLICATION]**
@@ -9,7 +9,7 @@ DareFlip is an offline Truth or Dare game. You do not need an account. The game 
 
 ## Data stored on your device
 
-Player names, explicit gender choices, selected mode, language, settings, favorites, unlocked bonus packs, and the current session are stored locally. Each player can explicitly choose Woman, Man, Non-binary, or Prefer not to say. Gender choices are not inferred from names and are not sent to advertising services. They are used to run the game and resume it. You can erase them using the app's Reset local data control, by clearing application data, or by uninstalling. Operating-system backups may retain a copy according to your device's backup settings; review those settings if you share a device.
+Player names, explicit gender choices, selected mode, language, settings, favorites, unlocked bonus packs, private-session acknowledgement and the current session are stored locally. Each player can explicitly choose Woman, Man, Non-binary, or Prefer not to say. Gender choices are not inferred from names and are not sent to advertising services. They are used to run the game and resume it. You can erase them using the app's Reset local data control, by clearing application data, or by uninstalling. Operating-system backups may retain a copy according to your device's backup settings; review those settings if you share a device.
 
 ## Optional advertising
 
@@ -27,7 +27,7 @@ Sharing a card is an explicit action. DareFlip generates an image on your device
 
 ## Age and player safety
 
-DareFlip is intended for adults, not children. Flirty mode is marked 18+ and requires an adult confirmation. Do not enter personal information that you do not wish other players to see. Every question or challenge can be skipped without penalty. Participants can decline any activity or stop at any time.
+DareFlip is intended for adults, not children. Private Flirty mode is marked 18+, restricted to two partners and requires a separate voluntary acknowledgement from each partner for a new session. Random excludes private Flirty cards. Session acknowledgement does not replace consent to each activity. Do not enter personal information that you do not wish other players to see. Every question or challenge can be skipped without penalty. Participants can decline any activity or stop at any time.
 
 ## Your choices and rights
 

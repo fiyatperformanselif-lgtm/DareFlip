@@ -33,10 +33,26 @@ export const tr: Dictionary = {
   "mode.random": "Rastgele",
   "mode.couples.description": "Aranızdaki bağı canlandır",
   "mode.party.description": "Yeni tanışmaları hikâyelere dönüştür",
-  "mode.flirty.description": "Sınırlar sana ait, eğlence ortak",
+  "mode.flirty.description": "İki yetişkin partnere özel bir oyun",
   "mode.deep.description": "Havadan sudan sohbetin ötesine geç",
   "mode.crazy.description": "Bol kahkaha. Sıfır baskı.",
   "mode.random.description": "Her şeyden biraz",
+  "setup.privateSubtitle":
+    "Yalnızca ikiniz. Her iki partner de 18 yaşında veya daha büyük olmalı ve oynamayı istemeli.",
+  "setup.privateHowTo":
+    "Özel kartlardaki “bana”, “beni” ve “benim” gibi ifadeler diğer partnerini kasteder.",
+  "setup.privatePlayersRequired":
+    "Flört modu için tam iki yetişkin partner gerekiyor.",
+  "setup.partnerConfirm":
+    "{name}: 18 yaşında veya daha büyüğüm; partnerimle bu özel yakınlık oyununu oynamak istiyorum.",
+  "setup.partnerConsentRequired":
+    "Her iki partner de 18 yaşında veya daha büyük olduğunu ve oynamak istediğini kendisi onaylamalı.",
+  "setup.privateRule":
+    "Her etkinlikte ikinizin de o anda istekli olması gerekir. İstediğiniz an açıklama yapmadan ve ceza almadan durabilir veya kartı geçebilirsiniz.",
+  "setup.legacyPrivateGroup":
+    "Kayıtlı grup oyunun korunuyor. Yeni özel kartlar için iki yetişkin partnerle yeni bir oyun başlat.",
+  "setup.newPrivateGame": "İki kişilik oyun başlat",
+  "game.partner": "Partnerin: {name}",
   "setup.title": "Kimler oynuyor?",
   "setup.subtitle": "2–20 kişi bir araya gelin. Gece sizin.",
   "setup.players": "Oyuncular",
@@ -59,9 +75,9 @@ export const tr: Dictionary = {
   "setup.bold": "Cesur",
   "setup.start": "Oyunu başlat",
   "setup.ageConfirm":
-    "Tüm oyuncular 18 yaşında veya daha büyük ve oynamayı kabul ediyor.",
+    "Her iki partner de 18 yaşında veya daha büyük ve Flört modunu birlikte oynamak istiyor.",
   "setup.ageRequired":
-    "Flört modu yalnızca oynamaya rıza gösteren 18 yaş ve üzeri yetişkinler içindir.",
+    "Flört modu için, 18 yaşında veya daha büyük olduğunu ve oynamak istediğini ayrı ayrı onaylayan iki yetişkin partner gerekir.",
   "setup.minPlayers": "En az 2 oyuncu ekle.",
   "setup.maxPlayers": "En fazla 20 kişi oynayabilirsiniz.",
   "setup.uniqueNames": "Her oyuncuya farklı bir ad ver.",
@@ -171,7 +187,7 @@ export const tr: Dictionary = {
   "legal.rules":
     "Rızayla oyna. Herkesin sınırlarına saygı göster. İstediğin kartı istediğin an geç.",
   "legal.adult":
-    "Flört modu 18 yaş ve üzeri yetişkinler içindir. Uygulama açık cinsel içerik barındırmaz.",
+    "Flört modu iki yetişkin partnere özel yakınlık içeriği sunar; yalnızca 18 yaş ve üzeri, birlikte oynamaya rıza gösteren iki kişi içindir. Her kart isteğe bağlıdır; rıza her an geri alınabilir.",
   "common.or": "veya",
   "common.back": "Geri",
   "common.close": "Kapat",

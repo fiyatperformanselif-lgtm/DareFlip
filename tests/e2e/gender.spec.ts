@@ -1,5 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
-import { chooseGenders } from "../helpers/players";
+import { chooseGenders, confirmPartners } from "../helpers/players";
 
 async function enterNames(page: Page) {
   await page
@@ -252,8 +252,8 @@ test("gender choices are checked before adult-mode confirmation", async ({
   await page
     .getByRole("button", { name: "Start the game", exact: true })
     .click();
-  await expect(page.getByRole("alert")).toContainText("consenting adults");
-  await page.getByRole("checkbox").check();
+  await expect(page.getByRole("alert")).toContainText("partners");
+  await confirmPartners(page);
   await page
     .getByRole("button", { name: "Start the game", exact: true })
     .click();

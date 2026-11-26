@@ -1,11 +1,18 @@
 import catalog from "./cards.json";
 import archivedCatalog from "./archive-v1.json";
+import archivedFlirtyCatalog from "./archive-v2-flirty.json";
 import type { Card } from "../domain/types";
 
 export const cards: readonly Card[] = catalog as Card[];
 /** Previous revisions remain available only for exact saved-card restoration. */
 export const archivedCards: readonly Card[] = archivedCatalog as Card[];
-export const persistedCards: readonly Card[] = [...cards, ...archivedCards];
+export const archivedFlirtyCards: readonly Card[] =
+  archivedFlirtyCatalog as Card[];
+export const persistedCards: readonly Card[] = [
+  ...cards,
+  ...archivedCards,
+  ...archivedFlirtyCards,
+];
 const persistedLookup = new Map(
   persistedCards.map((card) => [`${card.id}:${card.language}`, card]),
 );

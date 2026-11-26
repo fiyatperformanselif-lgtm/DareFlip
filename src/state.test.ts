@@ -1,8 +1,18 @@
 import { describe, expect, it } from "vitest";
-import { archivedCards, cards, lookupCard } from "./content";
+import {
+  archivedCards,
+  archivedFlirtyCards,
+  cards,
+  lookupCard,
+} from "./content";
 import { loadState, saveState, STORAGE_KEY } from "./domain/storage";
 import type { StorageLike } from "./domain/storage";
-import { initialState, loadAppState, validState } from "./state";
+import {
+  initialState,
+  isPrivateSessionReady,
+  loadAppState,
+  validState,
+} from "./state";
 import { hasCompleteGenders } from "./domain/players";
 import type { Session, State } from "./state";
 
@@ -188,16 +198,32 @@ describe("persisted application state validation", () => {
     );
   });
 
-  it("requires confirmed adult participation in both Flirty and Random modes", () => {
-    for (const mode of ["flirty", "random"] as const) {
-      const current = session({ mode, card: null, seen: [], rounds: 0 });
-      expect(validState(state({ session: current, ageConfirmed: false }))).toBe(
-        false,
-      );
-      expect(validState(state({ session: current, ageConfirmed: true }))).toBe(
-        true,
-      );
-    }
+  it("requires confirmed adult participation for Flirty while ordinary Random remains playable", () => {
+    const current = session({
+      mode: "flirty",
+      card: null,
+      seen: [],
+      rounds: 0,
+    });
+    expect(validState(state({ session: current, ageConfirmed: false }))).toBe(
+      false,
+    );
+    expect(validState(state({ session: current, ageConfirmed: true }))).toBe(
+      true,
+    );
+    expect(
+      validState(
+        state({
+          session: session({ mode: "random", card: null, seen: [], rounds: 0 }),
+          ageConfirmed: false,
+        }),
+      ),
+    ).toBe(true);
+    expect(
+      validState(
+        state({ session: session({ mode: "random" }), ageConfirmed: false }),
+      ),
+    ).toBe(true);
   });
 
   it("validates round counts while preserving explicit deck resets", () => {
@@ -506,5 +532,273 @@ describe("saved cards across editorial revisions", () => {
     const before = storage.getItem(STORAGE_KEY);
     expect(loadAppState(storage).session).toBeNull();
     expect(storage.getItem(STORAGE_KEY)).toBe(before);
+  });
+});
+
+describe("private Flirty participation and v2 save compatibility", () => {
+  const privateCard = cards.find(
+    (card) => card.category === "flirty" && card.language === "en",
+  )!;
+  const oldFlirty = archivedFlirtyCards.find((card) => card.language === "en")!;
+  const oldV1Flirty = archivedCards.find(
+    (card) => card.category === "flirty" && card.language === "en",
+  )!;
+  function currentPrivate(overrides: Partial<Session> = {}): Session {
+    return session({
+      mode: "flirty",
+      difficulty: privateCard.difficulty,
+      card: { ...privateCard },
+      seen: [privateCard.id],
+      rounds: 1,
+      privateAcknowledged: true,
+      ...overrides,
+    });
+  }
+  function oldSession(
+    card = oldFlirty,
+    overrides: Partial<Session> = {},
+  ): Session {
+    return session({
+      mode: "flirty",
+      difficulty: card.difficulty,
+      card: { ...card },
+      seen: [card.id],
+      rounds: 12,
+      ...overrides,
+    });
+  }
+  function withoutAcknowledgement(value: Session): Session {
+    const copy = { ...value };
+    delete copy.privateAcknowledged;
+    return copy;
+  }
+
+  it("requires precisely two explicitly acknowledged participants with complete gender choices", () => {
+    expect(isPrivateSessionReady(currentPrivate())).toBe(true);
+    expect(isPrivateSessionReady(null)).toBe(false);
+    expect(isPrivateSessionReady(undefined)).toBe(false);
+    expect(
+      isPrivateSessionReady(withoutAcknowledgement(currentPrivate())),
+    ).toBe(false);
+    expect(isPrivateSessionReady(currentPrivate({ mode: "random" }))).toBe(
+      false,
+    );
+    expect(
+      isPrivateSessionReady(currentPrivate({ genders: [null, "undisclosed"] })),
+    ).toBe(false);
+    expect(
+      isPrivateSessionReady(
+        currentPrivate({
+          players: ["Deniz", "Alex", "Sam"],
+          genders: ["female", "male", "undisclosed"],
+        }),
+      ),
+    ).toBe(false);
+    expect(
+      isPrivateSessionReady(
+        currentPrivate({ players: ["Deniz"], genders: ["female"] }),
+      ),
+    ).toBe(false);
+    expect(
+      isPrivateSessionReady(
+        currentPrivate({ genders: ["undisclosed", "undisclosed"] }),
+      ),
+    ).toBe(true);
+  });
+
+  it("roundtrips an acknowledged private game and keeps old/new favorites distinct", () => {
+    const original = state({
+      session: currentPrivate(),
+      ageConfirmed: true,
+      favorites: [oldFlirty.id, privateCard.id],
+    });
+    expect(validState(original)).toBe(true);
+    const storage = memoryStorage();
+    saveState(original, storage);
+    expect(loadAppState(storage)).toEqual(original);
+    expect(lookupCard(oldFlirty.id, "en")).toEqual(oldFlirty);
+    expect(oldFlirty.id).toMatch(/-v2$/);
+    expect(privateCard.id).toMatch(/^flirty-v3-/);
+  });
+
+  it("rejects a new private card in Random, a group, an unacknowledged game or an incomplete profile", () => {
+    const invalidSessions = [
+      withoutAcknowledgement(currentPrivate()),
+      currentPrivate({ mode: "random" }),
+      withoutAcknowledgement(currentPrivate({ mode: "random" })),
+      currentPrivate({
+        players: ["Deniz", "Alex", "Sam"],
+        genders: ["female", "male", "undisclosed"],
+      }),
+      withoutAcknowledgement(
+        currentPrivate({
+          players: ["Deniz", "Alex", "Sam"],
+          genders: ["female", "male", "undisclosed"],
+        }),
+      ),
+      currentPrivate({ genders: [null, "undisclosed"] }),
+      withoutAcknowledgement(currentPrivate({ card: null })),
+      withoutAcknowledgement(currentPrivate({ mode: "random", card: null })),
+    ];
+    for (const invalid of invalidSessions) {
+      expect(validState(state({ session: invalid, ageConfirmed: true }))).toBe(
+        false,
+      );
+    }
+    expect(
+      validState(state({ session: currentPrivate(), ageConfirmed: false })),
+    ).toBe(false);
+  });
+
+  it("rejects malformed acknowledgement values rather than silently treating them as legacy", () => {
+    for (const privateAcknowledged of [
+      false,
+      null,
+      undefined,
+      "true",
+      1,
+      {},
+      [],
+    ]) {
+      expect(
+        validState({
+          ...state({ ageConfirmed: true }),
+          session: { ...currentPrivate(), privateAcknowledged },
+        }),
+      ).toBe(false);
+    }
+    expect(
+      validState(
+        state({
+          session: session({ privateAcknowledged: true }),
+          ageConfirmed: true,
+        }),
+      ),
+    ).toBe(false);
+    expect(
+      validState(state({ session: oldSession(), ageConfirmed: true })),
+    ).toBe(true);
+  });
+
+  it("preserves archived v1/v2 two-person and group games without fabricating a new acknowledgement", () => {
+    for (const card of [oldFlirty, oldV1Flirty]) {
+      for (const players of [
+        ["Deniz", "Alex"],
+        ["Deniz", "Alex", "Sam"],
+      ]) {
+        const original = state({
+          session: oldSession(card, { players }),
+          ageConfirmed: true,
+          favorites: [card.id],
+          locale: "tr",
+          sound: false,
+        });
+        expect(validState(original)).toBe(true);
+        const storage = memoryStorage();
+        saveState(original, storage);
+        const restored = loadAppState(storage);
+        expect(restored).toEqual(original);
+        expect(restored.session!.card).toEqual(card);
+        expect(restored.session!.seen).toEqual([card.id]);
+        expect(restored.session!.rounds).toBe(12);
+        expect(restored.session!.genders).toEqual(
+          players.map(() => "undisclosed"),
+        );
+        expect(Object.hasOwn(restored.session!, "privateAcknowledged")).toBe(
+          false,
+        );
+        expect(isPrivateSessionReady(restored.session)).toBe(false);
+      }
+    }
+    const group = oldSession(oldFlirty, {
+      players: ["Deniz", "Alex", "Sam"],
+      card: null,
+    });
+    expect(validState(state({ session: group, ageConfirmed: true }))).toBe(
+      true,
+    );
+    expect(
+      validState(
+        state({
+          session: { ...group, privateAcknowledged: true },
+          ageConfirmed: true,
+        }),
+      ),
+    ).toBe(false);
+  });
+
+  it("keeps archived Flirty cards in legacy Random saves while requiring no age flag for fresh Random", () => {
+    const original = state({
+      session: oldSession(oldFlirty, { mode: "random" }),
+      ageConfirmed: true,
+      favorites: [oldFlirty.id],
+    });
+    expect(validState(original)).toBe(true);
+    const storage = memoryStorage();
+    saveState(original, storage);
+    expect(loadAppState(storage)).toEqual(original);
+    const fresh = state({
+      session: session({ mode: "random", card: null, seen: [], rounds: 0 }),
+      ageConfirmed: false,
+    });
+    expect(validState(fresh)).toBe(true);
+    saveState(fresh, storage);
+    expect(loadAppState(storage)).toEqual(fresh);
+  });
+
+  it("still migrates missing gender metadata in archived v2 saves without losing progress", () => {
+    const legacy = {
+      ...state({ ageConfirmed: true, favorites: [oldFlirty.id] }),
+      session: withoutGenders(oldSession()),
+    };
+    const storage = memoryStorage();
+    saveState(legacy, storage);
+    const restored = loadAppState(storage);
+    expect(restored).toEqual({
+      ...legacy,
+      session: { ...legacy.session, genders: [null, null] },
+    });
+    expect(isPrivateSessionReady(restored.session)).toBe(false);
+  });
+
+  it("keeps archived card text and sensitivity immutable and checks age for new private favorites", () => {
+    for (const change of [
+      { text: "changed saved prompt" },
+      { sensitive: false },
+    ]) {
+      expect(
+        validState({
+          ...state({ ageConfirmed: true }),
+          session: { ...oldSession(), card: { ...oldFlirty, ...change } },
+        }),
+      ).toBe(false);
+    }
+    expect(
+      validState(
+        state({
+          session: null,
+          favorites: [privateCard.id],
+          ageConfirmed: false,
+        }),
+      ),
+    ).toBe(false);
+    expect(
+      validState(
+        state({
+          session: null,
+          favorites: [privateCard.id],
+          ageConfirmed: true,
+        }),
+      ),
+    ).toBe(true);
+    expect(
+      validState(
+        state({
+          session: null,
+          favorites: [oldFlirty.id],
+          ageConfirmed: false,
+        }),
+      ),
+    ).toBe(true);
   });
 });

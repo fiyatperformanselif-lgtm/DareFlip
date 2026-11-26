@@ -1,34 +1,42 @@
-# Editorial revision 2 — 26 November 2026
+# Content revisions — 26 November 2026
 
-The user reported that the seed catalog felt shallow. Revision 2 rewrites all 192 active English concepts and supplies a Turkish version of each, rather than increasing the advertised card count. The active edition contains 180 core and 12 Afterglow concepts (384 EN/TR rows). Archived revision-1 rows exist solely to preserve saved cards and favorites and do not increase the active total or the 5,000-card roadmap count.
+## Current private edition: revision 3
 
-## Editorial standard
+The user supplied 72 bilingual Flirty rows representing 36 cards and requested their integration into a private game for two adult partners. That supplied material replaces the revision-2 Flirty selection using fresh `flirty-v3-` IDs. Work on this edition consists of integration, copyediting, translation, and EN/TR meaning alignment of the supplied material. It is not claimed to be independent source research or a newly authored collection of original explicit prompts.
 
-A Truth should give the player a recognizable starting scene, incident, choice or contradiction that can open a real story. Avoid broad preference inventories, vague coaching vocabulary, leading accusations, automatic trauma disclosure and prompts with several unrelated questions. Easy remains easy to enter; Bold asks for more honesty or creative exposure, not risk or explicit sexual detail.
+The active catalog still contains 192 EN cards and 192 TR translations: 156 revision-2 cards plus 36 revision-3 Flirty cards. These are 180 core and 12 Afterglow cards in total. The 5,000-original target remains unfinished. Matching text checks and distinct IDs cannot establish distinct underlying ideas; repeated themes in the supplied edition have not been certified absent.
 
-A Dare should be an activity: a brief improvisation, negotiation, listening exchange, word constraint, perspective switch or other playable interaction. Adding “tell us” to an ordinary question does not make it a new Dare. Prompts should work with two players; extra participants can volunteer. Consent-dependent interaction is framed as willing participation, and every card keeps the global unconditional skip behavior.
+Flirty 18+ now means exactly two adult partners, each personally confirming being at least 18 and wanting to play a private intimate card game together. The game-level confirmations do not imply agreement to a particular activity. Both partners must be willing at that moment, and either can stop or skip without explanation or penalty. On private cards, “me” and “my” refer to the other partner. Gender does not filter the deck or imply an opposite-sex pairing.
 
-Mode identities:
+Random excludes private Flirty cards and does not ask players to opt into the private mode. Private content remains sensitive and excluded from daily selection and advertising. A legacy group save is preserved rather than silently gaining access to the new private deck; a new two-partner game with both confirmations is required.
 
-- Couples: shared scenes, everyday teamwork, unspoken needs, expectations and concrete appreciation.
-- Party: recognizable social moments, harmless exaggerations, misread politeness, small contradictions and warm group interaction.
-- Flirty 18+: chemistry, mixed signals, initiative and playful tension, without turning every card into instructions about boundaries.
-- Deep Talk: approachable memories, changes of mind, identity, tradeoffs and listening; no demanded medical, financial or traumatic disclosures.
-- Crazy Fun: adult everyday absurdity and improvisation, rather than nursery-style imaginary animals and objects.
-- Afterglow: specific reflective moments and a softer end-of-night pace.
+This revision changes the earlier nonexplicit editorial scope of Flirty. Historical statements that no Flirty card contains explicit sexual material do not describe the supplied revision-3 edition. Content scope, appropriate ratings, publisher rights, and platform acceptance still require publisher review; integration is not proof of store approval.
 
-Gender does not determine the content or romantic pairing. No new task requires explicit sexual activity, nudity, kissing/touching, alcohol/substances, spending, private-message access, contacting exes or strangers, dangerous acts, ranking other players or humiliation.
+## Preserved editions
 
-## Review performed
+- `src/content/archive-v1.json` retains the exact original 282 rows: 192 EN and 90 TR.
+- `src/content/archive-v2-flirty.json` retains the exact replaced 72 revision-2 Flirty rows: 36 EN and 36 TR.
 
-Drafts were checked across modes, not just within each category. The review removed overlapping date-pitch tasks, alternate-plan pitches, repeated “playing it cool” questions, duplicated dramatic-headline reveals, repeated first-conversation questions, cancelled-plan relief and repeated place-guessing/narrator exercises. Turkish wording was revised for conversational use and EN/TR meaning alignment, including awkward literal constructions and differences such as “casual” versus “spontaneous.”
+Archived cards and favorites keep their own wording and trusted metadata. Archives are not eligible for current draws or daily selection and are not added to active card counts. Old group saves are not reinterpreted as private two-person consent. Strict saved-card validation and gender-completion migration remain part of compatibility handling.
 
-Structural checks cover metadata parity, all original revision-1 source IDs being revised, localized uniqueness, length limits, category/difficulty/type coverage and complete Turkish pairs. Tests cannot prove humor, emotional usefulness, cultural fit or semantic originality; these remain editorial judgments and should be checked through playtesting/native-speaker feedback. No psychological diagnosis or scientific efficacy claim is made.
+## Earlier revision 2: social editorial work
 
-## Source transparency
+The user reported that the original seed catalog felt shallow. Revision 2 rewrote all 192 English cards and paired each with Turkish, emphasizing recognizable scenes, choices, contradictions, and playable social interactions. Its Flirty cards were playful and nonexplicit; that description applies to the archived revision-2 Flirty material, not the active private edition.
 
-The user suggested X/Twitter as an optional source. A public X search request was attempted from the development environment and failed with an HTTP CONNECT 403 network restriction. No X posts were read, quoted, copied, attributed or claimed as trend research for this revision. The final prompts are original editorial writing, informed by the gameplay brief and review of the existing catalog.
+The revision-2 review removed overlapping date pitches, alternate-plan tasks, repeated “playing it cool” questions, dramatic-headline reveals, first-conversation questions, cancelled-plan relief, and place-guessing/narrator exercises. Turkish copy was revised for conversational use and EN/TR alignment, including awkward literal constructions and mismatches such as “casual” versus “spontaneous.” This was editorial review, not certification of semantic originality or psychological efficacy.
 
-## Upgrade behavior
+The continuing social-mode identities are:
 
-Active revision-2 concepts use fresh `-v2` IDs. The exact previous 282 rows (192 EN, 90 TR) are retained in `src/content/archive-v1.json`. Old saved cards and favorites resolve to their own trusted edition; they are not silently replaced with a different question. Current draws and daily questions use only the new active catalog. A restored old card may remain on screen until the player takes the next turn. Strict saved-card metadata checks still apply, and old gender-completion migration is preserved.
+- Couples: shared scenes, everyday teamwork, unspoken needs, expectations, and concrete appreciation.
+- Party: recognizable social moments, harmless exaggeration, misread politeness, small contradictions, and warm group interaction.
+- Deep Talk: approachable memories, changes of mind, identity, tradeoffs, and listening without demanded medical, financial, or traumatic disclosure.
+- Crazy Fun: adult everyday absurdity and improvisation rather than nursery-style imaginary animals and objects.
+- Afterglow: concrete reflective moments and a softer end-of-night pace.
+
+## Source transparency and verification limits
+
+For revision 2, the user suggested X/Twitter as an optional source. A public X search request from the development environment failed with an HTTP CONNECT 403 network restriction. No X posts were read, quoted, copied, attributed, or claimed as trend research. Revision-2 wording was original editorial work based on the brief and existing catalog; revision-3 private wording comes from the user's supplied material. No external source provenance is invented for either edition.
+
+Structural checks cover exact text duplication, immutable IDs, metadata parity, full active EN/TR pairing, difficulty/type coverage, archive integrity, and private-deck eligibility. Separate flow checks must cover per-partner confirmation, two-person-only private setup, Random exclusion, free skipping, and restoration of earlier saves. Executed results and untested native/platform behavior belong in `DEVELOPMENT_STATUS.md`.
+
+Tests cannot certify cultural fit, consent in a real interaction, age, emotional usefulness, semantic uniqueness, rights ownership, or App Store/Google Play acceptance. Native-speaker feedback and real playtesting remain necessary; no psychological diagnosis or scientific efficacy claim is made.

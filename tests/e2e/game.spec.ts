@@ -1,6 +1,10 @@
 import { expect, test, type Page } from "@playwright/test";
 import { readFile } from "node:fs/promises";
-import { chooseGenders, type GenderChoice } from "../helpers/players";
+import {
+  chooseGenders,
+  confirmPartners,
+  type GenderChoice,
+} from "../helpers/players";
 
 async function home(page: Page) {
   await page.goto("/");
@@ -175,15 +179,15 @@ test("validates blank and duplicate names and enforces 20-player limit", async (
   ).toBeEnabled();
 });
 
-test("adult modes require explicit confirmation and can be declined", async ({
+test("private Flirty requires both partner confirmations and permits free skips", async ({
   page,
 }) => {
   await setup(page, "Flirty 18\\+");
   await page
     .getByRole("button", { name: "Start the game", exact: true })
     .click();
-  await expect(page.getByRole("alert")).toContainText("consenting adults");
-  await page.getByRole("checkbox").check();
+  await expect(page.getByRole("alert")).toContainText("partners");
+  await confirmPartners(page);
   await page
     .getByRole("button", { name: "Start the game", exact: true })
     .click();
@@ -356,7 +360,8 @@ test("all six modes, three difficulties, bottle selection and ending games work"
     });
     await difficulty.click();
     await expect(difficulty).toHaveAttribute("aria-pressed", "true");
-    if (index === 2 || index === 5) await page.getByRole("checkbox").check();
+    if (index === 2) await confirmPartners(page);
+    if (index === 5) await expect(page.getByRole("checkbox")).toHaveCount(0);
     await page
       .getByRole("button", { name: "Start the game", exact: true })
       .click();

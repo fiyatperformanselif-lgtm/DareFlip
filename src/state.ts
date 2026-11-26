@@ -1,10 +1,10 @@
-import { persistedCards } from "./content";
+import { cards, persistedCards } from "./content";
 import type { Card, Difficulty, Mode } from "./domain/types";
 import { detectLanguage, languages } from "./i18n";
 import type { Locale } from "./i18n";
 import { loadState } from "./domain/storage";
 import type { StorageLike } from "./domain/storage";
-import { validGenders } from "./domain/players";
+import { hasCompleteGenders, validGenders } from "./domain/players";
 import type { Gender } from "./domain/players";
 
 export interface Session {
@@ -16,6 +16,8 @@ export interface Session {
   player: string;
   card: Card | null;
   rounds: number;
+  /** Absent in legacy saves; a stored false/invalid value is never treated as consent. */
+  privateAcknowledged?: true;
 }
 export interface State {
   version: 1;
@@ -31,6 +33,9 @@ export interface State {
 const knownIds = new Set(persistedCards.map(({ id }) => id));
 const canonicalCards = new Map(
   persistedCards.map((card) => [`${card.id}:${card.language}`, card]),
+);
+const privateCardIds = new Set(
+  cards.filter((card) => card.category === "flirty").map((card) => card.id),
 );
 const cardFields: readonly (keyof Card)[] = [
   "id",
@@ -95,6 +100,19 @@ export function initialState(): State {
   };
 }
 
+/** Participant-specific acknowledgement is separate from the older age check. */
+export function isPrivateSessionReady(
+  session: Session | null | undefined,
+): boolean {
+  return (
+    !!session &&
+    session.mode === "flirty" &&
+    session.players.length === 2 &&
+    session.privateAcknowledged === true &&
+    hasCompleteGenders(session.genders)
+  );
+}
+
 /** Treat persisted data as untrusted, including incomplete migrated gender choices. */
 export function validState(value: unknown): value is State {
   if (!isRecord(value)) return false;
@@ -106,6 +124,11 @@ export function validState(value: unknown): value is State {
     typeof value.unlocked !== "boolean" ||
     typeof value.ageConfirmed !== "boolean" ||
     !validIds(value.favorites)
+  )
+    return false;
+  if (
+    !value.ageConfirmed &&
+    value.favorites.some((id) => privateCardIds.has(id))
   )
     return false;
 
@@ -139,13 +162,17 @@ export function validState(value: unknown): value is State {
   )
     return false;
 
-  if (
-    (session.mode === "flirty" || session.mode === "random") &&
-    !value.ageConfirmed
-  )
+  if (session.mode === "flirty" && !value.ageConfirmed) return false;
+  const privateReady = isPrivateSessionReady(session as unknown as Session);
+  if (Object.hasOwn(session, "privateAcknowledged") && !privateReady)
+    return false;
+  if (session.seen.some((id) => privateCardIds.has(id)) && !privateReady)
     return false;
   if (session.card === null) return true;
   if (!validCard(session.card)) return false;
+  // An archived card can remain visible in a legacy save, but private active cards
+  // cannot be smuggled into Random, a group, or an unacknowledged two-person game.
+  if (privateCardIds.has(session.card.id) && !privateReady) return false;
 
   return (
     session.seen.includes(session.card.id) &&
