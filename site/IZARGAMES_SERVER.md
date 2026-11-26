@@ -1,35 +1,45 @@
 # IzarGames sunucusuna DareFlip sayfaları
 
-Yayıncı adı `IzarGames`, herkese açık destek e-postası `info@izargames.com` olarak kullanıcı tarafından doğrulandı. Kullanıcı kendi sunucusunda, hosting panelindeki dosya yöneticisini kullanacağını belirtti. Panel türü ve alan adına ait web kök dizini henüz bilinmiyor.
+Yayıncı adı `IzarGames`, herkese açık destek e-postası `info@izargames.com` olarak kullanıcı tarafından doğrulandı. Kullanıcının Plesk ekranında **File Manager for dareflip.izargames.com**, `Home directory → dareflip.izargames.com` yolu ve açılmış bir `dareflip` klasörü görülüyor. Reklamlı ZIP bu dizinde açılmış; mevcut yerleşim korunacak, ana dizindeki `index.html` değiştirilmeyecek.
 
-`izargames.publisher-plan.json` gerçek uygulama yapılandırması değildir: e-posta alan adından önerilen `https://izargames.com/dareflip/` altındaki yeni sayfaların yükleme planıdır. Sunucuya erişim ortamın proxy'si tarafından origin'e ulaşmadan HTTP CONNECT 403 ile engellendi; bu, sitenin kapalı olduğu anlamına gelmez. Hedef alan adı, klasör ve canlı adresler doğrulanmadan uygulamadaki boş web adresleri doldurulmaz.
+Önceki ZIP'in bağlantıları `izargames.com/dareflip/` içindi. Yeni paket, ekranda görülen alt alan adı ve klasöre göre `https://dareflip.izargames.com/dareflip/` bağlantılarıyla yeniden üretilir. `izargames.publisher-plan.json` bu hedefleri kaydeder; gerçek uygulama yapılandırması veya canlı yayın kanıtı değildir.
+
+Bu ortamdan yapılan HTTPS isteği proxy tarafından origin'e ulaşmadan HTTP CONNECT 403 ile engellendi. Bu, sitenin kapalı olduğunu göstermez. Plesk'in belge kökü eşleşmesi ve dört sayfanın gerçek HTTPS yanıtı henüz doğrulanmadığından uygulamadaki üç web adresi boş kalır.
 
 ## Hazırlanan dosyalar
 
-Mevcut sitenin ana dosyalarını veya başka uygulamaların sayfalarını değiştirmeden, ayrı `dareflip` klasöründe dört dosya kullanılacak:
+Dört bağımsız dosya kullanılır:
 
 - `index.html`: DareFlip yayıncı bilgileri.
 - `privacy.html`: gizlilik politikası.
 - `support.html`: destek ve iletişim.
 - `terms.html`: kullanım koşulları.
 
-Her dosya EN/TR içerik ve kendi CSS'ini içerir; harici script, font veya stylesheet gerektirmez. Seçilecek uygulama sürümüyle aynı reklam açıklamasına sahip paket kullanılmalıdır. Reklamlı ve reklamsız varyantlar ayrı hazırlanır; aynı klasöre birlikte yüklenmez.
+Her dosya EN/TR içerik ve kendi CSS'ini içerir; harici script, font veya stylesheet gerektirmez. Ekranda yüklenen paket reklamlı sürümdür. Buna uygun yeni yerel paket `DareFlip-subdomain-pages-ad-enabled.zip` adını taşır ve **yalnızca dört HTML dosyasını**, klasör veya yerel manifest eklemeden içerir. Bu seçim uygulamanın üretim reklam profilini veya gerçek AdMob kimliklerini otomatik tamamlamaz. Reklamsız yayın seçilirse aynı kaynaktan reklamsız metinler üretilmelidir; iki sürüm aynı hedefe birlikte yüklenmez.
 
 ```sh
-node scripts/build-public-pages.mjs --config site/izargames.publisher-plan.json --ads-enabled true --out-dir artifacts/legal-site/izargames-ad-enabled
-node scripts/build-public-pages.mjs --config site/izargames.publisher-plan.json --ads-enabled false --out-dir artifacts/legal-site/izargames-ad-free
+node scripts/build-public-pages.mjs --config site/izargames.publisher-plan.json --ads-enabled true --out-dir artifacts/legal-site/subdomain-ad-enabled
 ```
 
-Bu komutlar yalnızca yerel dosya üretir; sunucuya yüklemez, DNS değiştirmez ve alan adı sahipliği kanıtlamaz. Manifest `deploymentVerified: false` olarak kalır. Dosyalar yayıncı/sürüm kontrolünden sonra doğrulanan HTTPS web kökünün `dareflip` alt klasörüne yüklenmelidir; mevcut bir klasör varsa önce içeriği incelenir.
+Komut yerel HTML'leri ve yerel `build-manifest.json` dosyasını üretir; sunucuya yüklemez veya DNS değiştirmez. Manifest `deploymentVerified: false` olarak kalır. Yükleme ZIP'i yalnızca bu çıktının dört HTML dosyasını içerir; manifest kamuya açık dizine yüklenmez.
 
-## Hosting panelinden yükleme
+## Ekrandaki Plesk dizininden devam
 
-1. Uygulamanın seçilen reklam sürümüyle eşleşen ZIP'i indirin: reklamlı uygulama için `DareFlip-IzarGames-ad-enabled.zip`, reklamsız uygulama için `DareFlip-IzarGames-ad-free.zip`. Henüz yayın profili seçilmedi; iki paketi aynı hedefe yüklemeyin.
-2. Panelde **Alan Adları / Domains** bölümünden sitenin gerçek alan adını ve **Document Root / Belge Kökü** değerini kontrol edin. Dosya yöneticisinde o dizini açın. cPanel'de `public_html`, Plesk'te `httpdocs` olabilir; addon domain farklı bir klasör kullanabilir. Klasör adını varsaymayın.
-3. ZIP'i bilgisayarınızda açın. İçindeki yalnızca `dareflip` klasörünü web köküne yükleyin. Sonuç, örneğin doğrulanan web kökü `public_html` ise `public_html/dareflip/privacy.html` olmalıdır. Panel klasör yüklemeyi desteklemiyorsa web kökünde `dareflip` oluşturup dört HTML dosyasını içine yükleyin. Arşivi önceden oluşturulmuş `dareflip` klasörünün içinde açmayın; `dareflip/dareflip` şeklinde iç içe klasör oluşmamalıdır.
-4. Ana sitenin `index.html`, `.htaccess` veya diğer uygulama dosyalarına dokunmayın. Mevcut `dareflip` klasörü varsa içeriğini kontrol edip yedekleyin; bu pakete ait olmayan dosyaları silmeyin. ZIP, `YUKLEME.txt` ve `local-build-manifest.json` dosyalarını herkese açık web köküne yüklemek gerekmez.
-5. Tarayıcıdan gerçek alan adında `/dareflip/`, `/dareflip/privacy.html`, `/dareflip/support.html` ve `/dareflip/terms.html` adreslerini açın. Bir site yönlendirmesi bu adresler yerine ana sayfayı gösteriyorsa hosting panelindeki yol/yönlendirme ayarını kontrol edin; başka uygulamaları etkileyen genel kuralları değiştirmeyin.
+1. Plesk'te **Hosting Settings / Barındırma Ayarları → Document Root / Belge Kökü** alanının ekranda görülen alt alan adı dizinine işaret ettiğini doğrulayın. Ana alan adının `httpdocs` dizinine veya başka uygulamaların klasörlerine taşımayın.
+2. Ekrandaki **`dareflip` klasörünü açın**. İçinde önceki paketin `index.html`, `privacy.html`, `support.html`, `terms.html` dosyaları bulunmalıdır. Değiştirmeden önce mevcut dört dosyanın kopyasını yerel olarak saklayın.
+3. Yeni `DareFlip-subdomain-pages-ad-enabled.zip` dosyasını bu klasöre yükleyip **Archive → Extract Files** ile aynı klasöre açın; yalnızca bu dört HTML dosyasının değiştirilmesine izin verin. Paket içinde ek klasör bulunmadığından `dareflip/dareflip` oluşmaz. Panel bunu desteklemiyorsa ZIP'i bilgisayarda açıp dört dosyayı bu klasöre yükleyin.
+4. Sonuç `dareflip.izargames.com/dareflip/privacy.html` şeklinde olmalıdır. Üst dizindeki `index.html`, `.htaccess` ve diğer uygulama dosyalarına dokunmayın.
+5. Yeni ZIP'i açtıktan sonra sunucudaki yükleme ZIP'lerini ve önceki paketten üst dizine açılan `YUKLEME.txt` ile `local-build-manifest.json` dosyalarını kaldırabilir veya web kökü dışında saklayabilirsiniz. Kendi yedeğinizi koruyun; başka dosya veya klasörleri silmeyin.
 
 ## Yükleme sonrası
 
-Gerçek tarayıcıdan dört adresin HTTPS üzerinden 200 döndüğünü, doğru IzarGames iletişim bilgisini, iki dili ve seçilen reklam sürümünü gösterdiğini kontrol edin. Ardından doğrulanan web/gizlilik/destek adresleri `src/config/publisher.json` içine alınır ve uygulama yeniden hazırlanır. Şifre veya özel SSH anahtarı sohbet içinde paylaşılmaz.
+Tarayıcıdan şu dört hedefi ayrı ayrı kontrol edin:
+
+- `https://dareflip.izargames.com/dareflip/`
+- `https://dareflip.izargames.com/dareflip/privacy.html`
+- `https://dareflip.izargames.com/dareflip/support.html`
+- `https://dareflip.izargames.com/dareflip/terms.html`
+
+Gerçek yanıtlar HTTPS üzerinden 200 olmalı; Plesk karşılama sayfası veya ana sayfaya yönlendirme yerine doğru EN/TR DareFlip metinleri, IzarGames ve `info@izargames.com` görünmelidir. Menü bağlantıları aynı alt alan adındaki bu sayfalara gitmelidir. Eski apex alan adına giden bağlantılar kalmamalıdır. Başka uygulamaları etkileyen genel yönlendirme kurallarını değiştirmeyin.
+
+Canlı adresler doğrulandıktan sonra web/gizlilik/destek adresleri `src/config/publisher.json` içine alınır ve uygulama yeniden hazırlanır. Bu yerel paket için henüz canlı yayın doğrulaması, native uygulama derlemesi veya App Store gönderimi yapılmadı. Şifre veya özel anahtar sohbet içinde paylaşılmaz.

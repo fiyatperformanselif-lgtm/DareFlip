@@ -1,13 +1,13 @@
 {
   "name": "IzarGames",
   "supportEmail": "info@izargames.com",
-  "websiteUrl": "https://izargames.com/dareflip/",
-  "privacyUrl": "https://izargames.com/dareflip/privacy.html",
-  "supportUrl": "https://izargames.com/dareflip/support.html",
-  "termsUrl": "https://izargames.com/dareflip/terms.html",
+  "websiteUrl": "https://dareflip.izargames.com/dareflip/",
+  "privacyUrl": "https://dareflip.izargames.com/dareflip/privacy.html",
+  "supportUrl": "https://dareflip.izargames.com/dareflip/support.html",
+  "termsUrl": "https://dareflip.izargames.com/dareflip/terms.html",
   "deployment": {
     "status": "planned",
     "liveVerified": false,
-    "note": "Proposed separate DareFlip folder on the publisher's server. The email domain identifies the proposed host; the actual website host and document root have not been verified. These URLs are not activated in the application."
+    "note": "The publisher's Plesk screenshot identifies dareflip.izargames.com and an extracted dareflip folder. These planned URLs preserve that observed layout and replace the earlier apex-domain plan. The corrected pages have only been generated locally; document-root mapping and public HTTPS responses remain unverified. These URLs are not activated in the application."
   }
 }
