@@ -3,7 +3,10 @@
 import importlib.util
 import json
 from pathlib import Path
+import re
+import subprocess
 import sys
+import textwrap
 import unittest
 from unittest.mock import patch
 import xml.etree.ElementTree as ET
@@ -18,6 +21,18 @@ class CodemagicMetadataTests(unittest.TestCase):
     def setUp(self):
         # Fixtures only, never used as signing/account configuration.
         self.values = {'BUNDLE_ID': 'test.fixture.app', 'APPLE_TEAM_ID': 'TESTTEAM01', 'APP_STORE_APPLE_ID': '123'}
+
+    def test_all_workflow_shell_scripts_have_valid_bash_syntax(self):
+        source = (ci.ROOT / 'codemagic.yaml').read_text()
+        # This repository keeps every script in an 8-space-indented literal block.
+        # Count all script keys too, so a new/unsupported form cannot be skipped.
+        blocks = re.findall(r'(?m)^ {8}script: \|\n((?: {10}[^\n]*\n|[ \t]*\n)+)', source)
+        self.assertGreater(len(blocks), 0)
+        self.assertEqual(len(blocks), len(re.findall(r'(?m)^ +script:', source)))
+        for index, block in enumerate(blocks, start=1):
+            with self.subTest(script=index):
+                result = subprocess.run(['bash', '-n'], input=textwrap.dedent(block), text=True, capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr)
 
     def test_required_metadata_rejects_missing_values(self):
         for key in self.values:

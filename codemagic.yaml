@@ -102,7 +102,7 @@ workflows:
       - name: Validate iOS release before compiling
         script: |
           set -euo pipefail
-          : "${DAREFLIP_RELEASE_PROFILE:?Set the intended profile in this workflow's variables}"
+          : "${DAREFLIP_RELEASE_PROFILE:?Set the intended profile in the workflow variables}"
           : "${VITE_ADS_ENABLED:?Set false for ad-free or true for production-ads in this workflow}"
           npm ci
           node scripts/check-release.mjs --platform ios --profile "$DAREFLIP_RELEASE_PROFILE"
