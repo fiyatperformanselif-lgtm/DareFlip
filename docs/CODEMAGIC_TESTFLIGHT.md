@@ -66,7 +66,7 @@ Apple yüklemeyi işledikten sonra App Store Connect → DareFlip → TestFlight
 
 ## Mevcut doğrulama sınırı
 
-Uygulamanın web kontrolleri ve iOS payload/sync komutu Linux'ta denenmiştir. YAML ve CI yardımcıları ayrıca yerel olarak denetlenmiştir. Codemagic uygulaması, Apple entegrasyonu, sertifika/profil ve iki hesap değişkeni kullanıcı tarafından bağlanmadan burada bulut build'i veya TestFlight yüklemesi başlatılamaz. Başarılı Git push, başarılı Apple yüklemesi anlamına gelmez.
+Uygulamanın web kontrolleri ve iOS payload/sync komutu Linux'ta denenmiştir. YAML ve CI yardımcıları ayrıca yerel olarak denetlenmiştir. Kullanıcının 27 Kasım 2026'da paylaştığı ekran, `3748094` için `ios-app-store` run index 2'nin **finished** olduğunu, imzalı archive/export ve Publishing adımlarının tamamlandığını, `App.ipa` çıktısının 3.67 MB olduğunu gösteriyor. Bu, çalışan bulut derleme/yükleme akışına ilişkin kullanıcı kanıtıdır; bu ortamdan kimlik doğrulamalı IPA veya Apple hesabı doğrudan incelenmedi. Gerçek sürüm/build numarası ve işlenme durumu App Store Connect → DareFlip → TestFlight ekranından okunmalıdır. Codemagic index 2, uygulamanın build numarası olarak kabul edilmez. Apple incelemesi, cihaz testi ve herkese açık yayın ayrıca doğrulanır.
 
 Kodlama, imzalama veya yükleme hatasını paylaşırken `.p8`, sertifika özel anahtarı, parolalar, oturum çerezleri ve API token'larını gizleyin. Kodun tamamı ve mevcut test/ürün kapsamı `DEVELOPMENT_STATUS.md` içinde açıklanmıştır.
 
