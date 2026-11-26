@@ -2371,6 +2371,20 @@ button:active:not(:disabled) {
   .tile-arrow {
     right: 8px;
   }
+  .choice-buttons > button {
+    flex: 1;
+    min-width: 0;
+    width: auto;
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px 4px;
+  }
+  .choice-buttons > button > svg:first-child {
+    margin-inline-end: 0;
+  }
+  .choice-buttons > button > svg:last-child {
+    display: none;
+  }
   .play-card-inner {
     padding: 21px 18px;
   }

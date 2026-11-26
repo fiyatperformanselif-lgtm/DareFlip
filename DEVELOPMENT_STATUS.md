@@ -22,7 +22,7 @@ AdMob services are native-only and explicitly enabled. UMP `canRequestAds` gates
 | TypeScript | `npm run typecheck` passed |
 | Lint | `npm run lint` passed; generated native/build/test reports excluded |
 | Unit tests | **71 passed** across domain/content/archive integrity/storage, player metadata, state validation/migration, i18n and mocked ad-service contracts |
-| Browser game matrix | **54/54 passed**, Chromium at iPhone/Android/iPad viewport sizes; covers all modes/difficulties, player limits, cards, exhaustion, skip, favorites, persistence, adult gate, settings/legal/privacy, no web ads, reward failure and real PNG export |
+| Browser game matrix | **75/75 passed**, Chromium at iPhone/Android/iPad viewport sizes; includes 21 focused Flirty EN/TR/difficulty, repeat/exhaustion/reset, skip, persistence and narrow-screen checks, alongside the full game matrix |
 | Targeted final copy regression | **6/6 passed** after clarifying the pause dialog’s Back button |
 | Screenshot regeneration | **3/3 passed**, 15 actual application PNGs under `artifacts/screenshots` |
 | Production offline checks | **2/2 passed**: service-worker cold reload/resume/play without network or third-party requests; storage-denied play with visible warning |
@@ -92,3 +92,11 @@ All 192 active concepts were rewritten in English and Turkish, including all 12 
 Fresh revision IDs keep existing favorites and the current saved card on their original trusted text. New draws/daily cards only use the new catalog, and current Turkish play has no missing-card fallback. The old gender-completion migration, card repeat history, entitlement checks and sensitive-favorite ad suppression continue to support archived IDs without accepting altered saved text.
 
 Verification: 71 unit tests, 54 E2E tests across three Chromium phone/tablet profiles, 11 accessibility tests and 2 production offline tests passed. Separate narrow-phone and landscape checks verified the longest EN/TR prompts are fully readable and Next/Skip remain reachable; TypeScript, lint, production beta build and iOS sync passed. A new signed Codemagic/TestFlight build and real-device playtesting of the revised content remain necessary; this task did not upload a native beta.
+
+## Focused Flirty review and narrow-screen correction — 26 November 2026
+
+The user clarified that the intended 18+ experience is a private game between partners. The existing 36 Flirty concepts, despite their EN/TR rewrite, are predominantly dating conversations and verbal/imagined Dares. There is no bedroom pack, and the current content does not meet that clarified product goal. No explicit sexual content was added during this testing pass. Editorial gaps are recorded in `docs/TEST_REPORT_2026_11_26.md`.
+
+Independent live checks found a real Turkish Truth/Dare choice-screen overflow at 320px after skipping a Bold card (`.main` scroll width 339px). Choices now share the available width at up to 360px and place their icons above the labels; the corrected screen measures 320px without clipping. Card, choice, skip and next controls were checked in portrait and landscape, with no uncaught JavaScript errors.
+
+Added 21 focused Flirty browser checks across English/Turkish, all three difficulties and the three phone/tablet profiles. Each pool is played through completely, including explicit exhaustion/reset, age acknowledgement, free skips, saved current card/favorites and reload/resume. Final verification: **75/75 E2E, 71/71 unit, 11/11 accessibility, 2/2 production offline and 8/8 Codemagic helper tests passed**; lint, TypeScript, production beta build and iOS sync passed. These are Chromium and mocked-service checks, not direct execution of the installed TestFlight app or native SDK certification. The earlier Android APK remains a historical build.
