@@ -21,7 +21,11 @@
     "test:a11y": "playwright test -c tests/accessibility/playwright.config.ts",
     "setup:android": "bash scripts/setup-android.sh",
     "build:android": "npm run native:sync && python3 scripts/android-build.py",
-    "beta:ios": "node scripts/prepare-ios-beta.mjs"
+    "beta:ios": "node scripts/prepare-ios-beta.mjs",
+    "release:ios": "node scripts/prepare-ios-release.mjs",
+    "public:build": "node scripts/build-public-pages.mjs",
+    "test:release": "node --test scripts/release-checks.test.mjs site/build-public-pages.test.mjs && python3 scripts/ios-ad-profile-tests.py",
+    "test:store-ui": "playwright test -c playwright.release.config.ts"
   },
   "dependencies": {
     "@capacitor-community/admob": "8.4.2",

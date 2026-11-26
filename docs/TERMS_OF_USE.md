@@ -1,21 +1,41 @@
 # DareFlip Terms of Use
 
-Draft for publisher review. Last updated: 26 November 2026.
+Publisher-review template. Last updated: 26 November 2026.
 
-Publisher/legal entity and support contact: **[REQUIRED BEFORE PUBLICATION]**
+Publisher: **{{PUBLISHER_NAME}}**
+Contact: **{{SUPPORT_EMAIL}}**
+Website: {{WEBSITE_URL}}
+Privacy: {{PRIVACY_URL}}
+Support: {{SUPPORT_URL}}
 
-DareFlip is intended for adults and includes social games and a separate private game for two adult partners. By playing, you agree to participate voluntarily and respectfully. A player may skip any question or activity, withdraw consent, or leave at any time without explanation or a game penalty. Never pressure another person to participate.
+Unresolved fields mean publisher configuration is incomplete. Do not publish this template with replacement tokens. Publisher identity, rights, applicable consumer disclosures and jurisdiction-specific terms require publisher/legal review before publication.
 
-Flirty 18+ is exclusively for two partners who are each at least 18 and independently choose to play a private intimate card game together. It contains adult-partner content. Each partner must make their own confirmation before a new private game begins; these declarations are not identity or age verification. Agreeing to start the game does not mean agreeing to any particular activity. Every activity requires both partners to be willing at that moment, and either partner may stop immediately. First-person wording on private cards, such as “me” or “my,” refers to the other partner.
+## Voluntary play
 
-Random excludes private Flirty cards. Choosing a social mode or a Random game does not opt anyone into private-partner content. Saved cards from an earlier edition retain their original wording; a preserved group game does not authorize access to new two-partner cards.
+DareFlip is intended for adults. Social modes support 2–20 players. Private Flirty is exclusively for two adult partners, each confirming being at least 18 and wanting to play a private intimate card game together. It includes private adult-partner content. The confirmations are declarations, not independent age verification.
 
-Do not use the game for dangerous, unlawful, humiliating, discriminatory, or nonconsensual activities. Do not perform an activity when your circumstances make it unsafe. No card overrides a participant's boundaries or applicable law.
+Starting a session does not mean agreeing to any particular activity. Both partners must be willing at that moment. Anyone can skip a card, stop or leave without explanation or a game penalty. Never pressure another person. No card overrides a person's current boundaries or applicable law. First-person wording on private cards, such as “me” or “my,” refers to the other partner.
 
-The game and its artwork, branding, software, and content are protected by applicable intellectual-property law. You may share individual cards through the in-app share function for personal, noncommercial use. Share private content only with the agreement of both partners and respect the destination service's rules. Ownership and licensing details, including rights in supplied content, must be finalized by the publisher before release. Third-party software remains subject to its respective licenses.
+Random excludes private Flirty cards. Selecting a social or Random game does not opt anyone into private content. Earlier saved cards and favorites keep their own wording; preserving a group save does not authorize a new private session.
 
-DareFlip does not require an account or internet access for core gameplay. Local progress and favorites may be lost after clearing device storage, uninstalling, or device failure. Optional advertising and rewarded packs depend on availability. Declining an ad or leaving before a reward is earned does not restrict the core game. This version includes no subscriptions or in-app purchases.
+## Responsible use
 
-The service is provided as available, subject to nonwaivable consumer rights. To the extent permitted by law, the publisher does not guarantee uninterrupted availability or compatibility with every device. These terms do not exclude statutory rights or liabilities that cannot legally be excluded.
+Do not use the game for dangerous, unlawful, humiliating, discriminatory or nonconsensual activities. Do not perform an activity when circumstances make it unsafe. Players remain responsible for how they choose to use the game.
 
-The publisher must supply its legal identity, contact details, applicable consumer disclosures, and jurisdiction-specific provisions with qualified legal review before publication. Apple and Google platform terms may also apply. Material changes to these terms should be dated and communicated in the app.
+## Content and sharing
+
+Software, artwork, branding and content are subject to applicable intellectual-property rights and third-party licenses. Individual cards may be shared through the app for personal, noncommercial use, subject to those rights and the destination service's rules. Share private-partner content only with both partners' agreement. The publisher must establish the necessary rights in supplied material before release.
+
+## Offline use, storage and services
+
+No account is required for core gameplay. Progress and preferences are stored locally and can be lost after clearing storage, uninstalling, or device failure. Resetting local data cannot be undone by signing in because there is no gameplay account or recovery server. Device backups may retain separate copies.
+
+{{ADS_TERMS_SECTION}}
+
+This version has no subscriptions or in-app purchases. Share destinations and device/platform services have their own terms.
+
+## Availability and legal rights
+
+The app is provided as available, subject to mandatory consumer protections. To the extent permitted by applicable law, uninterrupted availability or compatibility with every device is not guaranteed. These terms do not exclude rights or liabilities that cannot legally be excluded.
+
+Material changes should be dated and communicated through the app or publisher website. Questions about these terms or use of DareFlip can be sent to {{SUPPORT_EMAIL}}. Apple and Google platform terms may also apply. A page build does not establish publication, legal sufficiency or store approval.

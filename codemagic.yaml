@@ -60,3 +60,68 @@ workflows:
         # Upload only. Select testers / approve external beta review yourself in App Store Connect.
         submit_to_testflight: false
         submit_to_app_store: false
+
+  # Release preparation is intentionally separate from the test-inventory beta flow.
+  # Choose the product profile explicitly in dareflip_release; there is no default.
+  ios-app-store:
+    name: DareFlip · App Store candidate upload (manual)
+    instance_type: mac_mini_m2
+    max_build_duration: 90
+    integrations:
+      app_store_connect: "Kahvehanem ASC"
+    environment:
+      groups:
+        - dareflip_beta # Existing APPLE_TEAM_ID and APP_STORE_APPLE_ID
+        - dareflip_release # Explicit profile/ads flag; production IDs only if ads are chosen
+      vars:
+        BUNDLE_ID: *bundle_id
+        XCODE_PROJECT: ios/App/App.xcodeproj
+        XCODE_SCHEME: App
+        VITE_ADMOB_TESTING: "false"
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: *bundle_id
+      node: "24.22.3"
+      xcode: latest
+    scripts:
+      - name: Install CLI and verify Apple app identity
+        script: |
+          set -euo pipefail
+          python3 -m venv "$CM_BUILD_DIR/.codemagic-tools"
+          "$CM_BUILD_DIR/.codemagic-tools/bin/python" -m pip install 'codemagic-cli-tools==0.72.0'
+          export PATH="$CM_BUILD_DIR/.codemagic-tools/bin:$PATH"
+          echo "PATH=$PATH" >> "$CM_ENV"
+          python3 scripts/codemagic-tests.py
+          python3 scripts/codemagic-ios.py check
+      - name: Validate iOS release before compiling
+        script: |
+          set -euo pipefail
+          : "${DAREFLIP_RELEASE_PROFILE:?Choose ad-free or production-ads explicitly in dareflip_release}"
+          : "${VITE_ADS_ENABLED:?Set false for ad-free or true for production-ads}"
+          npm ci
+          node scripts/check-release.mjs --platform ios --profile "$DAREFLIP_RELEASE_PROFILE"
+          npm run lint
+          npm test
+          DAREFLIP_BUNDLE_ID="$BUNDLE_ID" npm run release:ios
+          python3 scripts/codemagic-ios.py prepare
+      - name: Apply distribution signing and resolve release dependencies
+        script: |
+          set -euo pipefail
+          xcode-project use-profiles --project "$XCODE_PROJECT" --archive-method app-store
+          python3 scripts/codemagic-ios.py verify-profile
+          xcodebuild -resolvePackageDependencies -project "$XCODE_PROJECT" -scheme "$XCODE_SCHEME"
+      - name: Archive and export the signed store candidate
+        script: |
+          set -euo pipefail
+          xcode-project build-ipa --project "$XCODE_PROJECT" --scheme "$XCODE_SCHEME" --config Release
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - build/ios/xcarchive/**/*.xcarchive
+      - /tmp/xcodebuild_logs/*.log
+      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
+    publishing:
+      app_store_connect:
+        auth: integration
+        # Candidate upload only: App Store Connect review and release stay manual.
+        submit_to_testflight: false
+        submit_to_app_store: false

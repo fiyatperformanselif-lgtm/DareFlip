@@ -2,8 +2,22 @@ import { spawnSync } from "node:child_process";
 import { fileURLToPath, URL } from "node:url";
 import { existsSync } from "node:fs";
 const root = fileURLToPath(new URL("../", import.meta.url));
-const env = { ...process.env, VITE_ADMOB_TESTING: "true" };
+const env = {
+  ...process.env,
+  VITE_ADS_ENABLED: "true",
+  VITE_ADMOB_TESTING: "true",
+};
 for (const [command, args] of [
+  [
+    "python3",
+    [
+      "scripts/ios-ad-profile.py",
+      "--profile",
+      "beta",
+      "--plist",
+      "ios/App/App/Info.plist",
+    ],
+  ],
   ["npm", ["run", "build"]],
   ["npx", ["cap", "sync", "ios"]],
 ]) {

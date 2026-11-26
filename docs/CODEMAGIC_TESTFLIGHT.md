@@ -71,3 +71,34 @@ Uygulamanın web kontrolleri ve iOS payload/sync komutu Linux'ta denenmiştir. Y
 Kodlama, imzalama veya yükleme hatasını paylaşırken `.p8`, sertifika özel anahtarı, parolalar, oturum çerezleri ve API token'larını gizleyin. Kodun tamamı ve mevcut test/ürün kapsamı `DEVELOPMENT_STATUS.md` içinde açıklanmıştır.
 
 Resmi kaynaklar: [Codemagic App Store Connect publishing](https://docs.codemagic.io/yaml-publishing/app-store-connect/), [iOS signing](https://docs.codemagic.io/yaml-code-signing/signing-ios/), [code signing identities](https://docs.codemagic.io/partials/code-signing-identities/).
+
+## Mağaza adayı için ayrı akış: `ios-app-store`
+
+`ios-testflight` test reklamlı beta akışı olarak kalır. Mağaza adayı için `ios-app-store` akışını **elle** başlatın. Bu akış da yalnızca imzalı adayı App Store Connect'e yükler: beta incelemesine, App Store incelemesine veya herkese açık yayına otomatik göndermez.
+
+Önce Codemagic'te `dareflip_release` adlı değişken grubunu oluşturun. Reklam modeli için varsayılan seçim yoktur; yayıncı şu iki açık profilden birini seçmelidir:
+
+| Değişken | Reklamsız aday | Gerçek reklamlı aday |
+| --- | --- | --- |
+| `DAREFLIP_RELEASE_PROFILE` | `ad-free` | `production-ads` |
+| `VITE_ADS_ENABLED` | `false` | `true` |
+| `VITE_ADMOB_TESTING` | Akış tarafından `false` | Akış tarafından `false` |
+| `ADMOB_IOS_APP_ID` | Gerekmez | Yayıncıya ait gerçek iOS uygulama kimliği (`~`) |
+| `VITE_ADMOB_IOS_BANNER` | Gerekmez | Gerçek banner birim kimliği (`/`) |
+| `VITE_ADMOB_IOS_INTERSTITIAL` | Gerekmez | Gerçek interstitial birim kimliği (`/`) |
+| `VITE_ADMOB_IOS_REWARDED` | Gerekmez | Gerçek rewarded birim kimliği (`/`) |
+
+İki profil de mevcut `dareflip_beta` grubundaki gerçek `APPLE_TEAM_ID`/`APP_STORE_APPLE_ID` ve kayıtlı dağıtım sertifikası/profilini kullanır. Uygulama ve reklam kimlikleri herkese açık yapılandırma değerleridir; API özel anahtarları ve imzalama anahtarları yalnızca güvenli Codemagic alanlarında tutulur.
+
+Yeni akış, **derlemeden önce** iOS yayın ön kontrolünü çalıştırır. Yayıncı bilgileri, politika/destek bağlantıları, içerik ve seçilen reklam profili ön kontrolü geçmeden web paketi veya native archive üretilmez. `release:ios` komutu aynı ön kontrolü kendi içinde de uygular; doğrudan çağrı geçidi atlamaz:
+
+```sh
+# Bu bir profil seçimi örneğidir; tamamlanmış yayıncı/ürün ayarlarının yerini tutmaz.
+DAREFLIP_RELEASE_PROFILE=ad-free VITE_ADS_ENABLED=false VITE_ADMOB_TESTING=false npm run release:ios
+```
+
+`ad-free`, JavaScript'teki reklam çağrılarını kapatmakla yetinmez: Capacitor plugin allowlist'inden AdMob'u çıkarır, SwiftPM köprüsünü dört temel eklentiyle yeniden üretir ve iOS Info.plist'ten GAD/ATT/SKAdNetwork reklam anahtarlarını kaldırır. Üretilen bağımlılık listesi doğrulanır. `production-ads`, örnek kimlikleri kabul etmez; yayıncıya ait uygulama/birim kimlikleri ve gözden geçirilmiş SDK/UMP gizlilik ayarları gerekir. İsteğe bağlı `IOS_TRACKING_USAGE_DESCRIPTION` yalnızca yayıncı tarafından gözden geçirilmiş bir ATT açıklamasıdır; mevcut arayüz ATT izni istemediğinden varsayılan olarak eklenmez.
+
+Beta hazırlama komutu (`npm run beta:ios`) özellikle test modunu yeniden kurar: AdMob eklentisini ve resmi örnek uygulama kimliği/ATT açıklamasını geri getirir. Bu nedenle yalnızca YAML'de `VITE_ADMOB_TESTING` değerini değiştirmek beta akışını mağaza akışına dönüştürmez; mağaza için `release:ios`/`ios-app-store` kullanın.
+
+Linux'ta `python3 scripts/ios-ad-profile-tests.py` ile bağımsız geçici proje üzerinde gerçek Capacitor sync doğrulanmıştır: reklamsız SwiftPM/plugin listesi, reklam anahtarlarının kaldırılması, tekrarlı çalıştırmada aynı sonuç ve beta yapılandırmasına dönüş. Bu kontrol bir iOS derlemesi, imza, IPA incelemesi veya cihaz testi değildir. Yeni mağaza akışının gerçek Codemagic sonucu ve Apple işlem/inceleme durumu ayrıca doğrulanmalıdır.

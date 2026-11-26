@@ -878,6 +878,29 @@ button:active:not(:disabled) {
   line-height: 1.65;
   margin: 16px 0 24px;
 }
+.support-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-height: 44px;
+  padding: 12px;
+  margin-top: 12px;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+.support-link span {
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+.legal-text a {
+  color: #ffc2dc;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  overflow-wrap: anywhere;
+}
 .partner-checks {
   display: grid;
   gap: 10px;

@@ -53,7 +53,7 @@ export function interstitialEligible(
   );
 }
 
-/** No ad SDK call is made on web, before an explicit opt-in, or without UMP canRequestAds. */
+/** No ad SDK call is made when disabled, on web, before opt-in, or without UMP canRequestAds. */
 export class AdsManager {
   state: AdState = "off";
   private permitted = false;
@@ -76,6 +76,7 @@ export class AdsManager {
     private units: AdUnits,
     private testing: boolean,
     private clock: () => number = Date.now,
+    readonly enabled: boolean = true,
   ) {
     this.lastShown = clock();
   }
@@ -88,7 +89,7 @@ export class AdsManager {
   }
   private publishBannerSize(height: number): void {
     this.bannerHeight =
-      this.permitted && this.banner && Number.isFinite(height)
+      this.enabled && this.permitted && this.banner && Number.isFinite(height)
         ? Math.max(0, height)
         : 0;
     this.bannerSizeListeners.forEach((listener) => listener(this.bannerHeight));
@@ -101,6 +102,7 @@ export class AdsManager {
   async enableAds({
     attOptIn = false,
   }: { attOptIn?: boolean } = {}): Promise<AdState> {
+    if (!this.enabled) return (this.state = "off");
     if (this.platform === "web") return (this.state = "web");
     if (this.busy) return this.state;
     if (!this.validUnits()) return (this.state = "unavailable");
@@ -158,8 +160,9 @@ export class AdsManager {
     this.permitted = false;
     this.state = "off";
     this.publishBannerSize(0);
-    if (this.banner) {
-      this.banner = false;
+    const hadBanner = this.banner;
+    this.banner = false;
+    if (hadBanner && this.enabled) {
       try {
         await this.plugin.removeBanner();
       } catch {
@@ -168,6 +171,7 @@ export class AdsManager {
     }
   }
   async privacyOptions(): Promise<AdState> {
+    if (!this.enabled) return (this.state = "off");
     if (this.platform === "web") return (this.state = "web");
     await this.disableAds();
     try {
@@ -180,6 +184,12 @@ export class AdsManager {
   }
   async updatePlacement(placement: AdPlacement): Promise<void> {
     this.placement = placement;
+    if (!this.enabled) {
+      this.banner = false;
+      this.state = "off";
+      this.publishBannerSize(0);
+      return;
+    }
     const shouldShow = this.permitted && placement.menu && !placement.sensitive;
     if (!shouldShow) {
       if (this.banner) {
@@ -220,6 +230,7 @@ export class AdsManager {
   }
   async maybeInterstitial(context: AdContext): Promise<boolean> {
     if (
+      !this.enabled ||
       !this.permitted ||
       this.busy ||
       !interstitialEligible(context, this.clock(), this.lastShown)
@@ -250,7 +261,13 @@ export class AdsManager {
     }
   }
   async rewarded(): Promise<boolean> {
-    if (!this.permitted || this.busy || this.placement.sensitive) return false;
+    if (
+      !this.enabled ||
+      !this.permitted ||
+      this.busy ||
+      this.placement.sensitive
+    )
+      return false;
     this.busy = true;
     const token = this.generation;
     try {
@@ -286,7 +303,8 @@ export function selectAdConfig(
   platform: string,
   development: boolean,
   env: Record<string, string | undefined>,
-): { units: AdUnits; testing: boolean } {
+): { units: AdUnits; testing: boolean; enabled: boolean } {
+  const enabled = env.VITE_ADS_ENABLED !== "false";
   const testing = development || env.VITE_ADMOB_TESTING === "true";
   const suffix = platform === "ios" ? "IOS" : "ANDROID";
   const units = testing
@@ -296,12 +314,16 @@ export function selectAdConfig(
         interstitial: env[`VITE_ADMOB_${suffix}_INTERSTITIAL`] || "",
         rewarded: env[`VITE_ADMOB_${suffix}_REWARDED`] || "",
       };
-  return { units, testing };
+  return { units, testing, enabled };
 }
 const config = selectAdConfig(platform, import.meta.env.DEV, import.meta.env);
+/** Build-time ad-free switch; UI can omit ad controls without changing saved preferences. */
+export const advertisingEnabled = config.enabled;
 export const ads = new AdsManager(
   AdMob,
   platform,
   config.units,
   config.testing,
+  undefined,
+  config.enabled,
 );

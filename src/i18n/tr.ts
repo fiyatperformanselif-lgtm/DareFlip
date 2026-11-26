@@ -188,6 +188,12 @@ export const tr: Dictionary = {
     "Rızayla oyna. Herkesin sınırlarına saygı göster. İstediğin kartı istediğin an geç.",
   "legal.adult":
     "Flört modu iki yetişkin partnere özel yakınlık içeriği sunar; yalnızca 18 yaş ve üzeri, birlikte oynamaya rıza gösteren iki kişi içindir. Her kart isteğe bağlıdır; rıza her an geri alınabilir.",
+  "legal.publisherPending": "Yayıncı bilgileri bekleniyor",
+  "legal.publicPrivacy": "Gizlilik politikasını web'de aç",
+  "legal.emailSupport": "E-posta ile destek",
+  "legal.supportWebsite": "Destek sitesi",
+  "packs.adFree":
+    "Bu sürüm reklamsızdır. Dahil edilen kartlarla çevrimdışı oynayabilirsin.",
   "common.or": "veya",
   "common.back": "Geri",
   "common.close": "Kapat",

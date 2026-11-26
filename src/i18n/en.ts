@@ -187,6 +187,12 @@ export const en = {
     "Play with consent. Respect everyone’s boundaries. Skip any card at any time.",
   "legal.adult":
     "Flirty contains private adult-partner content and is only for two consenting adults aged 18 or older. Every card is optional, and consent can be withdrawn at any time.",
+  "legal.publisherPending": "Publisher details pending",
+  "legal.publicPrivacy": "View public privacy policy",
+  "legal.emailSupport": "Email support",
+  "legal.supportWebsite": "Support website",
+  "packs.adFree":
+    "This edition has no ads. The included collection works offline.",
   "common.or": "or",
   "common.back": "Back",
   "common.close": "Close",

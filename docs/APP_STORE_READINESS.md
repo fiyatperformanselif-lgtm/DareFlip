@@ -2,6 +2,8 @@
 
 Assessed application source: `6042750f23a4d58d2c37455edc91c996627da27b`.
 
+This is the assessment snapshot for that beta artifact. Later technical preparation adds explicit store profiles and configurable legal/support pages; see [RELEASE_SETUP.md](RELEASE_SETUP.md). No production profile, publisher identity or final content decision is implied by adding that infrastructure.
+
 **Decision: hold public submission.** Passing software tests and producing a signed beta IPA do not establish App Store readiness. No App Store submission, Apple approval or public release was performed during this assessment. The active card texts were not changed.
 
 ## Evidence and its limits

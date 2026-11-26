@@ -12,7 +12,9 @@ jobs:
       - run: npm ci
       - run: npm run typecheck && npm run lint && npm test && npm run build
       - run: python3 scripts/codemagic-tests.py
+      - run: npm run test:release
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
+      - run: npm run test:store-ui
       - run: npm run test:offline
       - run: npm run test:a11y

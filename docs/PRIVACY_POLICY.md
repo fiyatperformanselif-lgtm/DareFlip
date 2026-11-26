@@ -1,38 +1,45 @@
 # DareFlip Privacy Policy
 
-Draft for publisher review. Last updated: 26 November 2026.
+Publisher-review template. Last updated: 26 November 2026.
 
-Publisher/legal entity: **[REQUIRED BEFORE PUBLICATION]**
-Privacy contact: **[REQUIRED BEFORE PUBLICATION]**
+Publisher: **{{PUBLISHER_NAME}}**
+Privacy contact: **{{SUPPORT_EMAIL}}**
+Website: {{WEBSITE_URL}}
+Public privacy policy: {{PRIVACY_URL}}
+Support: {{SUPPORT_URL}}
 
-DareFlip is an offline Truth or Dare game. You do not need an account. The game does not operate an application backend and does not upload the names, gender choices, answers, favorite cards, settings, or game progress you enter to a DareFlip server. Answers are spoken; the app does not record them.
+Unresolved fields mean the publisher configuration is incomplete. Do not publish this template with replacement tokens. The standalone public-page generator requires actual publisher details and an explicit advertising mode before producing pages.
 
-## Data stored on your device
+## Gameplay and information
 
-Player names, explicit gender choices, selected mode, language, settings, favorites, unlocked bonus packs, private-session acknowledgement and the current session are stored locally. Each player can explicitly choose Woman, Man, Non-binary, or Prefer not to say. Gender choices are not inferred from names and are not sent to advertising services. They are used to run the game and resume it. You can erase them using the app's Reset local data control, by clearing application data, or by uninstalling. Operating-system backups may retain a copy according to your device's backup settings; review those settings if you share a device.
+DareFlip is an offline Truth or Dare game. No account is required, and the game has no application backend that receives gameplay data. Names, explicit gender choices, favorites, settings and session progress are not uploaded to a DareFlip server. Answers are spoken between players; the app does not record them.
 
-## Optional advertising
+Social modes support 2–20 players. Private Flirty is restricted to exactly two adult partners, each making a separate named confirmation that they are at least 18 and want to play. Random excludes private Flirty. Consent to start a session does not mean consent to an activity: both partners must still be willing at that moment, and either can stop or skip without explanation or penalty.
 
-Advertising is optional. The core game works if you decline it, stay offline, or an ad cannot load. The web preview does not request native ads.
+## Information stored locally
 
-Native editions integrate Google AdMob and Google's User Messaging Platform (UMP). No ad request is made until you explicitly enable ads and UMP reports that requests are permitted. Google's consent form and privacy options allow choices required in your region. You may disable ads at any time in Settings. iOS App Tracking Transparency is separate and optional; declining tracking does not prevent play. Requests in this implementation ask for nonpersonalized ads, which can still use device storage and data for delivery, security, frequency controls, and measurement under Google's policies.
+Player names, explicit gender choices, mode, difficulty, language, preferences, favorites, unlocked bonus packs, private-session acknowledgement and the current session are stored on the device to run and resume the game. Each player chooses Woman, Man, Non-binary, or Prefer not to say; gender is not inferred from names. Gameplay names and gender choices are not sent to advertising services.
 
-When ads are enabled, Google and its partners may process identifiers, IP address, approximate location inferred from IP, device and app information, ad interactions, and diagnostic/performance data. Exact collection depends on platform, SDK configuration, consent, and region. Read [Google's advertising privacy information](https://policies.google.com/technologies/ads) and [Google's privacy policy](https://policies.google.com/privacy). The publisher must confirm actual SDK data practices and complete App Store privacy labels and Google Play Data safety before release.
+Reset local data in Settings erases the app's local progress and preferences. Clearing application/browser data or uninstalling can also remove them. Operating-system backups may retain copies according to the device's backup settings. Review those settings if you share a device. There is no gameplay account or server-held answer history to recover or delete.
 
-Ads are not requested alongside sensitive cards or the Flirty mode. Bonus packs may be unlocked by an optional rewarded ad only after the SDK confirms an earned reward. Watching ads is never required to skip a card or continue the core game.
+{{ADS_PRIVACY_SECTION}}
 
 ## Sharing
 
-Sharing a card is an explicit action. DareFlip generates an image on your device and invokes the device's share sheet or downloads the image in the browser. Player names and gender choices are excluded from generated images. The destination you choose processes shared information under its own policies. Native temporary share images are removed from the app cache after the share action completes.
+Sharing is an explicit action. The app creates a card image on the device, then opens the system share sheet or downloads a PNG in a browser. Generated images omit player names and gender choices. The chosen destination handles shared information under its own terms and privacy policy. The app attempts to remove temporary native share images after sharing; copies saved or sent elsewhere remain under the user's and destination's control. Share private-partner content only with both partners' agreement.
 
-## Age and player safety
+## Age and voluntary participation
 
-DareFlip is intended for adults, not children. Private Flirty mode is marked 18+, restricted to two partners and requires a separate voluntary acknowledgement from each partner for a new session. Random excludes private Flirty cards. Session acknowledgement does not replace consent to each activity. Do not enter personal information that you do not wish other players to see. Every question or challenge can be skipped without penalty. Participants can decline any activity or stop at any time.
+DareFlip is intended for adults, not children. The private mode's confirmations are declarations, not independent identity or age verification. Do not enter personal information that you do not want other players to see. Anyone can decline a card or stop at any time; no card overrides a person's current decision.
 
-## Your choices and rights
+## Choices, retention and requests
 
-You can change advertising choices, turn off sound and haptics, change language, delete local game data, and choose whether to share. Since no DareFlip server stores gameplay data, deletion of local data is performed on your device. Rights relating to Google's processing are handled through its privacy controls and applicable law. To raise a privacy request with the publisher, use the contact above after it is configured.
+Local gameplay information stays on the device until deleted, subject to device backups and storage behavior. Players can reset local data, change sound/haptics and language, and decide whether to share. Send publisher privacy requests to {{SUPPORT_EMAIL}}.
 
-## International processing, retention, and changes
+Sharing destinations may process information internationally and retain it under their own policies. Advertising-specific processing and choices depend on the edition described above.
 
-Google and share destinations may process information internationally and retain it according to their policies. DareFlip retains local data until you erase it. This policy must be reviewed when services or data practices change. The publisher must host a publicly accessible final policy and show its URL in both stores before publication.
+## Public website, email and changes
+
+The generated static publisher pages include no analytics scripts, advertising scripts or contact form. The selected host may process ordinary web request information, including IP address and browser details, under its own policy. Email support involves the user's email provider and the publisher's email service and discloses the information the user chooses to send.
+
+The publisher must review this policy when configuration or data practices change, provide applicable contact/rights arrangements, and verify the final public HTTPS URL. The dated version and configured edition should match the app presented to users. A local page build does not establish website availability, native SDK behavior or store approval.

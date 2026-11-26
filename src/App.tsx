@@ -39,12 +39,12 @@ import { detectLanguage, languages, localeInfo, t } from "./i18n";
 import type { Key, Locale } from "./i18n";
 import { initialState, isPrivateSessionReady, loadAppState } from "./state";
 import type { Session, State } from "./state";
-import { ads } from "./services/ads";
+import { ads, advertisingEnabled } from "./services/ads";
 import { feedback } from "./services/feedback";
 import { shareCard } from "./services/share";
 import { useNativeBack, exitNativeApp } from "./ui/useNativeBack";
-import privacy from "../docs/PRIVACY_POLICY.md?raw";
-import terms from "../docs/TERMS_OF_USE.md?raw";
+import { publisher, publisherReady } from "./config/publisher";
+import { LegalText } from "./ui/LegalText";
 
 type Tab = "play" | "favorites" | "packs" | "settings";
 type Overlay =
@@ -224,9 +224,12 @@ export default function App() {
       if (event.key === "Tab" && dialog) {
         const focusable = [
           ...dialog.querySelectorAll<HTMLElement>(
-            'button:not(:disabled),input,select,[tabindex="0"]',
+            'button:not(:disabled),a[href],input:not(:disabled),select:not(:disabled),textarea:not(:disabled),[tabindex="0"]',
           ),
-        ];
+        ].filter(
+          (element) =>
+            element.tabIndex >= 0 && element.getClientRects().length > 0,
+        );
         const first = focusable[0],
           last = focusable.at(-1);
         if (event.shiftKey && document.activeElement === first) {
@@ -1176,54 +1179,71 @@ export default function App() {
                   </button>
                 </div>
               </article>
-              <article className="pack-card afterglow-pack">
-                <div className="pack-art">
-                  <span className="afterglow-orb">✦</span>
-                  <span>{tr("packs.afterglow")}</span>
-                </div>
-                <div className="pack-body">
-                  <div className="pill">
-                    {state.unlocked ? (
-                      <Check size={13} />
-                    ) : (
-                      <LockKeyhole size={13} />
-                    )}{" "}
-                    {tr(state.unlocked ? "packs.unlocked" : "common.optional")}
+              {(advertisingEnabled || state.unlocked) && (
+                <article className="pack-card afterglow-pack">
+                  <div className="pack-art">
+                    <span className="afterglow-orb">✦</span>
+                    <span>{tr("packs.afterglow")}</span>
                   </div>
-                  <h2>{tr("packs.afterglow")}</h2>
-                  <p>{tr("packs.afterglowDescription")}</p>
-                  <button
-                    className="primary wide"
-                    disabled={busy}
-                    onClick={() =>
-                      state.unlocked ? goTab("play") : void claimPack()
-                    }
-                  >
-                    {state.unlocked
-                      ? tr("home.play")
-                      : busy
-                        ? tr("packs.loading")
-                        : tr("packs.unlock")}
-                    {!state.unlocked && <Play size={16} />}
-                  </button>
-                  <p className="fine-print">{tr("packs.rewardExplain")}</p>
-                </div>
-              </article>
+                  <div className="pack-body">
+                    <div className="pill">
+                      {state.unlocked ? (
+                        <Check size={13} />
+                      ) : (
+                        <LockKeyhole size={13} />
+                      )}{" "}
+                      {tr(
+                        state.unlocked ? "packs.unlocked" : "common.optional",
+                      )}
+                    </div>
+                    <h2>{tr("packs.afterglow")}</h2>
+                    <p>{tr("packs.afterglowDescription")}</p>
+                    <button
+                      className="primary wide"
+                      disabled={busy}
+                      onClick={() =>
+                        state.unlocked ? goTab("play") : void claimPack()
+                      }
+                    >
+                      {state.unlocked
+                        ? tr("home.play")
+                        : busy
+                          ? tr("packs.loading")
+                          : tr("packs.unlock")}
+                      {!state.unlocked && <Play size={16} />}
+                    </button>
+                    <p className="fine-print">
+                      {tr(
+                        advertisingEnabled
+                          ? "packs.rewardExplain"
+                          : "packs.adFree",
+                      )}
+                    </p>
+                  </div>
+                </article>
+              )}
             </div>
             <div className="comfort">
               <ShieldCheck size={20} />
               <p>
                 {tr(
-                  Capacitor.isNativePlatform()
-                    ? "packs.rewardExplain"
-                    : "consent.noAdsWeb",
+                  !advertisingEnabled
+                    ? "packs.adFree"
+                    : Capacitor.isNativePlatform()
+                      ? "packs.rewardExplain"
+                      : "consent.noAdsWeb",
                 )}
               </p>
             </div>
-            <button className="text-link" onClick={() => setOverlay("consent")}>
-              {tr("settings.adPrivacy")}
-              <ChevronRight size={15} />
-            </button>
+            {advertisingEnabled && (
+              <button
+                className="text-link"
+                onClick={() => setOverlay("consent")}
+              >
+                {tr("settings.adPrivacy")}
+                <ChevronRight size={15} />
+              </button>
+            )}
           </section>
         )}
         {screen === "home" && tab === "settings" && (
@@ -1320,23 +1340,25 @@ export default function App() {
                   { key: "support", icon: HelpCircle },
                   { key: "consent", icon: Settings2 },
                 ] as const
-              ).map(({ key, icon: Icon }) => (
-                <button
-                  className="settings-row"
-                  key={key}
-                  onClick={() => setOverlay(key)}
-                >
-                  <span>
-                    <Icon size={20} />
-                    {tr(
-                      key === "consent"
-                        ? "settings.adPrivacy"
-                        : `settings.${key}`,
-                    )}
-                  </span>
-                  <ChevronRight size={17} />
-                </button>
-              ))}
+              )
+                .filter(({ key }) => advertisingEnabled || key !== "consent")
+                .map(({ key, icon: Icon }) => (
+                  <button
+                    className="settings-row"
+                    key={key}
+                    onClick={() => setOverlay(key)}
+                  >
+                    <span>
+                      <Icon size={20} />
+                      {tr(
+                        key === "consent"
+                          ? "settings.adPrivacy"
+                          : `settings.${key}`,
+                      )}
+                    </span>
+                    <ChevronRight size={17} />
+                  </button>
+                ))}
             </div>
             <div className="local-note">
               <ShieldCheck size={20} />
@@ -1467,18 +1489,26 @@ export default function App() {
                       : "legal.termsTitle",
                   )}
                 </h2>
-                <p className="legal-language">{tr("legal.languageNotice")}</p>
-                <div className="legal-text" lang="en" dir="ltr">
-                  {(overlay === "privacy" ? privacy : terms)
-                    .split("\n")
-                    .map((line, i) =>
-                      line.startsWith("#") ? (
-                        <h3 key={i}>{line.replace(/^#+ /, "")}</h3>
-                      ) : (
-                        <p key={i}>{line}</p>
-                      ),
-                    )}
-                </div>
+                <p className="legal-language">
+                  {state.locale === "tr" ? "Türkçe" : "English"}
+                  {!publisherReady && ` · ${tr("legal.publisherPending")}`}
+                </p>
+                <LegalText
+                  page={overlay}
+                  language={state.locale === "tr" ? "tr" : "en"}
+                  publisher={publisher}
+                  adsEnabled={advertisingEnabled}
+                />
+                {overlay === "privacy" && publisher.privacyUrl && (
+                  <a
+                    className="secondary wide support-link"
+                    href={publisher.privacyUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {tr("legal.publicPrivacy")}
+                  </a>
+                )}
               </>
             )}
             {overlay === "support" && (
@@ -1489,9 +1519,32 @@ export default function App() {
                 <h2 id="dialog-title">{tr("legal.supportTitle")}</h2>
                 <p>{tr("legal.rules")}</p>
                 <p>{tr("legal.supportBody")}</p>
-                <p className="translation-note">
-                  {tr("legal.supportUnavailable")}
-                </p>
+                {publisher.name && (
+                  <p className="publisher-name">{publisher.name}</p>
+                )}
+                {publisher.supportEmail ? (
+                  <a
+                    className="secondary wide support-link"
+                    href={`mailto:${encodeURIComponent(publisher.supportEmail).replaceAll("%40", "@")}`}
+                  >
+                    {tr("legal.emailSupport")}
+                    <span>{publisher.supportEmail}</span>
+                  </a>
+                ) : (
+                  <p className="translation-note">
+                    {tr("legal.supportUnavailable")}
+                  </p>
+                )}
+                {publisher.supportUrl && (
+                  <a
+                    className="secondary wide support-link"
+                    href={publisher.supportUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {tr("legal.supportWebsite")}
+                  </a>
+                )}
                 <button
                   className="secondary wide"
                   onClick={() => setOverlay("privacy")}
@@ -1507,53 +1560,59 @@ export default function App() {
                   <ShieldCheck size={28} />
                 </span>
                 <h2 id="dialog-title">{tr("consent.title")}</h2>
-                <p>{tr("consent.body")}</p>
-                {!Capacitor.isNativePlatform() && (
-                  <p className="fine-print">{tr("consent.noAdsWeb")}</p>
-                )}
-                <button
-                  className="primary wide"
-                  disabled={busy}
-                  onClick={() => void enableAds()}
-                >
-                  {tr("consent.open")}
-                  <ArrowRight size={16} />
-                </button>
-                <button
-                  className="secondary wide"
-                  disabled={busy}
-                  onClick={async () => {
-                    try {
-                      await ads.privacyOptions();
-                      setAdStatus("off");
-                      notify(tr("common.done"));
-                    } catch {
-                      notify(tr("consent.unavailable"));
-                    }
-                  }}
-                >
-                  {tr("settings.adPrivacy")}
-                </button>
-                <button
-                  className="text-link"
-                  onClick={async () => {
-                    await ads.disableAds();
-                    setAdStatus("off");
-                    notify(tr("common.done"));
-                  }}
-                >
-                  {tr("common.off")}
-                </button>
-                {adStatus && (
-                  <p className="fine-print" role="status">
-                    {tr(
-                      adStatus === "web"
-                        ? "consent.noAdsWeb"
-                        : adStatus === "available"
-                          ? "common.on"
-                          : "common.off",
+                {!advertisingEnabled ? (
+                  <p>{tr("packs.adFree")}</p>
+                ) : (
+                  <>
+                    <p>{tr("consent.body")}</p>
+                    {!Capacitor.isNativePlatform() && (
+                      <p className="fine-print">{tr("consent.noAdsWeb")}</p>
                     )}
-                  </p>
+                    <button
+                      className="primary wide"
+                      disabled={busy}
+                      onClick={() => void enableAds()}
+                    >
+                      {tr("consent.open")}
+                      <ArrowRight size={16} />
+                    </button>
+                    <button
+                      className="secondary wide"
+                      disabled={busy}
+                      onClick={async () => {
+                        try {
+                          await ads.privacyOptions();
+                          setAdStatus("off");
+                          notify(tr("common.done"));
+                        } catch {
+                          notify(tr("consent.unavailable"));
+                        }
+                      }}
+                    >
+                      {tr("settings.adPrivacy")}
+                    </button>
+                    <button
+                      className="text-link"
+                      onClick={async () => {
+                        await ads.disableAds();
+                        setAdStatus("off");
+                        notify(tr("common.done"));
+                      }}
+                    >
+                      {tr("common.off")}
+                    </button>
+                    {adStatus && (
+                      <p className="fine-print" role="status">
+                        {tr(
+                          adStatus === "web"
+                            ? "consent.noAdsWeb"
+                            : adStatus === "available"
+                              ? "common.on"
+                              : "common.off",
+                        )}
+                      </p>
+                    )}
+                  </>
                 )}
               </>
             )}

@@ -51,6 +51,7 @@ npm run build
 npm run test:e2e
 npm run test:offline
 npm run test:a11y
+npm run test:release
 ```
 
 Playwright uses `/usr/bin/chromium` if available; otherwise install its browser with `npx playwright install chromium`, or set `PLAYWRIGHT_CHROMIUM_EXECUTABLE`. The e2e suite tests Chromium at iPhone, Android and iPad viewport sizes; it does not imply real WebKit/native device verification. `test:offline` requires the current `dist` build and uses port 4173. The E2E command starts its own isolated test server on port 5177. Generated test traces/reports are ignored. Authentic app captures are in [artifacts/screenshots](artifacts/screenshots); they are development browser captures, not final native store evidence.
@@ -73,6 +74,8 @@ Read [native build instructions](docs/NATIVE_BUILDS.md) and [AdMob configuration
 Ads never start on opening the app. Explicit privacy action, UMP SDK permission and a supported native platform are prerequisites. Requests are nonpersonalized; tracking permission is not requested by the current UI. Sensitive gameplay and saved sensitive cards exclude advertising. Banners reserve the measured native height; interstitials require more than five cards, at least 120 seconds, and an active explicit pause. Rewarded pack unlock requires a genuine reward. The free core remains playable when ads fail or are declined.
 
 ## Publication handoff
+
+The explicit ad-free/production-ad store build paths, public publisher configuration, shared EN/TR legal pages and remaining publisher/content choices are documented in [RELEASE_SETUP.md](docs/RELEASE_SETUP.md). No store profile is selected automatically. Missing publisher details and an unresolved content assessment still stop release preparation.
 
 - [Privacy Policy draft](docs/PRIVACY_POLICY.md)
 - [Terms of Use draft](docs/TERMS_OF_USE.md)

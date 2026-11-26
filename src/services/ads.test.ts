@@ -7,14 +7,12 @@ import {
   TEST_AD_UNITS,
 } from "./ads";
 
-function setup(canRequestAds = true, platform = "android") {
+function setup(canRequestAds = true, platform = "android", enabled = true) {
   const plugin = {
-    requestConsentInfo: vi
-      .fn()
-      .mockResolvedValue({
-        canRequestAds,
-        status: AdmobConsentStatus.NOT_REQUIRED,
-      }),
+    requestConsentInfo: vi.fn().mockResolvedValue({
+      canRequestAds,
+      status: AdmobConsentStatus.NOT_REQUIRED,
+    }),
     showConsentForm: vi.fn(),
     showPrivacyOptionsForm: vi.fn().mockResolvedValue(undefined),
     addListener: vi.fn().mockResolvedValue({ remove: vi.fn() }),
@@ -38,6 +36,7 @@ function setup(canRequestAds = true, platform = "android") {
     TEST_AD_UNITS.android,
     true,
     () => now,
+    enabled,
   );
   return {
     ads,
@@ -180,12 +179,12 @@ describe("build ad configuration", () => {
         VITE_ADMOB_TESTING: "false",
         VITE_ADMOB_IOS_BANNER: "real",
       }),
-    ).toEqual({ testing: true, units: TEST_AD_UNITS.ios });
+    ).toEqual({ testing: true, units: TEST_AD_UNITS.ios, enabled: true });
   });
   it("supports an explicit test build without silently supplying IDs in release", () => {
     expect(
       selectAdConfig("android", false, { VITE_ADMOB_TESTING: "true" }),
-    ).toEqual({ testing: true, units: TEST_AD_UNITS.android });
+    ).toEqual({ testing: true, units: TEST_AD_UNITS.android, enabled: true });
     expect(selectAdConfig("android", false, {}).units).toEqual({
       banner: "",
       interstitial: "",
@@ -217,6 +216,112 @@ describe("build ad configuration", () => {
     resolve();
     expect(await pending).toBe(false);
     expect(plugin.showInterstitial).not.toHaveBeenCalled();
+  });
+});
+
+describe("explicit ad-free configuration", () => {
+  it("leaves the existing beta/default behavior enabled unless explicitly disabled", () => {
+    expect(selectAdConfig("ios", true, {}).enabled).toBe(true);
+    expect(
+      selectAdConfig("android", false, { VITE_ADMOB_TESTING: "true" }),
+    ).toEqual({ enabled: true, testing: true, units: TEST_AD_UNITS.android });
+    const existing = setup();
+    expect(existing.ads.enabled).toBe(true);
+  });
+
+  it("honors the disabled flag in development, test builds and production", () => {
+    for (const platform of ["ios", "android", "web"]) {
+      for (const development of [false, true]) {
+        for (const testing of [undefined, "false", "true"]) {
+          expect(
+            selectAdConfig(platform, development, {
+              VITE_ADS_ENABLED: "false",
+              VITE_ADMOB_TESTING: testing,
+            }).enabled,
+          ).toBe(false);
+        }
+      }
+    }
+    const disabledProduction = selectAdConfig("ios", false, {
+      VITE_ADS_ENABLED: "false",
+    });
+    expect(disabledProduction.testing).toBe(false);
+    expect(disabledProduction.units).toEqual({
+      banner: "",
+      interstitial: "",
+      rewarded: "",
+    });
+  });
+
+  it("does not call any plugin method on any platform despite every available UI action", async () => {
+    for (const platform of ["ios", "android", "web"]) {
+      // The plugin would grant consent, ATT and a positive reward if called.
+      const { ads, plugin, advance } = setup(true, platform, false);
+      const listener = vi.fn();
+      const unsubscribe = ads.onBannerSize(listener);
+      await ads.updatePlacement({ menu: true, sensitive: false });
+      expect(await ads.enableAds({ attOptIn: true })).toBe("off");
+      expect(await ads.privacyOptions()).toBe("off");
+      advance(240_000);
+      await ads.updatePlacement({
+        menu: false,
+        sensitive: false,
+        naturalBreak: true,
+      });
+      expect(await ads.maybeInterstitial(context)).toBe(false);
+      expect(await ads.rewarded()).toBe(false);
+      await ads.disableAds();
+      await ads.updatePlacement({ menu: true, sensitive: false });
+      expect(await ads.enableAds()).toBe("off");
+      expect(await ads.rewarded()).toBe(false);
+      expect(ads.enabled).toBe(false);
+      expect(ads.state).toBe("off");
+      for (const method of Object.values(plugin))
+        expect(method).not.toHaveBeenCalled();
+      expect(listener).toHaveBeenCalled();
+      expect(listener.mock.calls.every(([height]) => height === 0)).toBe(true);
+      unsubscribe();
+    }
+  });
+
+  it("applies the actual build flag to the exported native manager without SDK calls", async () => {
+    const { plugin } = setup(true, "ios");
+    vi.resetModules();
+    vi.stubEnv("VITE_ADS_ENABLED", "false");
+    vi.doMock("@capacitor/core", async () => {
+      const core =
+        await vi.importActual<typeof import("@capacitor/core")>(
+          "@capacitor/core",
+        );
+      return {
+        ...core,
+        Capacitor: { ...core.Capacitor, getPlatform: () => "ios" },
+      };
+    });
+    vi.doMock("@capacitor-community/admob", async () => {
+      const admob = await vi.importActual<
+        typeof import("@capacitor-community/admob")
+      >("@capacitor-community/admob");
+      return { ...admob, AdMob: plugin };
+    });
+    try {
+      const configured = await import("./ads");
+      expect(configured.advertisingEnabled).toBe(false);
+      expect(configured.ads.enabled).toBe(false);
+      expect(await configured.ads.enableAds({ attOptIn: true })).toBe("off");
+      expect(await configured.ads.privacyOptions()).toBe("off");
+      await configured.ads.updatePlacement({ menu: true, sensitive: false });
+      expect(await configured.ads.maybeInterstitial(context)).toBe(false);
+      expect(await configured.ads.rewarded()).toBe(false);
+      await configured.ads.disableAds();
+      for (const method of Object.values(plugin))
+        expect(method).not.toHaveBeenCalled();
+    } finally {
+      vi.doUnmock("@capacitor/core");
+      vi.doUnmock("@capacitor-community/admob");
+      vi.unstubAllEnvs();
+      vi.resetModules();
+    }
   });
 });
 

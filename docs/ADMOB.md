@@ -40,3 +40,18 @@ Configure `GADApplicationIdentifier` in iOS Info.plist, and `com.google.android.
 6. Host privacy/support pages and any required app-ads.txt on publisher-controlled domains and configure URLs in stores and AdMob.
 
 Official references: [Capacitor plugin](https://github.com/capacitor-community/admob), [Android UMP](https://developers.google.com/admob/android/privacy), [iOS UMP](https://developers.google.com/admob/ios/privacy), [test ads](https://developers.google.com/admob/android/test-ads), [Apple ATT](https://developer.apple.com/documentation/apptrackingtransparency).
+
+## Explicit store release profiles
+
+`VITE_ADS_ENABLED=false` disables advertising bridge calls, including UMP, ATT, SDK initialization, banners, interstitials, and rewards. The App Store preparation path also excludes `@capacitor-community/admob` from Capacitor's native plugin allowlist; this removes its Google SDK dependency chain from the generated SwiftPM graph. An application-level runtime guard alone cannot establish that a native advertising SDK is absent.
+
+Choose the product configuration explicitly; no release profile is selected by default:
+
+- `DAREFLIP_RELEASE_PROFILE=ad-free`, `VITE_ADS_ENABLED=false`, `VITE_ADMOB_TESTING=false`: no production advertising IDs are needed. The helper removes iOS GAD keys, `NSUserTrackingUsageDescription`, and `SKAdNetworkItems`. Other Info.plist values remain intact. The product UI and privacy disclosures must accurately describe the chosen ad-free edition; publisher review is still required.
+- `DAREFLIP_RELEASE_PROFILE=production-ads`, `VITE_ADS_ENABLED=true`, `VITE_ADMOB_TESTING=false`: supply `ADMOB_IOS_APP_ID` plus `VITE_ADMOB_IOS_BANNER`, `VITE_ADMOB_IOS_INTERSTITIAL`, and `VITE_ADMOB_IOS_REWARDED`. The helper rejects missing/malformed IDs and Google's sample publisher. It writes the native app ID and delayed-measurement flag. It preserves configured production SKAdNetwork entries. Supply a truthful optional `IOS_TRACKING_USAGE_DESCRIPTION` only if tracking permission is part of the reviewed release behavior; no default ATT claim is manufactured for a store candidate.
+
+Run `npm run release:ios` through the manual `ios-app-store` workflow, or with the same explicit environment locally. It executes the platform-aware publisher/content/advertising preflight **before** the web compilation, then builds, syncs iOS, prepares the plist, and checks the generated native dependency list. The workflow uploads a candidate only; review submission and public release remain manual.
+
+`npm run beta:ios` deliberately forces test advertising back on and restores the official sample native app ID after an ad-free preparation. It is never a store-release command. The existing `ios-testflight` workflow retains this behavior.
+
+For preparation tests, `python3 scripts/ios-ad-profile-tests.py` uses a disposable checkout fixture and the installed Capacitor CLI. It checks that ad-free sync contains four core plugins and no AdMob package/class, repeat runs are identical, and returning to beta restores all five plugins plus official sample plist settings. It also tests malformed/sample production-ID rejection. These checks neither enable a real profile nor validate a signed iOS binary, device behavior, native SDK network traffic, legal compliance, or App Store acceptance.
