@@ -1,6 +1,6 @@
 # DareFlip development status
 
-Date: 25 November 2026. Version: 0.1.0. This is a working development release aimed at a store-quality product; **it is not ready to submit to the stores**. No live ad IDs, developer-account details or publisher identity have been invented.
+Date: 26 November 2026. Version: 0.1.0. This is a working development release aimed at a store-quality product; **it is not ready to submit to the stores**. No live ad IDs, developer-account details or publisher identity have been invented.
 
 ## Implemented
 
@@ -8,9 +8,9 @@ React/TypeScript/Vite application with Capacitor iOS/iPadOS and Android projects
 
 All six modes, 2–20 unique named players with required explicit gender choices, Easy/Medium/Bold, random next-player selection without adjacent repeats when possible, Truth/Dare choice, canonical no-repeat deck history, explicit exhausted-deck reset, unconditional skip, favorites, persisted resume, daily question, PNG share/download, bonus-pack reward flow, settings and local-data reset are implemented. App data remains on-device. No backend or login is required. Storage denial/corruption is handled; denied storage is visibly disclosed.
 
-The English catalog has **192 original concepts: 180 core + 12 Afterglow**. There are **90 Turkish translations**, for **282 JSON records**. The 5,000-original target is unfinished; translated rows are not counted as originals. Cards contain ID, category, difficulty, type, language, pack and sensitivity. Semantic originality, cultural suitability and safety still require human editorial review beyond automated duplicate checks.
+The English catalog has **192 original concepts: 180 core + 12 Afterglow**. Editorial revision 2 rewrites all active concepts and provides **192 Turkish translations**, for **384 active JSON records**. The exact earlier 282 rows are archived solely for saved-card/favorite compatibility and are not drawn or counted as active content. The 5,000-original target is unfinished; translated rows are not counted as originals. Cards contain ID, category, difficulty, type, language, pack and sensitivity. Semantic originality, cultural suitability and safety still require human editorial review beyond automated duplicate checks.
 
-Twenty languages can be selected and device language is detected. English/Turkish keyed UI dictionaries are complete; the other 18 UI dictionaries are partial. Turkish card content is partial; the other 18 card languages are unimplemented. Per-card English fallback and translation status are disclosed. Arabic RTL works in browser checks. English legal drafts are identified as English; fallback card text declares its actual language.
+Twenty languages can be selected and device language is detected. English/Turkish keyed UI dictionaries are complete; the other 18 UI dictionaries are partial. All active Turkish cards are translated; the other 18 card languages are unimplemented. Historical archived favorites can still require an English fallback. Per-card English fallback and translation status are disclosed. Arabic RTL works in browser checks. English legal drafts are identified as English; fallback card text declares its actual language.
 
 AdMob services are native-only and explicitly enabled. UMP `canRequestAds` gates initialization/requests. The current UI does not request ATT/tracking; requests ask for nonpersonalized inventory. Menu banners reserve their actual measured size; sensitive gameplay/cards suppress ads. Interstitials require more than five played cards, a 120-second minimum, and an explicit pause that is rechecked after loading. Reward cancellation/failure/revoked permission never unlocks content. Ads never block core play. Native development uses official Google sample IDs; production ad units are blank unless configured.
 
@@ -21,8 +21,8 @@ AdMob services are native-only and explicitly enabled. UMP `canRequestAds` gates
 | Clean dependency installation | `npm ci --no-audit --no-fund` passed against the committed lockfile |
 | TypeScript | `npm run typecheck` passed |
 | Lint | `npm run lint` passed; generated native/build/test reports excluded |
-| Unit tests | **62 passed** across domain/content/storage, player metadata, state validation/migration, i18n and mocked ad-service contracts |
-| Browser game matrix | **48/48 passed**, Chromium at iPhone/Android/iPad viewport sizes; covers all modes/difficulties, player limits, cards, exhaustion, skip, favorites, persistence, adult gate, settings/legal/privacy, no web ads, reward failure and real PNG export |
+| Unit tests | **71 passed** across domain/content/archive integrity/storage, player metadata, state validation/migration, i18n and mocked ad-service contracts |
+| Browser game matrix | **54/54 passed**, Chromium at iPhone/Android/iPad viewport sizes; covers all modes/difficulties, player limits, cards, exhaustion, skip, favorites, persistence, adult gate, settings/legal/privacy, no web ads, reward failure and real PNG export |
 | Targeted final copy regression | **6/6 passed** after clarifying the pause dialog’s Back button |
 | Screenshot regeneration | **3/3 passed**, 15 actual application PNGs under `artifacts/screenshots` |
 | Production offline checks | **2/2 passed**: service-worker cold reload/resume/play without network or third-party requests; storage-denied play with visible warning |
@@ -84,3 +84,11 @@ Every player row now requires an explicit Woman, Man, Non-binary, or Prefer not 
 Legacy v1 saves missing gender metadata are migrated without resetting the active card, seen history, current player, favorites or preferences. Resume opens a completion form with the original roster locked; choosing the missing options returns to the same game. Explicit unanswered values remain pending rather than being silently treated as undisclosed. Invalid/misaligned stored metadata is rejected by the same defensive state validator.
 
 Latest verification: 62 unit tests, 48 phone/tablet browser E2E tests, 11 accessibility tests and 2 production offline tests passed; TypeScript, lint, production beta build and iOS synchronization passed. This includes all four choices, per-player required validation, player removal, 20-player setup, Turkish labels, reload persistence and exact legacy-game recovery. Updated screenshots include the new controls. The input/select 16px minimum and native pinch recovery configuration are preserved. Actual new-feature behavior on iPhone/TestFlight still requires installing a newly built Codemagic beta. The earlier Android debug APK remains a historical development artifact and has not been rebuilt for this feature.
+
+## Editorial revision 2 — 26 November 2026
+
+All 192 active concepts were rewritten in English and Turkish, including all 12 bonus cards. The review prioritized concrete personal/social scenes, revealing contradictions, adult humor and actable short Dares. Sixteen concepts received additional bilingual revisions to remove cross-mode overlap and unnatural wording. X access was attempted but blocked by the environment's HTTP CONNECT403 restriction; no X posts were read or copied. See `docs/EDITORIAL_REVIEW.md` for editorial criteria and source transparency. The quality review is not a psychological/therapeutic or native-speaker certification.
+
+Fresh revision IDs keep existing favorites and the current saved card on their original trusted text. New draws/daily cards only use the new catalog, and current Turkish play has no missing-card fallback. The old gender-completion migration, card repeat history, entitlement checks and sensitive-favorite ad suppression continue to support archived IDs without accepting altered saved text.
+
+Verification: 71 unit tests, 54 E2E tests across three Chromium phone/tablet profiles, 11 accessibility tests and 2 production offline tests passed. Separate narrow-phone and landscape checks verified the longest EN/TR prompts are fully readable and Next/Skip remain reachable; TypeScript, lint, production beta build and iOS sync passed. A new signed Codemagic/TestFlight build and real-device playtesting of the revised content remain necessary; this task did not upload a native beta.

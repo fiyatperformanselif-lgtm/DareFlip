@@ -1,4 +1,4 @@
-import { cards } from "./content";
+import { persistedCards } from "./content";
 import type { Card, Difficulty, Mode } from "./domain/types";
 import { detectLanguage, languages } from "./i18n";
 import type { Locale } from "./i18n";
@@ -28,9 +28,9 @@ export interface State {
   ageConfirmed: boolean;
 }
 
-const knownIds = new Set(cards.map(({ id }) => id));
+const knownIds = new Set(persistedCards.map(({ id }) => id));
 const canonicalCards = new Map(
-  cards.map((card) => [`${card.id}:${card.language}`, card]),
+  persistedCards.map((card) => [`${card.id}:${card.language}`, card]),
 );
 const cardFields: readonly (keyof Card)[] = [
   "id",

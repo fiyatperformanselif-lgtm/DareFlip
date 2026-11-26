@@ -49,7 +49,7 @@ export const languages: readonly Language[] = [
     nativeName: "Türkçe",
     dir: "ltr",
     uiComplete: true,
-    contentStatus: "partial",
+    contentStatus: "available",
   },
   {
     code: "de",

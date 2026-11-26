@@ -1,0 +1,2822 @@
+[
+  {
+    "id": "couples-easy-truth-01",
+    "category": "couples",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "en",
+    "text": "Which ordinary moment with me would you turn into a photograph?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-easy-truth-01",
+    "category": "couples",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "tr",
+    "text": "Birlikte yaşadığımız hangi sıradan anı fotoğrafa dönüştürmek isterdin?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-easy-truth-02",
+    "category": "couples",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "en",
+    "text": "What tiny habit of mine makes a room feel more like home?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-easy-truth-02",
+    "category": "couples",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "tr",
+    "text": "Benim hangi küçük alışkanlığım bir ortamı sana evin gibi hissettiriyor?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-easy-truth-03",
+    "category": "couples",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "en",
+    "text": "If we had one free afternoon and no phones, how would you spend it?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-easy-truth-03",
+    "category": "couples",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "tr",
+    "text": "Telefonlarımız olmadan boş bir öğleden sonramız olsa nasıl geçirmek isterdin?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-easy-truth-04",
+    "category": "couples",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "en",
+    "text": "Which meal would you like us to learn to cook together?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-easy-truth-05",
+    "category": "couples",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "en",
+    "text": "What was the first detail you noticed about me?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-easy-truth-06",
+    "category": "couples",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "en",
+    "text": "Which song belongs on the soundtrack of our relationship?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-easy-dare-01",
+    "category": "couples",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "en",
+    "text": "Describe your partner as a weather forecast for the coming week.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-easy-dare-01",
+    "category": "couples",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "tr",
+    "text": "Partnerini gelecek haftanın hava durumu tahmini gibi anlat.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-easy-dare-02",
+    "category": "couples",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "en",
+    "text": "Invent a two-move celebration dance together. Seated moves count.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-easy-dare-02",
+    "category": "couples",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "tr",
+    "text": "Birlikte iki hareketlik bir kutlama dansı uydurun. Oturarak da yapabilirsiniz.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-easy-dare-03",
+    "category": "couples",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "en",
+    "text": "Draw a tiny map of your ideal shared day and explain its stops.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-easy-dare-03",
+    "category": "couples",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "tr",
+    "text": "Birlikte geçireceğiniz ideal günün küçük bir haritasını çiz ve durakları açıkla.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-easy-dare-04",
+    "category": "couples",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "en",
+    "text": "Give your partner a sincere compliment that has nothing to do with appearance.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-easy-dare-05",
+    "category": "couples",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "en",
+    "text": "Choose a word you both like and make it your secret greeting for this round.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-easy-dare-06",
+    "category": "couples",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "en",
+    "text": "Tell a thirty-second bedtime story starring the two of you as explorers.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-medium-truth-01",
+    "category": "couples",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "en",
+    "text": "When do you feel most listened to by me?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-medium-truth-01",
+    "category": "couples",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "tr",
+    "text": "Seni en çok ne zaman gerçekten dinlediğimi hissediyorsun?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-medium-truth-02",
+    "category": "couples",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "en",
+    "text": "What shared routine would you happily retire, and what would replace it?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-medium-truth-02",
+    "category": "couples",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "tr",
+    "text": "Hangi ortak rutinimizi bırakıp yerine ne koymak isterdin?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-medium-truth-03",
+    "category": "couples",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "en",
+    "text": "Which small adventure would help us discover a new side of each other?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-medium-truth-03",
+    "category": "couples",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "tr",
+    "text": "Birbirimizin yeni bir yönünü keşfetmek için nasıl küçük bir maceraya çıkabiliriz?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-medium-truth-04",
+    "category": "couples",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "en",
+    "text": "What is one way I could make a stressful day easier for you?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-medium-truth-05",
+    "category": "couples",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "en",
+    "text": "Which difference between us has taught you something useful?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-medium-truth-06",
+    "category": "couples",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "en",
+    "text": "What would you like us to celebrate more often?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-medium-dare-01",
+    "category": "couples",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "en",
+    "text": "Plan a date together using only three objects you can see.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-medium-dare-01",
+    "category": "couples",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "tr",
+    "text": "Gördüğünüz üç nesneden yola çıkarak birlikte bir buluşma planlayın.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-medium-dare-02",
+    "category": "couples",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "en",
+    "text": "Take turns naming one thing that made you proud of the other this month.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-medium-dare-02",
+    "category": "couples",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "tr",
+    "text": "Bu ay birbirinizle gurur duymanızı sağlayan birer şeyi sırayla söyleyin.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-medium-dare-03",
+    "category": "couples",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "en",
+    "text": "Ask your partner a question about a favorite memory, then retell it from their point of view.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-medium-dare-03",
+    "category": "couples",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "tr",
+    "text": "Partnerine sevdiği bir anıyı sor, sonra o anıyı onun bakış açısından anlat.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-medium-dare-04",
+    "category": "couples",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "en",
+    "text": "Create a playful award for something your partner does well and give an acceptance speech for them.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-medium-dare-05",
+    "category": "couples",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "en",
+    "text": "Together, write a six-word invitation to your dream weekend.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-medium-dare-06",
+    "category": "couples",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "en",
+    "text": "Offer your partner three ways to spend five quiet minutes together; let them choose or pass.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-bold-truth-01",
+    "category": "couples",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "en",
+    "text": "What important wish have you struggled to put into words with me?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-bold-truth-01",
+    "category": "couples",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "tr",
+    "text": "Benimle paylaşmak isteyip de söze dökmekte zorlandığın önemli bir dileğin var mı?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-bold-truth-02",
+    "category": "couples",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "en",
+    "text": "What does a healthy amount of independence in our relationship look like to you?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-bold-truth-02",
+    "category": "couples",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "tr",
+    "text": "İlişkimizde sağlıklı bir bağımsızlık alanı sence nasıl olmalı?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-bold-truth-03",
+    "category": "couples",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "en",
+    "text": "Which assumption about love did you change after getting to know me?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-bold-truth-03",
+    "category": "couples",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "tr",
+    "text": "Beni tanıdıktan sonra aşkla ilgili hangi düşüncen değişti?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-bold-truth-04",
+    "category": "couples",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "en",
+    "text": "What would you like us to handle differently the next time we disagree?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-bold-truth-05",
+    "category": "couples",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "en",
+    "text": "Which dream of yours deserves a little more space in our plans?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-bold-truth-06",
+    "category": "couples",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "en",
+    "text": "What helps you feel safe saying no to someone you love?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-bold-dare-01",
+    "category": "couples",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "en",
+    "text": "Complete this sentence honestly: I feel cared for when you… Your partner may simply listen.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-bold-dare-01",
+    "category": "couples",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "tr",
+    "text": "Şu cümleyi içtenlikle tamamla: Sen … yaptığında önemsendiğimi hissediyorum. Partnerin sadece dinleyebilir.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-bold-dare-02",
+    "category": "couples",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "en",
+    "text": "Write an unsent two-line postcard to your future selves about something you hope to protect.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-bold-dare-02",
+    "category": "couples",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "tr",
+    "text": "Gelecekteki kendinize korumak istediğiniz bir şey hakkında gönderilmeyecek iki satırlık bir kartpostal yazın.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-bold-dare-03",
+    "category": "couples",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "en",
+    "text": "Each name a boundary that makes quality time better. Thank each other for sharing.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-bold-dare-03",
+    "category": "couples",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "tr",
+    "text": "Birlikte geçirdiğiniz zamanı güzelleştiren birer sınırınızı paylaşın. Paylaştığı için birbirinize teşekkür edin.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-bold-dare-04",
+    "category": "couples",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "en",
+    "text": "Invite your partner to describe one goal; offer one specific way you could support it.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-bold-dare-05",
+    "category": "couples",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "en",
+    "text": "Share a thank-you for something your partner did that you never properly acknowledged.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "couples-bold-dare-06",
+    "category": "couples",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "en",
+    "text": "Create a gentle phrase either of you can use to pause a difficult conversation.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-easy-truth-01",
+    "category": "party",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "en",
+    "text": "What harmless opinion would you defend with surprising enthusiasm?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-easy-truth-01",
+    "category": "party",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "tr",
+    "text": "Hangi zararsız fikrini beklenmedik bir coşkuyla savunursun?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-easy-truth-02",
+    "category": "party",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "en",
+    "text": "Which everyday object deserves a much better name?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-easy-truth-02",
+    "category": "party",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "tr",
+    "text": "Hangi gündelik eşyanın çok daha iyi bir adı olmalıydı?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-easy-truth-03",
+    "category": "party",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "en",
+    "text": "What is your most reliable trick for making a dull day better?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-easy-truth-03",
+    "category": "party",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "tr",
+    "text": "Sıkıcı bir günü güzelleştirmek için en güvendiğin yöntem ne?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-easy-truth-04",
+    "category": "party",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "en",
+    "text": "Which fictional shop would you spend an afternoon browsing?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-easy-truth-05",
+    "category": "party",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "en",
+    "text": "What snack combination do you enjoy that might surprise this group?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-easy-truth-06",
+    "category": "party",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "en",
+    "text": "If your week had a title, what would it be?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-easy-dare-01",
+    "category": "party",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "en",
+    "text": "Introduce yourself as the host of a very specific imaginary museum.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-easy-dare-01",
+    "category": "party",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "tr",
+    "text": "Çok özel bir hayali müzenin ev sahibiymişsin gibi kendini tanıt.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-easy-dare-02",
+    "category": "party",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "en",
+    "text": "Give a weather report for an imaginary planet using three made-up weather words.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-easy-dare-02",
+    "category": "party",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "tr",
+    "text": "Üç uydurma hava durumu sözcüğü kullanarak hayali bir gezegen için hava durumu sun.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-easy-dare-03",
+    "category": "party",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "en",
+    "text": "Choose an object and advertise it as if it were the invention of the century.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-easy-dare-03",
+    "category": "party",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "tr",
+    "text": "Bir nesne seç ve yüzyılın icadıymış gibi reklamını yap.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-easy-dare-04",
+    "category": "party",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "en",
+    "text": "Name five things you would pack for a holiday on the moon, without scientific accuracy.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-easy-dare-05",
+    "category": "party",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "en",
+    "text": "Conduct an invisible orchestra for fifteen seconds. No sound required.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-easy-dare-06",
+    "category": "party",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "en",
+    "text": "Draw a mascot for this game session and let the group name it.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-medium-truth-01",
+    "category": "party",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "en",
+    "text": "What hobby would you try if being a beginner felt completely comfortable?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-medium-truth-01",
+    "category": "party",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "tr",
+    "text": "Acemi olmak seni hiç rahatsız etmese hangi hobiyi denerdin?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-medium-truth-02",
+    "category": "party",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "en",
+    "text": "Which small social rule would you rewrite to make gatherings kinder?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-medium-truth-02",
+    "category": "party",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "tr",
+    "text": "Buluşmaları daha sıcak kılmak için hangi küçük sosyal kuralı değiştirirdin?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-medium-truth-03",
+    "category": "party",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "en",
+    "text": "What did you believe was fancy when you were younger?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-medium-truth-03",
+    "category": "party",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "tr",
+    "text": "Küçükken neyi çok gösterişli sanırdın?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-medium-truth-04",
+    "category": "party",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "en",
+    "text": "When have you changed your mind because someone explained something well?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-medium-truth-05",
+    "category": "party",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "en",
+    "text": "What is a funny misunderstanding you can share without embarrassing anyone else?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-medium-truth-06",
+    "category": "party",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "en",
+    "text": "Which skill in this room would you like someone to teach you?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-medium-dare-01",
+    "category": "party",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "en",
+    "text": "Give a one-minute guided tour of the room as if it were an archaeological discovery.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-medium-dare-01",
+    "category": "party",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "tr",
+    "text": "Oda bir arkeolojik keşifmiş gibi bir dakikalık rehberli tur yaptır.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-medium-dare-02",
+    "category": "party",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "en",
+    "text": "With a willing player, narrate a slow-motion imaginary race between two household objects.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-medium-dare-02",
+    "category": "party",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "tr",
+    "text": "İstekli bir oyuncuyla iki ev eşyası arasındaki hayali yarışı ağır çekimde anlatın.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-medium-dare-03",
+    "category": "party",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "en",
+    "text": "Answer the next two willing questions as a very polite robot; you may pass any question.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-medium-dare-03",
+    "category": "party",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "tr",
+    "text": "İstekli oyuncuların sonraki iki sorusunu çok kibar bir robot gibi yanıtla; istediğin soruyu geçebilirsin.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-medium-dare-04",
+    "category": "party",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "en",
+    "text": "Compose a four-line anthem for an ordinary task such as folding towels.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-medium-dare-05",
+    "category": "party",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "en",
+    "text": "Pitch a new holiday and explain its signature food, tradition, and greeting.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-medium-dare-06",
+    "category": "party",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "en",
+    "text": "Use only facial expressions or words of your choice to act out opening an unexpected gift.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-bold-truth-01",
+    "category": "party",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "en",
+    "text": "What is a compliment you find difficult to accept, even when it is sincere?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-bold-truth-01",
+    "category": "party",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "tr",
+    "text": "İçten söylense bile kabul etmekte zorlandığın bir iltifat var mı?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-bold-truth-02",
+    "category": "party",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "en",
+    "text": "Which first impression of you is usually wrong?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-bold-truth-02",
+    "category": "party",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "tr",
+    "text": "İnsanların seninle ilgili hangi ilk izlenimi genellikle yanlış oluyor?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-bold-truth-03",
+    "category": "party",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "en",
+    "text": "What part of your personality appears only when you feel completely comfortable?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-bold-truth-03",
+    "category": "party",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "tr",
+    "text": "Kendini tamamen rahat hissettiğinde kişiliğinin hangi yönü ortaya çıkıyor?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-bold-truth-04",
+    "category": "party",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "en",
+    "text": "Which choice are you glad you made even though others did not understand it?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-bold-truth-05",
+    "category": "party",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "en",
+    "text": "What kind of invitation would make you feel especially included?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-bold-truth-06",
+    "category": "party",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "en",
+    "text": "What have you recently outgrown without making a big announcement?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-bold-dare-01",
+    "category": "party",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "en",
+    "text": "Deliver a dramatic acceptance speech for an award you invent for your own everyday effort.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-bold-dare-01",
+    "category": "party",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "tr",
+    "text": "Gündelik çaban için kendine uydurduğun bir ödülün dramatik kabul konuşmasını yap.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-bold-dare-02",
+    "category": "party",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "en",
+    "text": "Invite each willing player to add one word to a story; turn the result into a movie trailer.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-bold-dare-02",
+    "category": "party",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "tr",
+    "text": "İsteyen her oyuncudan hikâyeye bir sözcük eklemesini iste; sonucu bir film fragmanına dönüştür.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-bold-dare-03",
+    "category": "party",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "en",
+    "text": "Teach the group a skill you can demonstrate safely while seated in under one minute.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-bold-dare-03",
+    "category": "party",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "tr",
+    "text": "Oturarak güvenle gösterebildiğin bir beceriyi gruba bir dakikadan kısa sürede öğret.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-bold-dare-04",
+    "category": "party",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "en",
+    "text": "Create a new game-show round using no props and explain how everyone can opt out.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-bold-dare-05",
+    "category": "party",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "en",
+    "text": "Perform a short campaign speech asking to become mayor of an imaginary floating town.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "party-bold-dare-06",
+    "category": "party",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "en",
+    "text": "Give a sincere toast to the group without mentioning appearance, drinking, or popularity.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "flirty-easy-truth-01",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "en",
+    "text": "What makes a first conversation feel instantly warm to you?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-truth-01",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "tr",
+    "text": "İlk sohbetin sana hemen sıcak gelmesini sağlayan şey ne?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-truth-02",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "en",
+    "text": "Which kind of compliment stays with you longest?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-truth-02",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "tr",
+    "text": "Hangi tür iltifat aklında en uzun süre kalıyor?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-truth-03",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "en",
+    "text": "What would your ideal low-pressure first date include?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-truth-03",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "tr",
+    "text": "Kendini baskı altında hissetmeyeceğin ideal ilk buluşmada neler olurdu?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-truth-04",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "en",
+    "text": "Which small gesture do you find quietly charming?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-truth-05",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "en",
+    "text": "What is a green flag you notice early when getting to know someone?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-truth-06",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "en",
+    "text": "Would you rather receive a thoughtful note or a carefully chosen playlist, and why?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-dare-01",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "en",
+    "text": "Invent a charming introduction for a fictional character who loves the same hobby as you.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-dare-01",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "tr",
+    "text": "Seninle aynı hobiyi seven hayali bir karakter için sevimli bir tanışma cümlesi uydur.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-dare-02",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "en",
+    "text": "Describe a dream date using only colors and places, then explain your choices.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-dare-02",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "tr",
+    "text": "Hayalindeki buluşmayı yalnızca renkler ve yerlerle anlat, sonra seçimlerini açıkla.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-dare-03",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "en",
+    "text": "Offer a willing player a compliment about their energy or creativity. They may pass.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-dare-03",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "tr",
+    "text": "İstekli bir oyuncuya enerjisi ya da yaratıcılığı hakkında iltifat et. İstemezse geçebilir.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-dare-04",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "en",
+    "text": "Write a lighthearted two-line invitation to an imaginary picnic.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-dare-05",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "en",
+    "text": "Choose a song title that could start a sweet conversation and explain why.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-easy-dare-06",
+    "category": "flirty",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "en",
+    "text": "Practice asking someone for a date in a way that makes saying no easy.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-truth-01",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "en",
+    "text": "What is the difference between attention and genuine interest for you?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-truth-01",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "tr",
+    "text": "İlgi görmek ile gerçekten merak edilmek arasındaki fark sence ne?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-truth-02",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "en",
+    "text": "When does playful teasing feel welcome, and when would you want it to stop?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-truth-02",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "tr",
+    "text": "Tatlı takılmalar ne zaman hoşuna gider, ne zaman durmasını istersin?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-truth-03",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "en",
+    "text": "Which part of planning a date tells you the most about a person?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-truth-03",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "tr",
+    "text": "Buluşma planlarken hangi ayrıntı sana bir kişi hakkında en çok şey söyler?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-truth-04",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "en",
+    "text": "What is a romantic cliché you secretly enjoy?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-truth-05",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "en",
+    "text": "What helps you communicate that you are interested without feeling rushed?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-truth-06",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "en",
+    "text": "Which personal value makes someone more attractive to you over time?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-dare-01",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "en",
+    "text": "Create a fictional dating profile for a friendly dragon, including one clear relationship boundary.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-dare-01",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "tr",
+    "text": "Dost canlısı bir ejderha için bir ilişki sınırını da belirten hayali tanışma profili oluştur.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-dare-02",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "en",
+    "text": "Give a thirty-second review of an imaginary date at a library after closing time.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-dare-02",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "tr",
+    "text": "Kapanış saatinden sonra bir kütüphanede geçen hayali buluşmayı otuz saniyede değerlendir.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-dare-03",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "en",
+    "text": "Ask a willing player which conversation topic lights them up, then listen for one minute.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-dare-03",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "tr",
+    "text": "İstekli bir oyuncuya hangi sohbet konusunun onu heyecanlandırdığını sor, sonra bir dakika dinle.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-dare-04",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "en",
+    "text": "Turn a dull calendar reminder into a warm, respectful invitation.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-dare-05",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "en",
+    "text": "Describe a meet-cute that involves a misplaced umbrella and a very helpful dog.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-medium-dare-06",
+    "category": "flirty",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "en",
+    "text": "Write a three-item menu for a cozy date night with a surprise theme.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-truth-01",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "en",
+    "text": "How do you like someone to check whether a romantic gesture is welcome?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-truth-01",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "tr",
+    "text": "Romantik bir jestin hoşuna gidip gitmeyeceğinin sana nasıl sorulmasını istersin?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-truth-02",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "en",
+    "text": "What is a boundary you wish more people understood about dating?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-truth-02",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "tr",
+    "text": "Tanışma sürecinde insanların daha iyi anlamasını istediğin bir sınırın var mı?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-truth-03",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "en",
+    "text": "What does emotional chemistry feel like to you, beyond first impressions?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-truth-03",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "tr",
+    "text": "İlk izlenimlerin ötesinde duygusal uyum senin için nasıl bir his?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-truth-04",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "en",
+    "text": "When have you realized a slower pace was the right choice?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-truth-05",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "en",
+    "text": "What makes you feel comfortable changing your mind on a date?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-truth-06",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "en",
+    "text": "Which expectation about romance would you happily leave behind?",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-dare-01",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "en",
+    "text": "Write a warm message declining a second date while respecting both people.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-dare-01",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "tr",
+    "text": "İki kişiye de saygı göstererek ikinci bir buluşmayı reddeden sıcak bir mesaj yaz.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-dare-02",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "en",
+    "text": "Say a fictional romantic invitation aloud, then add a graceful response to a no.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-dare-02",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "tr",
+    "text": "Hayali bir romantik daveti sesli söyle, sonra hayır yanıtına verilecek zarif bir cevap ekle.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-dare-03",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "en",
+    "text": "Create a tiny poem about attraction without describing anyone’s body.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-dare-03",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "tr",
+    "text": "Kimsenin bedenini tarif etmeden çekim hakkında kısa bir şiir yaz.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-dare-04",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "en",
+    "text": "Name three ways to show interest that leave the other person plenty of space.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-dare-05",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "en",
+    "text": "With a willing player, role-play choosing a date activity by asking and listening rather than guessing.",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "flirty-bold-dare-06",
+    "category": "flirty",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "en",
+    "text": "Finish this sentence in your own words: The kind of connection I want makes room for…",
+    "pack": "core",
+    "sensitive": true
+  },
+  {
+    "id": "deep-easy-truth-01",
+    "category": "deep",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "en",
+    "text": "Which place helps your thoughts slow down?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-easy-truth-01",
+    "category": "deep",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "tr",
+    "text": "Hangi yerde düşüncelerin yavaşlıyor?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-easy-truth-02",
+    "category": "deep",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "en",
+    "text": "What is something ordinary you have learned to appreciate more?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-easy-truth-02",
+    "category": "deep",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "tr",
+    "text": "Zamanla değerini daha çok anladığın sıradan bir şey ne?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-easy-truth-03",
+    "category": "deep",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "en",
+    "text": "Which question would you enjoy being asked more often?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-easy-truth-03",
+    "category": "deep",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "tr",
+    "text": "Sana hangi sorunun daha sık sorulmasını isterdin?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-easy-truth-04",
+    "category": "deep",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "en",
+    "text": "What small thing are you looking forward to this week?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-easy-truth-05",
+    "category": "deep",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "en",
+    "text": "Which childhood curiosity would you like to revisit?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-easy-truth-06",
+    "category": "deep",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "en",
+    "text": "What does a genuinely restful day look like for you?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-easy-dare-01",
+    "category": "deep",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "en",
+    "text": "Name one sound, one color, and one texture you find comforting.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-easy-dare-01",
+    "category": "deep",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "tr",
+    "text": "Sana huzur veren bir ses, bir renk ve bir doku söyle.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-easy-dare-02",
+    "category": "deep",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "en",
+    "text": "Draw a simple symbol for how you feel today; explain only as much as you want.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-easy-dare-02",
+    "category": "deep",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "tr",
+    "text": "Bugün nasıl hissettiğini anlatan basit bir sembol çiz; yalnızca istediğin kadar açıkla.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-easy-dare-03",
+    "category": "deep",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "en",
+    "text": "Tell the story of an object you have kept for sentimental reasons, or invent one.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-easy-dare-03",
+    "category": "deep",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "tr",
+    "text": "Manevi değeri olduğu için sakladığın bir eşyanın hikâyesini anlat ya da bir hikâye uydur.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-easy-dare-04",
+    "category": "deep",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "en",
+    "text": "Complete the sentence: This week, I would like to make more room for…",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-easy-dare-05",
+    "category": "deep",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "en",
+    "text": "Write a short thank-you to a place that helped you feel at ease.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-easy-dare-06",
+    "category": "deep",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "en",
+    "text": "Choose a word for your current season of life and tell the group why.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-medium-truth-01",
+    "category": "deep",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "en",
+    "text": "Which belief have you become more curious about rather than more certain of?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-medium-truth-01",
+    "category": "deep",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "tr",
+    "text": "Hangi inancın hakkında daha emin olmak yerine daha meraklı oldun?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-medium-truth-02",
+    "category": "deep",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "en",
+    "text": "What kind of progress do you tend to overlook in yourself?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-medium-truth-02",
+    "category": "deep",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "tr",
+    "text": "Kendindeki hangi gelişmeleri gözden kaçırma eğilimindesin?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-medium-truth-03",
+    "category": "deep",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "en",
+    "text": "When has doing less helped you notice more?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-medium-truth-03",
+    "category": "deep",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "tr",
+    "text": "Daha az şey yapmak ne zaman daha çok şey fark etmeni sağladı?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-medium-truth-04",
+    "category": "deep",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "en",
+    "text": "Which value guides your decisions when nobody is watching?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-medium-truth-05",
+    "category": "deep",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "en",
+    "text": "What does being understood look like in a conversation?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-medium-truth-06",
+    "category": "deep",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "en",
+    "text": "What would you ask your future self if you could receive only one sentence back?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-medium-dare-01",
+    "category": "deep",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "en",
+    "text": "Build a personal definition of success using exactly three things you value.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-medium-dare-01",
+    "category": "deep",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "tr",
+    "text": "Değer verdiğin tam üç şeyi kullanarak kendi başarı tanımını oluştur.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-medium-dare-02",
+    "category": "deep",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "en",
+    "text": "Offer your younger self advice that contains no criticism.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-medium-dare-02",
+    "category": "deep",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "tr",
+    "text": "Küçük yaştaki kendine içinde eleştiri olmayan bir öğüt ver.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-medium-dare-03",
+    "category": "deep",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "en",
+    "text": "Name a lesson you learned slowly and tell it as a short fable.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-medium-dare-03",
+    "category": "deep",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "tr",
+    "text": "Yavaş yavaş öğrendiğin bir dersi kısa bir masal gibi anlat.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-medium-dare-04",
+    "category": "deep",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "en",
+    "text": "Write a permission slip to yourself for something harmless you have been postponing.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-medium-dare-05",
+    "category": "deep",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "en",
+    "text": "Ask a willing player what helps them feel heard, and reflect back what you understood.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-medium-dare-06",
+    "category": "deep",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "en",
+    "text": "Imagine a bench dedicated to you. What would you want its plaque to say?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-bold-truth-01",
+    "category": "deep",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "en",
+    "text": "Which part of your identity feels like a choice you are still making?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-bold-truth-01",
+    "category": "deep",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "tr",
+    "text": "Kimliğinin hangi yönünü hâlâ vermekte olduğun bir karar gibi hissediyorsun?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-bold-truth-02",
+    "category": "deep",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "en",
+    "text": "What would you protect in your life even if it never impressed anyone?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-bold-truth-02",
+    "category": "deep",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "tr",
+    "text": "Kimseyi etkilemeyecek olsa da hayatında neyi korurdun?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-bold-truth-03",
+    "category": "deep",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "en",
+    "text": "When does being brave mean asking for help for you?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-bold-truth-03",
+    "category": "deep",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "tr",
+    "text": "Cesur olmak senin için ne zaman yardım istemek anlamına geliyor?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-bold-truth-04",
+    "category": "deep",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "en",
+    "text": "What expectation have you carried that you may be ready to put down?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-bold-truth-05",
+    "category": "deep",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "en",
+    "text": "What is a kind truth about yourself you are still learning to believe?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-bold-truth-06",
+    "category": "deep",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "en",
+    "text": "What do you want the people close to you to feel in your presence?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-bold-dare-01",
+    "category": "deep",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "en",
+    "text": "Say one thing you are learning to forgive yourself for; you may keep the details private.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-bold-dare-01",
+    "category": "deep",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "tr",
+    "text": "Kendini affetmeyi öğrendiğin bir şeyi söyle; ayrıntıları kendine saklayabilirsin.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-bold-dare-02",
+    "category": "deep",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "en",
+    "text": "Write a short promise to yourself that leaves room for imperfect days.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-bold-dare-02",
+    "category": "deep",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "tr",
+    "text": "Kusursuz olmayan günlere de yer bırakan kısa bir sözü kendine yaz.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-bold-dare-03",
+    "category": "deep",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "en",
+    "text": "Describe a future you would find meaningful without referring to money or status.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-bold-dare-03",
+    "category": "deep",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "tr",
+    "text": "Para ya da statüden söz etmeden sana anlamlı gelecek bir geleceği anlat.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-bold-dare-04",
+    "category": "deep",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "en",
+    "text": "Name a personal limit and turn it into a respectful sentence you could use in real life.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-bold-dare-05",
+    "category": "deep",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "en",
+    "text": "Share an unanswered question you can live with for now, without trying to solve it.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "deep-bold-dare-06",
+    "category": "deep",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "en",
+    "text": "Compose a two-sentence letter beginning: You do not have to earn the right to rest.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-easy-truth-01",
+    "category": "crazy",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "en",
+    "text": "If your shoes could file a complaint, what would it say?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-easy-truth-01",
+    "category": "crazy",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "tr",
+    "text": "Ayakkabıların bir şikâyet dilekçesi yazabilse ne yazardı?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-easy-truth-02",
+    "category": "crazy",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "en",
+    "text": "Which vegetable has the strongest main-character energy?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-easy-truth-02",
+    "category": "crazy",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "tr",
+    "text": "Hangi sebzede en güçlü başrol enerjisi var?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-easy-truth-03",
+    "category": "crazy",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "en",
+    "text": "What would be the least useful superpower you would still enjoy having?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-easy-truth-03",
+    "category": "crazy",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "tr",
+    "text": "Sahip olmaktan yine de hoşlanacağın en işe yaramaz süper güç ne olurdu?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-easy-truth-04",
+    "category": "crazy",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "en",
+    "text": "If your laugh were a vehicle, what would it be?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-easy-truth-05",
+    "category": "crazy",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "en",
+    "text": "Which household chore would make the strangest Olympic event?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-easy-truth-06",
+    "category": "crazy",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "en",
+    "text": "What imaginary creature would make a surprisingly good receptionist?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-easy-dare-01",
+    "category": "crazy",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "en",
+    "text": "Invent a greeting used by very formal penguins.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-easy-dare-01",
+    "category": "crazy",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "tr",
+    "text": "Çok resmî penguenlerin kullandığı bir selamlaşma uydur.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-easy-dare-02",
+    "category": "crazy",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "en",
+    "text": "Explain how to use an imaginary spoon to someone from another galaxy.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-easy-dare-02",
+    "category": "crazy",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "tr",
+    "text": "Başka galaksiden gelen birine hayali bir kaşığın nasıl kullanıldığını anlat.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-easy-dare-03",
+    "category": "crazy",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "en",
+    "text": "Give three different voices to three invisible hats.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-easy-dare-03",
+    "category": "crazy",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "tr",
+    "text": "Üç görünmez şapka için üç farklı ses oluştur.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-easy-dare-04",
+    "category": "crazy",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "en",
+    "text": "Create a five-second sound logo for a company that sells clouds. Silence is also a design choice.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-easy-dare-05",
+    "category": "crazy",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "en",
+    "text": "Act out a sleepy mountain waking up, using only your hands or a spoken description.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-easy-dare-06",
+    "category": "crazy",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "en",
+    "text": "Design a new punctuation mark and show where it belongs in a sentence.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-medium-truth-01",
+    "category": "crazy",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "en",
+    "text": "If you ran a hotel for ghosts, what would your best-reviewed service be?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-medium-truth-01",
+    "category": "crazy",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "tr",
+    "text": "Hayaletler için bir otel işletseydin en iyi yorum alan hizmetin ne olurdu?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-medium-truth-02",
+    "category": "crazy",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "en",
+    "text": "What would a documentary about your snack cupboard be called?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-medium-truth-02",
+    "category": "crazy",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "tr",
+    "text": "Atıştırmalık dolabın hakkında çekilen belgeselin adı ne olurdu?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-medium-truth-03",
+    "category": "crazy",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "en",
+    "text": "Which two unrelated jobs should be combined for maximum comedy?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-medium-truth-03",
+    "category": "crazy",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "tr",
+    "text": "En komik sonuç için birbiriyle ilgisiz hangi iki meslek birleştirilmeli?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-medium-truth-04",
+    "category": "crazy",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "en",
+    "text": "If gravity took a lunch break, what would you try to keep from floating away first?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-medium-truth-05",
+    "category": "crazy",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "en",
+    "text": "What ridiculous rule would you introduce in a city built entirely from cushions?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-medium-truth-06",
+    "category": "crazy",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "en",
+    "text": "If your calendar became a person, what would your first conversation be about?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-medium-dare-01",
+    "category": "crazy",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "en",
+    "text": "Deliver breaking news about a sock elected president of the laundry basket.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-medium-dare-01",
+    "category": "crazy",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "tr",
+    "text": "Çamaşır sepetine başkan seçilen bir çorap hakkında son dakika haberi sun.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-medium-dare-02",
+    "category": "crazy",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "en",
+    "text": "Teach a short masterclass in professional daydreaming, with two imaginary qualifications.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-medium-dare-02",
+    "category": "crazy",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "tr",
+    "text": "İki hayali uzmanlık belgesiyle profesyonel hayal kurma üzerine kısa bir ders ver.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-medium-dare-03",
+    "category": "crazy",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "en",
+    "text": "Invent a sport for turtles and commentate its championship final.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-medium-dare-03",
+    "category": "crazy",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "tr",
+    "text": "Kaplumbağalar için bir spor uydur ve şampiyonluk finalini anlat.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-medium-dare-04",
+    "category": "crazy",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "en",
+    "text": "Explain a normal morning routine as a nature documentary narrator observing a rare species.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-medium-dare-05",
+    "category": "crazy",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "en",
+    "text": "Give a product demonstration for an umbrella that only works indoors.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-medium-dare-06",
+    "category": "crazy",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "en",
+    "text": "Create an alien recipe using three invented ingredients and describe the result.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-bold-truth-01",
+    "category": "crazy",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "en",
+    "text": "What absurd invention would solve a very tiny problem in your life?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-bold-truth-01",
+    "category": "crazy",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "tr",
+    "text": "Hayatındaki küçücük bir sorunu hangi absürt icat çözerdi?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-bold-truth-02",
+    "category": "crazy",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "en",
+    "text": "If your internal monologue had a customer service desk, what would be its busiest request?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-bold-truth-02",
+    "category": "crazy",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "tr",
+    "text": "İç sesinin bir müşteri hizmetleri masası olsa en sık gelen talep ne olurdu?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-bold-truth-03",
+    "category": "crazy",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "en",
+    "text": "Which imaginary law of physics would you replace for one harmless afternoon?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-bold-truth-03",
+    "category": "crazy",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "tr",
+    "text": "Zararsız bir öğleden sonra için hangi hayali fizik yasasını değiştirirdin?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-bold-truth-04",
+    "category": "crazy",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "en",
+    "text": "What would you put in a time capsule to confuse a very serious future historian?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-bold-truth-05",
+    "category": "crazy",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "en",
+    "text": "If every emotion had a hat, which hat would you be wearing right now?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-bold-truth-06",
+    "category": "crazy",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "en",
+    "text": "Which utterly fictional conspiracy explains why one sock always goes missing?",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-bold-dare-01",
+    "category": "crazy",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "en",
+    "text": "Perform a courtroom defense for a biscuit accused of being too crumbly.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-bold-dare-01",
+    "category": "crazy",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "tr",
+    "text": "Çok fazla ufalanmakla suçlanan bir bisküviyi mahkemede savun.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-bold-dare-02",
+    "category": "crazy",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "en",
+    "text": "Create a thirty-second opera about a phone battery reaching one percent. Speaking the lines is welcome.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-bold-dare-02",
+    "category": "crazy",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "tr",
+    "text": "Telefon şarjının yüzde bire düşmesi hakkında otuz saniyelik bir opera yap. Replikleri konuşarak da söyleyebilirsin.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-bold-dare-03",
+    "category": "crazy",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "en",
+    "text": "Give a motivational speech to an imaginary team of lost bookmarks.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-bold-dare-03",
+    "category": "crazy",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "tr",
+    "text": "Hayali bir kayıp kitap ayraçları takımına motivasyon konuşması yap.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-bold-dare-04",
+    "category": "crazy",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "en",
+    "text": "Pitch a serious business plan for a service that names people’s houseplants.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-bold-dare-05",
+    "category": "crazy",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "en",
+    "text": "Improvise a conversation between the moon and a streetlamp about working the night shift.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "crazy-bold-dare-06",
+    "category": "crazy",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "en",
+    "text": "Host a tiny awards ceremony for three objects nearby; every object gets a different award.",
+    "pack": "core",
+    "sensitive": false
+  },
+  {
+    "id": "afterglow-01",
+    "category": "couples",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "en",
+    "text": "Which shared tradition would you start if it cost nothing?",
+    "pack": "afterglow",
+    "sensitive": true
+  },
+  {
+    "id": "afterglow-02",
+    "category": "couples",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "en",
+    "text": "What does a good apology sound like to you?",
+    "pack": "afterglow",
+    "sensitive": true
+  },
+  {
+    "id": "afterglow-03",
+    "category": "couples",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "en",
+    "text": "Which unspoken expectation would you like to replace with a conversation?",
+    "pack": "afterglow",
+    "sensitive": true
+  },
+  {
+    "id": "afterglow-04",
+    "category": "couples",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "en",
+    "text": "Invent a nickname for your ideal shared home, then explain its story.",
+    "pack": "afterglow",
+    "sensitive": true
+  },
+  {
+    "id": "afterglow-05",
+    "category": "couples",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "en",
+    "text": "Together, design a tiny ritual to mark the end of a busy day.",
+    "pack": "afterglow",
+    "sensitive": true
+  },
+  {
+    "id": "afterglow-06",
+    "category": "couples",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "en",
+    "text": "Each share one way you would like to ask for support more clearly.",
+    "pack": "afterglow",
+    "sensitive": true
+  },
+  {
+    "id": "afterglow-07",
+    "category": "party",
+    "difficulty": "easy",
+    "type": "truth",
+    "language": "en",
+    "text": "What would your signature welcome gift be at a hotel you owned?",
+    "pack": "afterglow",
+    "sensitive": true
+  },
+  {
+    "id": "afterglow-08",
+    "category": "party",
+    "difficulty": "medium",
+    "type": "truth",
+    "language": "en",
+    "text": "Which everyday inconvenience could you turn into a friendly competition?",
+    "pack": "afterglow",
+    "sensitive": true
+  },
+  {
+    "id": "afterglow-09",
+    "category": "party",
+    "difficulty": "bold",
+    "type": "truth",
+    "language": "en",
+    "text": "What is a strength you have only recently started naming?",
+    "pack": "afterglow",
+    "sensitive": true
+  },
+  {
+    "id": "afterglow-10",
+    "category": "party",
+    "difficulty": "easy",
+    "type": "dare",
+    "language": "en",
+    "text": "Create a friendly slogan for a club dedicated to taking breaks.",
+    "pack": "afterglow",
+    "sensitive": true
+  },
+  {
+    "id": "afterglow-11",
+    "category": "party",
+    "difficulty": "medium",
+    "type": "dare",
+    "language": "en",
+    "text": "Stage a tiny press conference about an imaginary discovery in your pocket.",
+    "pack": "afterglow",
+    "sensitive": true
+  },
+  {
+    "id": "afterglow-12",
+    "category": "party",
+    "difficulty": "bold",
+    "type": "dare",
+    "language": "en",
+    "text": "Present a lifetime achievement award to the concept of patience.",
+    "pack": "afterglow",
+    "sensitive": true
+  }
+]

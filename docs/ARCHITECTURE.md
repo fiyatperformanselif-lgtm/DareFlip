@@ -39,7 +39,7 @@ Storage uses a `dareflip:v1` key and a versioned JSON envelope. Corrupt data and
 
 ## Content contract and scaling to 5,000
 
-Every card has `id`, `category`, `difficulty`, `type`, `language`, `text`, `pack`, and `sensitive`. Translations intentionally share their concept ID. The unique record key is `(id, language)`. Repeat prevention uses the concept ID, so changing language does not reset the seen history.
+Every card has `id`, `category`, `difficulty`, `type`, `language`, `text`, `pack`, and `sensitive`. Translations intentionally share their concept ID. The unique record key is `(id, language)`. Editorial revision 2 uses new `-v2` IDs; `persistedCards` combines current and immutable archived cards for strict save validation, and `lookupCard` keeps favorites on their own revision. Only the active `cards` collection feeds new draws and daily questions. Repeat prevention uses the concept ID, so changing language does not reset the seen history.
 
 The current catalog is a curated seed, not 5,000 completed originals. Consult `contentStats` and `DEVELOPMENT_STATUS.md` for the actual count. Additional JSON can be split into editorial packs without changing the draw contract. For a substantially larger catalog, preindex records by ID/locale and eligibility bucket to replace repeated linear lookup; benchmark before changing behavior. Do not increase counts with templates, word swaps, duplicated concepts, or unreviewed machine translation.
 
@@ -47,7 +47,7 @@ Editorial additions must receive stable IDs, intentional difficulty/category/pac
 
 ## Localization contract
 
-Twenty languages are selectable. English and Turkish have complete keyed interface dictionaries; other dictionaries intentionally contain only a subset of UI strings. Turkish card coverage is partial. Other card languages visibly fall back to English. Hardcoded decorative marketing text and legal drafts remain English. A selected locale, an RTL layout, or matching dictionary keys do not establish full editorial localization. Settings and per-card notices disclose missing content. Missing translations must remain marked incomplete until human-reviewed text exists.
+Twenty languages are selectable. English and Turkish have complete keyed interface dictionaries; other dictionaries intentionally contain only a subset of UI strings. Every active revision-2 card has English and Turkish text. Other card languages visibly fall back to English; archived historical favorites can also lack a Turkish translation. Legal drafts remain English and are labeled accordingly. A selected locale, an RTL layout, or matching dictionary keys do not establish full editorial localization. Settings and per-card notices disclose missing content. Missing translations remain marked incomplete. Availability flags describe existing text, not native-speaker certification or release approval.
 
 ## Native advertising boundary
 

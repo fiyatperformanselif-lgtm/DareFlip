@@ -29,7 +29,7 @@ import {
   Zap,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { cards } from "./content";
+import { lookupCard, persistedCards } from "./content";
 import { dailyCard, drawCard, pickPlayer } from "./domain/engine";
 import type { Card, Difficulty, Mode } from "./domain/types";
 import { saveState } from "./domain/storage";
@@ -170,7 +170,9 @@ export default function App() {
           !!session?.card?.sensitive)) ||
       (screen === "setup" && (chosen === "flirty" || chosen === "random")) ||
       (tab === "favorites" &&
-        cards.some((c) => c.sensitive && state.favorites.includes(c.id)));
+        persistedCards.some(
+          (c) => c.sensitive && state.favorites.includes(c.id),
+        ));
     void ads
       .updatePlacement({
         menu: !isGame && screen !== "setup" && overlay === null,
@@ -370,9 +372,7 @@ export default function App() {
     });
     setExhausted(false);
   };
-  const resolveCard = (id: string) =>
-    cards.find((c) => c.id === id && c.language === state.locale) ??
-    cards.find((c) => c.id === id && c.language === "en");
+  const resolveCard = (id: string) => lookupCard(id, state.locale);
   const toggleFavorite = (id: string) => {
     feel();
     const saved = state.favorites.includes(id);
@@ -1183,10 +1183,10 @@ export default function App() {
                   {!localeInfo(state.locale).uiComplete && (
                     <p>{tr("settings.partialUi")}</p>
                   )}
-                  {state.locale !== "en" && (
+                  {localeInfo(state.locale).contentStatus !== "available" && (
                     <p>
                       {tr(
-                        state.locale === "tr"
+                        localeInfo(state.locale).contentStatus === "partial"
                           ? "settings.partialCards"
                           : "settings.englishCards",
                       )}

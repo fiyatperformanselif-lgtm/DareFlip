@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { cards } from "./content";
+import { archivedCards, cards, lookupCard } from "./content";
 import { loadState, saveState, STORAGE_KEY } from "./domain/storage";
 import type { StorageLike } from "./domain/storage";
 import { initialState, loadAppState, validState } from "./state";
@@ -11,6 +11,12 @@ const core = cards.find(
     card.language === "en" && card.category === "party" && card.pack === "core",
 )!;
 const bonus = cards.find(
+  (card) => card.language === "en" && card.pack === "afterglow",
+)!;
+const archivedCore = archivedCards.find(
+  (card) => card.id === "party-easy-truth-01" && card.language === "en",
+)!;
+const archivedBonus = archivedCards.find(
   (card) => card.language === "en" && card.pack === "afterglow",
 )!;
 
@@ -397,5 +403,108 @@ describe("gender-aware application state and legacy migration", () => {
     const pristine = state({ session: null, favorites: [core.id] });
     saveState(pristine, storage);
     expect(loadAppState(storage)).toEqual(pristine);
+  });
+});
+
+describe("saved cards across editorial revisions", () => {
+  function archivedSession(overrides: Partial<Session> = {}): Session {
+    return session({
+      card: { ...archivedCore },
+      difficulty: archivedCore.difficulty,
+      seen: [archivedCore.id],
+      rounds: 17,
+      genders: ["female", "undisclosed"],
+      ...overrides,
+    });
+  }
+
+  it("preserves the exact old current card, favorites, seen IDs, gender choices and preferences", () => {
+    const original = state({
+      session: archivedSession(),
+      favorites: [archivedCore.id, core.id],
+      locale: "tr",
+      sound: false,
+      haptics: false,
+      unlocked: true,
+      ageConfirmed: true,
+    });
+    const storage = memoryStorage();
+    expect(validState(original)).toBe(true);
+    saveState(original, storage);
+    const restored = loadAppState(storage);
+    expect(restored).toEqual(original);
+    expect(restored.session!.card!.text).toBe(
+      "What harmless opinion would you defend with surprising enthusiasm?",
+    );
+    expect(lookupCard(restored.session!.card!.id, "en")).toEqual(archivedCore);
+    expect(restored.session!.card!.id).not.toMatch(/-v2$/);
+    expect(core.id).toMatch(/-v2$/);
+    expect(validState(restored)).toBe(true);
+  });
+
+  it("applies the gender migration to an archived in-progress session without replacing its card", () => {
+    const storage = memoryStorage();
+    const legacySession = withoutGenders(archivedSession({ rounds: 31 }));
+    const original = {
+      ...state(),
+      session: legacySession,
+      favorites: [archivedCore.id],
+    };
+    saveState(original, storage);
+    expect(loadAppState(storage)).toEqual({
+      ...original,
+      session: { ...legacySession, genders: [null, null] },
+    });
+    expect(hasCompleteGenders(loadAppState(storage).session!.genders)).toBe(
+      false,
+    );
+  });
+
+  it("retains an exact archived translation even after the selected interface language changes", () => {
+    const archivedTranslation = lookupCard(archivedCore.id, "tr")!;
+    expect(archivedTranslation.language).toBe("tr");
+    const original = state({
+      locale: "en",
+      session: archivedSession({ card: archivedTranslation }),
+    });
+    const storage = memoryStorage();
+    saveState(original, storage);
+    expect(loadAppState(storage)).toEqual(original);
+  });
+
+  it("validates every archived card field against trusted archive data", () => {
+    for (const change of [
+      { id: "unknown-old-card" },
+      { category: "couples" },
+      { difficulty: "bold" },
+      { type: "dare" },
+      { language: "xx" },
+      { text: "silently replaced archive text" },
+      { pack: "afterglow" },
+      { sensitive: !archivedCore.sensitive },
+    ]) {
+      const invalid = {
+        ...state(),
+        session: { ...archivedSession(), card: { ...archivedCore, ...change } },
+      };
+      expect(validState(invalid), JSON.stringify(change)).toBe(false);
+    }
+  });
+
+  it("keeps pack entitlement checks for archived cards and never rewrites an invalid save", () => {
+    const current = archivedSession({
+      card: archivedBonus,
+      mode: archivedBonus.category,
+      difficulty: archivedBonus.difficulty,
+      seen: [archivedBonus.id],
+    });
+    expect(validState(state({ session: current, unlocked: true }))).toBe(true);
+    const invalid = state({ session: current, unlocked: false });
+    expect(validState(invalid)).toBe(false);
+    const storage = memoryStorage();
+    saveState(invalid, storage);
+    const before = storage.getItem(STORAGE_KEY);
+    expect(loadAppState(storage).session).toBeNull();
+    expect(storage.getItem(STORAGE_KEY)).toBe(before);
   });
 });

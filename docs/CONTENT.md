@@ -1,10 +1,10 @@
 # Content authoring
 
-The shipped `src/content/cards.json` contains 192 English concepts and 90 Turkish translations (282 rows). The editorial target is 5,000 originals. This is a scalable seed catalog, not a claim that the target has been completed.
+The shipped `src/content/cards.json` contains 192 revised English concepts and 192 Turkish translations (384 active rows). The editorial target is 5,000 originals. This is a scalable seed catalog, not a claim that the target has been completed.
 
 ```json
 {
-  "id": "party-easy-truth-01",
+  "id": "party-easy-truth-01-v2",
   "category": "party",
   "difficulty": "easy",
   "type": "truth",
@@ -15,7 +15,7 @@ The shipped `src/content/cards.json` contains 192 English concepts and 90 Turkis
 }
 ```
 
-The example illustrates the schema; do not add it to the shipped catalog. Categories are `couples`, `party`, `flirty`, `deep`, `crazy`; Random selects across categories. Difficulties are `easy`, `medium`, `bold`; kinds are `truth`, `dare`. Packs are `core`, `afterglow` currently. Each `(id, language)` pair is unique, while a translation must preserve its original concept's ID and metadata. Keep concept IDs stable across edits and locales to preserve favorites and no-repeat histories. Engine lookup resolves a translation per concept, then visibly falls back to English.
+The example illustrates the schema; do not add it to the shipped catalog. Categories are `couples`, `party`, `flirty`, `deep`, `crazy`; Random selects across categories. Difficulties are `easy`, `medium`, `bold`; kinds are `truth`, `dare`. Packs are `core`, `afterglow` currently. Each `(id, language)` pair is unique, while a translation must preserve its original concept's ID and metadata. Translations share their concept revision ID. Shipped localized rows are immutable: editorial replacements use a fresh revision ID and keep the exact earlier rows in the trusted compatibility archive, so saved cards and favorites do not silently change meaning. Engine lookup resolves a translation per concept, then visibly falls back to English. The current active EN/TR edition is fully paired. `src/content/archive-v1.json` contains the exact earlier 282 records for saved-state restoration only; it is excluded from drawing, daily selection and active counts. Never edit that archive to make a test pass. See `EDITORIAL_REVIEW.md` for the 26 November revision and source transparency.
 
 An editorial addition must be a distinct idea, not an existing prompt with new nouns. Keep text natural and self-contained; use short spoken sentences. Every task must be consensual, voluntary, safe indoors, nonhumiliating and free from explicit sexual acts, substance requirements, dangerous activity, compelled touching, financial spending, compelled personal disclosure or stranger contact. Flirty is adult-only, playful and nonexplicit. Even a safe prompt can cross someone's personal boundary; unconditional skipping is always available.
 

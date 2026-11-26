@@ -219,7 +219,8 @@ test("daily question, language coverage disclosure, and Arabic RTL work", async 
   await expect(
     page.getByRole("heading", { name: "Tam sana göre." }),
   ).toBeVisible();
-  await expect(page.locator(".translation-note")).toContainText("sınırlı");
+  await expect(page.locator(".translation-note")).not.toContainText("sınırlı");
+  await expect(page.locator(".translation-note")).toContainText("tamam");
   await page.getByRole("combobox", { name: "Dil" }).selectOption("ar");
   await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
   await expect(page.locator("html")).toHaveAttribute("lang", "ar");

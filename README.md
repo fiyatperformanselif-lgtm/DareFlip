@@ -33,13 +33,13 @@ Favorites, preferences, unlocked bonus content, player gender choices and the cu
 
 ## Content and translation truth
 
-- **192 original English concepts:** 180 core cards + 12 Afterglow bonus cards.
-- **90 Turkish card translations.** Translation rows share canonical IDs; they are not additional original cards.
+- **192 revised English concepts:** 180 core cards + 12 Afterglow bonus cards, rewritten in editorial revision 2.
+- **192 Turkish card translations:** every active concept, including Afterglow, has an EN/TR pair. Translation rows are not additional original cards.
 - Expandable JSON system with a **5,000-original target**, not 5,000 finished cards. Avoid generated near-duplicates. Human editorial/cultural review is still required.
 - Twenty selectable language codes: `en tr de fr es pt it nl ru ar hi ja ko zh id pl sv no da el`.
-- English and Turkish keyed UI dictionaries are complete. The other 18 UI dictionaries are partial. Cards use individual English fallback where translations are absent; settings and affected cards disclose this. Arabic uses RTL. Legal drafts remain English and are labeled as such.
+- English and Turkish keyed UI dictionaries are complete. The other 18 UI dictionaries are partial. The active English/Turkish catalog is complete; other card languages use English fallback. Historical favorites keep their original edition and can still need a disclosed English fallback. Arabic uses RTL. Legal drafts remain English and are labeled as such.
 
-See [architecture](docs/ARCHITECTURE.md), [content guide](docs/CONTENT.md), and `src/content/cards.json`. Metadata includes unique concept ID, category, difficulty, type, language, pack and sensitivity. No answers are collected or saved.
+See [architecture](docs/ARCHITECTURE.md), [content guide](docs/CONTENT.md), [editorial revision notes](docs/EDITORIAL_REVIEW.md), and `src/content/cards.json`. The immutable v1 archive preserves earlier saved cards/favorites while all new draws use revision 2. Metadata includes unique concept ID, category, difficulty, type, language, pack and sensitivity. No answers are collected or saved.
 
 ## Quality commands
 

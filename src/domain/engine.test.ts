@@ -1,5 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { cards, contentLanguage, contentStats } from "../content";
+import { createHash } from "node:crypto";
+import {
+  archivedCards,
+  cards,
+  contentLanguage,
+  contentStats,
+  lookupCard,
+  persistedCards,
+} from "../content";
 import { dailyCard, drawCard, eligibleCards, pickPlayer } from "./engine";
 import type { DrawOptions } from "./types";
 
@@ -12,7 +20,15 @@ const options: DrawOptions = {
 };
 
 describe("content integrity", () => {
-  it("has unique localized IDs and genuinely distinct prompts", () => {
+  it("keeps the original committed v1 corpus unchanged for saved-card restoration", () => {
+    // Hash of parsed HEAD:src/content/cards.json before the v2 editorial rewrite.
+    // Whitespace-only JSON formatting changes do not alter this preservation check.
+    expect(
+      createHash("sha256").update(JSON.stringify(archivedCards)).digest("hex"),
+    ).toBe("5492a2cb17093a56061c3325a2a247b25518b8385ef99c610917b1ad6037a6a5");
+  });
+
+  it("has unique localized IDs and distinct prompt text", () => {
     const keys = cards.map((card) => `${card.id}:${card.language}`);
     expect(new Set(keys).size).toBe(cards.length);
     for (const language of ["en", "tr"]) {
@@ -22,7 +38,9 @@ describe("content integrity", () => {
       expect(new Set(texts).size).toBe(texts.length);
     }
     expect(contentStats.englishOriginals).toBe(192);
-    expect(contentStats.turkishTranslations).toBe(90);
+    expect(contentStats.turkishTranslations).toBe(192);
+    expect(contentStats.uniqueConcepts).toBe(192);
+    expect(cards).toHaveLength(384);
   });
 
   it("checks metadata and canonical translation alignment", () => {
@@ -34,14 +52,15 @@ describe("content integrity", () => {
       expect(["easy", "medium", "bold"]).toContain(card.difficulty);
       expect(["truth", "dare"]).toContain(card.type);
       expect(["core", "afterglow"]).toContain(card.pack);
-      if (card.language === "tr") {
-        const original = cards.find(
+      expect(card.id).toMatch(/-v2$/);
+      if (card.language === "en") {
+        const translated = cards.find(
           (candidate) =>
-            candidate.id === card.id && candidate.language === "en",
+            candidate.id === card.id && candidate.language === "tr",
         );
-        expect(original).toBeDefined();
+        expect(translated).toBeDefined();
         expect({ ...card, text: "", language: "" }).toEqual({
-          ...original,
+          ...translated,
           text: "",
           language: "",
         });
@@ -65,11 +84,60 @@ describe("content integrity", () => {
             expect(
               eligibleCards({ ...options, language, mode, difficulty, type })
                 .length,
-            ).toBeGreaterThanOrEqual(3);
+            ).toBeGreaterThanOrEqual(6);
+            expect(
+              eligibleCards({
+                ...options,
+                language,
+                mode,
+                difficulty,
+                type,
+              }).every((card) => card.language === language),
+            ).toBe(true);
           }
         }
       }
     }
+  });
+
+  it("keeps editorial revisions disjoint and excludes archived rows from active statistics", () => {
+    const activeIds = new Set(cards.map((card) => card.id));
+    expect(archivedCards).toHaveLength(282);
+    expect(
+      archivedCards.every(
+        (card) => !card.id.endsWith("-v2") && !activeIds.has(card.id),
+      ),
+    ).toBe(true);
+    expect(persistedCards).toHaveLength(cards.length + archivedCards.length);
+    expect(
+      new Set(persistedCards.map((card) => `${card.id}:${card.language}`)).size,
+    ).toBe(persistedCards.length);
+    expect(contentStats.englishOriginals).toBe(
+      cards.filter((card) => card.language === "en").length,
+    );
+    expect(contentStats.turkishTranslations).toBe(
+      cards.filter((card) => card.language === "tr").length,
+    );
+  });
+
+  it("restores exact saved revisions with explicit translation fallback", () => {
+    for (const card of persistedCards) {
+      expect(lookupCard(card.id, card.language)).toEqual(card);
+    }
+    const oldEnglishOnly = archivedCards.find(
+      (card) =>
+        card.language === "en" &&
+        !archivedCards.some(
+          (translation) =>
+            translation.id === card.id && translation.language === "tr",
+        ),
+    )!;
+    expect(lookupCard(oldEnglishOnly.id, "tr")).toEqual(oldEnglishOnly);
+    const activeEnglish = cards.find((card) => card.language === "en")!;
+    expect(lookupCard(activeEnglish.id, "tr-TR")?.language).toBe("tr");
+    expect(lookupCard(activeEnglish.id, "de-DE")).toEqual(activeEnglish);
+    expect(lookupCard("unknown-card", "tr")).toBeUndefined();
+    expect(lookupCard(oldEnglishOnly.id)?.id).toBe(oldEnglishOnly.id);
   });
 });
 
@@ -106,11 +174,11 @@ describe("draw engine", () => {
           card.category === "couples" &&
           card.difficulty === "bold" &&
           card.type === "dare" &&
-          ["tr", "en"].includes(card.language) &&
+          card.language === "tr" &&
           card.pack === "core",
       ),
     ).toBe(true);
-    expect(pool.filter((card) => card.language === "tr")).toHaveLength(3);
+    expect(pool.filter((card) => card.language === "tr")).toHaveLength(6);
     expect(new Set(pool.map((card) => card.id)).size).toBe(pool.length);
     const locked = eligibleCards({ ...options, mode: "random" });
     const unlocked = eligibleCards({
@@ -128,9 +196,41 @@ describe("draw engine", () => {
     });
     expect(
       translatedUnlocked.some(
-        (card) => card.pack === "afterglow" && card.language === "en",
+        (card) => card.pack === "afterglow" && card.language === "tr",
       ),
     ).toBe(true);
+  });
+
+  it("never draws archived cards even when a restored session contains old seen IDs", () => {
+    const activeIds = new Set(cards.map((card) => card.id));
+    const oldSeen = [...new Set(archivedCards.map((card) => card.id))];
+    for (const language of ["en", "tr"]) {
+      for (const type of ["truth", "dare"] as const) {
+        const config = {
+          ...options,
+          mode: "random" as const,
+          language,
+          type,
+          seen: oldSeen,
+          unlockedPacks: ["core", "afterglow"] as const,
+        };
+        const pool = eligibleCards(config);
+        expect(
+          pool.every(
+            (card) => activeIds.has(card.id) && card.id.endsWith("-v2"),
+          ),
+        ).toBe(true);
+        const seen = [...oldSeen];
+        for (let index = 0; index < pool.length; index++) {
+          const result = drawCard({ ...config, seen }, () => 0);
+          expect(result.card).not.toBeNull();
+          expect(activeIds.has(result.card!.id)).toBe(true);
+          expect(oldSeen).not.toContain(result.card!.id);
+          seen.push(result.card!.id);
+        }
+        expect(drawCard({ ...config, seen }).exhausted).toBe(true);
+      }
+    }
   });
 
   it("shares canonical seen IDs between translations", () => {
@@ -189,6 +289,18 @@ describe("daily card", () => {
           new Date(`2026-02-${String(day).padStart(2, "0")}T12:00:00Z`),
         ).sensitive,
       ).toBe(false);
+      expect(
+        dailyCard(
+          "en",
+          new Date(`2026-02-${String(day).padStart(2, "0")}T12:00:00Z`),
+        ).id,
+      ).toMatch(/-v2$/);
+      expect(
+        dailyCard(
+          "tr",
+          new Date(`2026-02-${String(day).padStart(2, "0")}T12:00:00Z`),
+        ).language,
+      ).toBe("tr");
     }
   });
 });
