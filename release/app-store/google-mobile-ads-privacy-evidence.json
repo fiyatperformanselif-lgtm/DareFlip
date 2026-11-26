@@ -1,0 +1,101 @@
+{
+  "sdk": "Google Mobile Ads 13.11.0",
+  "sourcePackageUrl": "https://raw.githubusercontent.com/googleads/swift-package-manager-google-mobile-ads/13.11.0/Package.swift",
+  "officialBinaryZipSha256": "310516d18f0d600c9e45ed42b955a6b8ec52108d380f7cd8ed1e424e9d3fec22",
+  "binaryChecksumMatched": true,
+  "manifestSha256": "69fb112582fc23fc06c635c961d262a3f7b4b5654d284787491de3000dadf9d2",
+  "deviceAndSimulatorManifestsIdentical": true,
+  "scope": "Official SDK-wide declarations; not independent candidate traffic, UMP/account/mediation verification or publisher account answers.",
+  "manifest": {
+    "NSPrivacyCollectedDataTypes": [
+      {
+        "NSPrivacyCollectedDataType": "NSPrivacyCollectedDataTypeOtherDiagnosticData",
+        "NSPrivacyCollectedDataTypeLinked": false,
+        "NSPrivacyCollectedDataTypeTracking": false,
+        "NSPrivacyCollectedDataTypePurposes": [
+          "NSPrivacyCollectedDataTypePurposeThirdPartyAdvertising",
+          "NSPrivacyCollectedDataTypePurposeDeveloperAdvertising",
+          "NSPrivacyCollectedDataTypePurposeAnalytics"
+        ]
+      },
+      {
+        "NSPrivacyCollectedDataType": "NSPrivacyCollectedDataTypeCoarseLocation",
+        "NSPrivacyCollectedDataTypeLinked": true,
+        "NSPrivacyCollectedDataTypeTracking": false,
+        "NSPrivacyCollectedDataTypePurposes": [
+          "NSPrivacyCollectedDataTypePurposeThirdPartyAdvertising",
+          "NSPrivacyCollectedDataTypePurposeAnalytics",
+          "NSPrivacyCollectedDataTypePurposeDeveloperAdvertising"
+        ]
+      },
+      {
+        "NSPrivacyCollectedDataType": "NSPrivacyCollectedDataTypePerformanceData",
+        "NSPrivacyCollectedDataTypeLinked": false,
+        "NSPrivacyCollectedDataTypeTracking": false,
+        "NSPrivacyCollectedDataTypePurposes": [
+          "NSPrivacyCollectedDataTypePurposeThirdPartyAdvertising",
+          "NSPrivacyCollectedDataTypePurposeDeveloperAdvertising",
+          "NSPrivacyCollectedDataTypePurposeAnalytics"
+        ]
+      },
+      {
+        "NSPrivacyCollectedDataType": "NSPrivacyCollectedDataTypeCrashData",
+        "NSPrivacyCollectedDataTypeLinked": false,
+        "NSPrivacyCollectedDataTypeTracking": false,
+        "NSPrivacyCollectedDataTypePurposes": [
+          "NSPrivacyCollectedDataTypePurposeAnalytics"
+        ]
+      },
+      {
+        "NSPrivacyCollectedDataType": "NSPrivacyCollectedDataTypeAdvertisingData",
+        "NSPrivacyCollectedDataTypeLinked": true,
+        "NSPrivacyCollectedDataTypeTracking": false,
+        "NSPrivacyCollectedDataTypePurposes": [
+          "NSPrivacyCollectedDataTypePurposeThirdPartyAdvertising",
+          "NSPrivacyCollectedDataTypePurposeDeveloperAdvertising",
+          "NSPrivacyCollectedDataTypePurposeAnalytics"
+        ]
+      },
+      {
+        "NSPrivacyCollectedDataType": "NSPrivacyCollectedDataTypeProductInteraction",
+        "NSPrivacyCollectedDataTypeLinked": true,
+        "NSPrivacyCollectedDataTypeTracking": false,
+        "NSPrivacyCollectedDataTypePurposes": [
+          "NSPrivacyCollectedDataTypePurposeAnalytics",
+          "NSPrivacyCollectedDataTypePurposeDeveloperAdvertising",
+          "NSPrivacyCollectedDataTypePurposeThirdPartyAdvertising"
+        ]
+      },
+      {
+        "NSPrivacyCollectedDataType": "NSPrivacyCollectedDataTypeDeviceID",
+        "NSPrivacyCollectedDataTypeLinked": true,
+        "NSPrivacyCollectedDataTypeTracking": true,
+        "NSPrivacyCollectedDataTypePurposes": [
+          "NSPrivacyCollectedDataTypePurposeThirdPartyAdvertising",
+          "NSPrivacyCollectedDataTypePurposeAnalytics",
+          "NSPrivacyCollectedDataTypePurposeDeveloperAdvertising"
+        ]
+      }
+    ],
+    "NSPrivacyAccessedAPITypes": [
+      {
+        "NSPrivacyAccessedAPITypeReasons": [
+          "35F9.1"
+        ],
+        "NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategorySystemBootTime"
+      },
+      {
+        "NSPrivacyAccessedAPITypeReasons": [
+          "CA92.1"
+        ],
+        "NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategoryUserDefaults"
+      },
+      {
+        "NSPrivacyAccessedAPITypeReasons": [
+          "E174.1"
+        ],
+        "NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategoryDiskSpace"
+      }
+    ]
+  }
+}

@@ -5,7 +5,7 @@ All copy below describes the intended app. Publish only claims verified against 
 | Field | Value |
 | --- | --- |
 | App name | DareFlip |
-| Store title (22 characters) | DareFlip: Truth or Dare |
+| Store title (23 characters) | DareFlip: Truth or Dare |
 | Subtitle (21 characters) | Couples & Party Games |
 | Slogan | Flip a card. Reveal a secret. |
 | Temporary bundle/package ID | com.dareflip.app |
@@ -20,6 +20,8 @@ All copy below describes the intended app. Publish only claims verified against 
 | Terms URL | https://dareflip.izargames.com/dareflip/terms.html |
 
 The publisher confirmed that the privacy, support and terms pages open in their browser after the Plesk permission correction. These addresses are now configured in the application source; they have not been entered into App Store Connect by this agent. Independent origin/TLS verification from this environment remains proxy-blocked. The draft below describes the selected advertising-enabled candidate and its private two-person mode. It still requires publisher/account review and is not a claim of store approval. [App Review notes](APP_REVIEW_NOTES.md) disclose the private content for the reviewer.
+
+The submitted-candidate preparation now targets the publisher-reported TestFlight **0.1.0 (3)**. They reported the name-entry zoom, card-skip and resume checks passed and explicitly requested publication with the current content. Copy-ready English fields are in `release/app-store/en-US/`; account submission has not been performed by this agent.
 
 ## Apple promotional text
 

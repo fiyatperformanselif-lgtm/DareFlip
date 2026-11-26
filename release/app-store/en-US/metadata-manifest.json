@@ -1,0 +1,97 @@
+{
+  "schema": "dareflip-app-store-metadata/v1",
+  "locale": "en-US",
+  "preparedDate": "2026-11-27",
+  "source": {
+    "file": "docs/STORE_METADATA.md",
+    "sha256": "090e416ef0b39fe82ebe8ebcc3be84840abd60db78785641ef8a2b52094c59e2",
+    "checkoutCommit": "0ad9402ecb167232bd2f5697c1e381cab31b4263",
+    "copy": "Description, promotional text and keywords copied verbatim from the source sections; name/subtitle match its declared brand values. Text files have no trailing newline.",
+    "workingTreePreparedForSubmission": true
+  },
+  "fields": {
+    "name.txt": {
+      "characters": 23,
+      "utf8Bytes": 23,
+      "limit": 30,
+      "withinLimit": true,
+      "sha256": "041720de429a3c5a4dcd2717f53f2f04772457ee80a66355d5d79c73a9316369"
+    },
+    "subtitle.txt": {
+      "characters": 21,
+      "utf8Bytes": 21,
+      "limit": 30,
+      "withinLimit": true,
+      "sha256": "9ba7c61db8aa30802d4963bb04da60b307a1e81502828bc27347ca37fd0cf009"
+    },
+    "promotional_text.txt": {
+      "characters": 145,
+      "utf8Bytes": 145,
+      "limit": 170,
+      "withinLimit": true,
+      "sha256": "7a29c427ead6d6f54dc08d8b2a65d3667df42e003c1ef5d64896799a19d949b2"
+    },
+    "keywords.txt": {
+      "characters": 78,
+      "utf8Bytes": 78,
+      "limit": 100,
+      "withinLimit": true,
+      "sha256": "1627d6a80fe5d35f80268effe4981b5113b49485d1c57d5cad0117045a6b209a",
+      "alsoWithin100Utf8Bytes": true
+    },
+    "description.txt": {
+      "characters": 1571,
+      "utf8Bytes": 1597,
+      "limit": 4000,
+      "withinLimit": true,
+      "sha256": "8a9c8414d704278d09c30debec47e6bb20a408f8202377671c1fb8a45c84d215"
+    },
+    "review_notes.txt": {
+      "characters": 1624,
+      "utf8Bytes": 1626,
+      "limit": 4000,
+      "withinLimit": true,
+      "sha256": "98af7526373e208ac362a19da7296679199968dc91fad6352e5578762e8b5c06"
+    }
+  },
+  "sourceCorrection": "The source title count was corrected to 23 characters; subtitle remains 21.",
+  "limits": {
+    "name": 30,
+    "subtitle": 30,
+    "promotionalText": 170,
+    "keywords": 100,
+    "description": 4000,
+    "counting": "Unicode code points; keywords are ASCII and also checked against 100 UTF-8 bytes."
+  },
+  "limitDocumentation": {
+    "references": [
+      "https://developer.apple.com/help/app-store-connect/reference/app-information/app-information/",
+      "https://developer.apple.com/help/app-store-connect/reference/app-information/platform-version-information/",
+      "https://developer.apple.com/app-store/product-page/"
+    ],
+    "liveFetchStatus": "The official platform-version-information URL returned HTTP 403 during preparation; current page content could not be read from this environment. Limits above are enforced; live-source access is not claimed."
+  },
+  "candidateEvidence": {
+    "version": "0.1.0",
+    "build": "3",
+    "source": "Parent task reports a user-provided App Store Connect screenshot with candidate 0.1.0/build 3, Ready to Submit, and an internal group. Not independently authenticated or inspected by this metadata task.",
+    "userReportedNativeChecks": [
+      "player-name keyboard zoom",
+      "skip",
+      "resume"
+    ]
+  },
+  "disclosures": {
+    "privateMode": "Description explicitly identifies sexual prompts/tasks for exactly two consenting adult partners and separate confirmations.",
+    "random": "Description explicitly excludes private Flirty from Random.",
+    "roadmap": "No 5,000-card or all-20-languages-complete claim."
+  },
+  "status": {
+    "copyReady": true,
+    "uploadedToAppStoreConnect": false,
+    "nameAvailabilityVerified": false,
+    "appleApprovalVerified": false,
+    "nativeBinaryInspectedByThisTask": false,
+    "screenshotsAndPrivacyAgeExportAnswers": "Outside these metadata files; complete honestly in the publisher account."
+  }
+}

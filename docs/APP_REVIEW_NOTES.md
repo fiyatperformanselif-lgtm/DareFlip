@@ -1,6 +1,6 @@
 # App Review notes draft
 
-These notes describe the current bundled content and selected iOS advertising configuration. They are prepared for the publisher to review and enter into App Store Connect; this agent has not submitted them or received Apple approval. The exact native version/build and device results must be supplied from the signed candidate.
+These notes describe the current bundled content and selected iOS advertising configuration. The candidate is **0.1.0 (3)** from the publisher's TestFlight screenshot. The publisher reported that name-entry zoom, skipping and resume work on their device and explicitly requested publication with the current content. Device model/OS and independent native SDK tests were not supplied. These notes are prepared for App Store Connect; this agent has not submitted them or received Apple approval. Copy-ready notes are in `release/app-store/en-US/review_notes.txt`.
 
 ## Reviewer access
 
@@ -16,7 +16,7 @@ Random mode excludes private Flirty cards. Favorites and existing saves can reta
 
 ## Advertising
 
-The store candidate is configured with the publisher's real iOS AdMob app and Banner/Interstitial/Rewarded unit IDs. Advertising is optional and requires the user to open the advertising preference flow; the app gates SDK initialization and ad requests on UMP `canRequestAds`. ATT is optional and is not triggered by the current interface. The app requests nonpersonalized ads.
+The store candidate is configured with the publisher's real iOS AdMob app and Banner/Interstitial/Rewarded unit IDs. Advertising is optional and requires the user to open the advertising preference flow; the app gates SDK initialization and ad requests on UMP `canRequestAds`. The current interface does not directly request ATT (`attOptIn:false`); published UMP IDFA messages can separately present ATT, so the actual AdMob message configuration must be considered. The app requests nonpersonalized ads, which alone does not establish that no data is collected or used for tracking.
 
 Banners are limited to eligible nonsensitive menus. Interstitials appear only at eligible natural breaks after the first five cards, with a minimum 120-second interval. Ads are excluded from private/sensitive contexts. Optional rewarded ads unlock bonus content only after an earned-reward callback; dismissal does not earn a reward. Unavailable ads never prevent core play or skipping.
 

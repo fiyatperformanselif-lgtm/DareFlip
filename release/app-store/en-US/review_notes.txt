@@ -1,0 +1,16 @@
+Candidate: DareFlip 0.1.0 (3).
+
+No sign-in or reviewer account is required. Core gameplay works offline. English and Turkish card editions are complete; other languages can have disclosed English fallback.
+
+Social modes support 2–20 players. Random excludes private Flirty cards.
+
+Flirty 18+ is a private mode for exactly two consenting adult partners. Its bundled deck contains sexual prompts and descriptions of sexual activities. To inspect it, select Flirty 18+, enter two fictitious player names, choose each player's gender option (including prefer not to say), and complete both separate age/participation confirmations. Choose a difficulty and Truth or Dare. Every card can be skipped without a penalty, and play can be stopped at any time. These controls are not presented as an exemption from Apple's content rules.
+
+The same content is available to reviewers and users. There is no hidden post-review unlock, special access code or remote content switch. Favorites and saved sessions can retain older bundled card editions.
+
+Advertising is optional. SDK initialization and ad requests are gated on UMP canRequestAds. Requests are nonpersonalized. Ads are excluded from private/sensitive contexts. Interstitials are limited to eligible natural breaks after the first five cards and at least 120 seconds apart. Rewarded ads unlock a bonus only after the earned-reward callback. Missing or declined ads never block core play or skipping.
+
+Publisher: IzarGames
+Support: info@izargames.com
+Privacy: https://dareflip.izargames.com/dareflip/privacy.html
+Support page: https://dareflip.izargames.com/dareflip/support.html

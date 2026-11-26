@@ -6,7 +6,7 @@ Implementation: `src/services/ads.ts`, `@capacitor-community/admob` 8.4.2 with C
 
 Nothing calls AdMob at startup. A user explicitly opens the advertising flow. `enableAds()` calls UMP `requestConsentInfo`, shows a required available consent form, requests fresh consent information, and proceeds only when `canRequestAds` is true. Google Mobile Ads `initialize` and every banner/interstitial/reward request are gated behind that result. Errors leave ads unavailable and play continues. Web performs no native consent or advertising calls.
 
-ATT is a separate opt-in. The app explains the purpose first; only `enableAds({attOptIn:true})` can ask for the iOS system permission. Denial is allowed. Ad requests use `npa:true` regardless of ATT; nonpersonalized ads still require the appropriate UMP permission.
+ATT is separate from GDPR consent. The app's direct ATT path requires `enableAds({attOptIn:true})`, and the current UI passes false. However, the installed plugin's consent documentation states that published AdMob UMP IDFA messages can separately present ATT; the direct-call flag alone does not establish that no prompt or tracking can occur. The account's UMP/IDFA configuration and native usage description must match. Denial is allowed. Ad requests use `npa:true` regardless of ATT; nonpersonalized ads still require the appropriate UMP permission and accurate data disclosures.
 
 Settings can disable ads locally and open Google's privacy options. After privacy options, ads stay disabled until explicitly enabled again. Local disable is not deletion of Google's existing consent records. Recheck consent each app session through the explicit flow. Do not persist a homegrown boolean as proof of legal consent.
 
@@ -40,6 +40,8 @@ Configure `GADApplicationIdentifier` in iOS Info.plist, and `com.google.android.
 6. Host privacy/support pages and any required app-ads.txt on publisher-controlled domains and configure URLs in stores and AdMob.
 
 Official references: [Capacitor plugin](https://github.com/capacitor-community/admob), [Android UMP](https://developers.google.com/admob/android/privacy), [iOS UMP](https://developers.google.com/admob/ios/privacy), [test ads](https://developers.google.com/admob/android/test-ads), [Apple ATT](https://developer.apple.com/documentation/apptrackingtransparency).
+
+For the current candidate, the official Google Mobile Ads13.11.0 binary's privacy manifest was retrieved through Google's SPM declaration and verified against its declared ZIP checksum. It declares seven collection categories, including linked Device ID with tracking=true; NPA alone cannot justify overriding that declaration. Exact SDK evidence and the distinction from candidate/account-specific answers are in [the submission privacy worksheet](../release/app-store/PRIVACY_WORKSHEET_TR.md). These SDK-wide declarations do not replace the publisher's actual App Store privacy answers or native network verification.
 
 ## Explicit store release profiles
 
