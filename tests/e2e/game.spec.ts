@@ -392,6 +392,12 @@ test("all six modes, three difficulties, bottle selection and ending games work"
 test("privacy, terms, support and preference controls are usable", async ({
   page,
 }) => {
+  const configuredPublisher = JSON.parse(
+    await readFile(
+      new URL("../../src/config/publisher.json", import.meta.url),
+      "utf8",
+    ),
+  ) as { name: string; supportEmail: string };
   await page
     .getByRole("navigation")
     .getByRole("button", { name: "Settings", exact: true })
@@ -407,9 +413,29 @@ test("privacy, terms, support and preference controls are usable", async ({
     await page.getByRole("button", { name, exact: true }).click();
     const dialog = page.getByRole("dialog");
     await expect(dialog).toBeVisible();
-    if (name === "Support")
-      await expect(dialog).toContainText("has not been configured");
-    else await expect(dialog.locator(".legal-text")).not.toBeEmpty();
+    if (name === "Support") {
+      const email = configuredPublisher.supportEmail.trim();
+      const emailLink = dialog.locator('a[href^="mailto:"]');
+      if (configuredPublisher.name.trim())
+        await expect(dialog.locator(".publisher-name")).toHaveText(
+          configuredPublisher.name.trim(),
+        );
+      if (email) {
+        await expect(emailLink).toHaveCount(1);
+        await expect(emailLink).toBeVisible();
+        await expect(emailLink).toContainText(email);
+        const href = await emailLink.getAttribute("href");
+        expect(decodeURIComponent(href!.slice("mailto:".length))).toBe(email);
+        await expect(dialog).not.toContainText(
+          "The publisher’s support contact has not been configured yet.",
+        );
+      } else {
+        await expect(emailLink).toHaveCount(0);
+        await expect(dialog).toContainText(
+          "The publisher’s support contact has not been configured yet.",
+        );
+      }
+    } else await expect(dialog.locator(".legal-text")).not.toBeEmpty();
     await page.getByRole("button", { name: "Close", exact: true }).click();
   }
 });

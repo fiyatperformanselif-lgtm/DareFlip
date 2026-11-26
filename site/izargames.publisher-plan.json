@@ -1,0 +1,13 @@
+{
+  "name": "IzarGames",
+  "supportEmail": "info@izargames.com",
+  "websiteUrl": "https://izargames.com/dareflip/",
+  "privacyUrl": "https://izargames.com/dareflip/privacy.html",
+  "supportUrl": "https://izargames.com/dareflip/support.html",
+  "termsUrl": "https://izargames.com/dareflip/terms.html",
+  "deployment": {
+    "status": "planned",
+    "liveVerified": false,
+    "note": "Proposed separate DareFlip folder on the publisher's server. The email domain identifies the proposed host; the actual website host and document root have not been verified. These URLs are not activated in the application."
+  }
+}

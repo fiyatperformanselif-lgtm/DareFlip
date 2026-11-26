@@ -6,6 +6,8 @@ Bu hazırlık iki açık yayın profili sunar. Hiçbir profil otomatik seçilmez
 
 `src/config/publisher.json` yalnızca herkese açık beş alanı içerir: `name`, `supportEmail`, `websiteUrl`, `privacyUrl`, `supportUrl`. Şifreler, imzalama anahtarları ve hesap sırları bu dosyaya yazılmaz. Alanlar gerçek bilgiler gelene kadar boştur; örnek alan adları veya uydurulmuş adreslerle yayına hazırmış gibi gösterilmez.
 
+Doğrulanan yayıncı adı **IzarGames**, destek e-postası **info@izargames.com** olarak yapılandırıldı. Kullanıcı sayfaları kendi sunucusuna hosting panelindeki dosya yöneticisinden yükleyecek. Üç web adresi canlı yayın doğrulanana kadar boş kalır. Ayrı `dareflip` klasörünün yerel paketleri ve yükleme adımları [sunucu kılavuzunda](../site/IZARGAMES_SERVER.md) yer alır; önerilen adres planı yayına hazır uygulama yapılandırması değildir.
+
 Uygulama destek ekranı bu yapılandırmadan çalışan e-posta, destek ve gizlilik bağlantılarını oluşturur. Yapılandırılmamış durumda eksikliği açıkça gösterir. Uygulamadaki EN/TR gizlilik/koşul metni ve üretilebilen web sayfaları aynı içerik kaynağını kullanır. Reklamsız ve reklamlı sürümler için farklı, gerçeğe uygun veri işleme açıklaması seçilir.
 
 ## Reklam profilleri

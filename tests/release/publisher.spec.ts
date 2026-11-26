@@ -15,6 +15,11 @@ const empty = {
   privacyUrl: "",
   supportUrl: "",
 };
+const emailOnly = {
+  ...empty,
+  name: configured.name,
+  supportEmail: configured.supportEmail,
+};
 
 async function publisherFixture(page: Page, publisher: typeof configured) {
   await page.route(
@@ -176,6 +181,39 @@ test("configured publisher identity has real anchor targets and consistent ad-fr
   await expect(dialog.locator(".legal-text")).not.toContainText(
     /\{\{|Not configured|development draft/i,
   );
+});
+
+test("a configured contact remains usable while public website URLs are still pending", async ({
+  page,
+}) => {
+  await publisherFixture(page, emailOnly);
+  await page.getByRole("button", { name: "Support", exact: true }).click();
+  const dialog = page.getByRole("dialog");
+  await expect(dialog.locator(".publisher-name")).toHaveText(emailOnly.name);
+  await expect(
+    dialog.getByRole("link", { name: /Email support/ }),
+  ).toHaveAttribute("href", `mailto:${emailOnly.supportEmail}`);
+  await expect(dialog).not.toContainText("has not been configured");
+  await expect(
+    dialog.getByRole("link", { name: "Support website", exact: true }),
+  ).toHaveCount(0);
+  await expect(dialog.getByRole("link")).toHaveCount(1);
+  await dialog
+    .getByRole("button", { name: "Privacy Policy", exact: true })
+    .click();
+  await expect(dialog.locator(".legal-language")).toHaveText(
+    "English · Publisher details pending",
+  );
+  await expect(dialog.locator(".legal-text")).toContainText(emailOnly.name);
+  await expect(dialog.locator(".legal-text")).toContainText(
+    emailOnly.supportEmail,
+  );
+  await expect(
+    dialog.getByRole("link", {
+      name: "View public privacy policy",
+      exact: true,
+    }),
+  ).toHaveCount(0);
 });
 
 test("Turkish privacy and terms identify the rendered language and publisher without English draft text", async ({
