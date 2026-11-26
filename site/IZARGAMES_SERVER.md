@@ -2,9 +2,9 @@
 
 Yayıncı adı `IzarGames`, herkese açık destek e-postası `info@izargames.com` olarak kullanıcı tarafından doğrulandı. Kullanıcının Plesk ekranında **File Manager for dareflip.izargames.com**, `Home directory → dareflip.izargames.com` yolu ve açılmış bir `dareflip` klasörü görülüyor. Reklamlı ZIP bu dizinde açılmış; mevcut yerleşim korunacak, ana dizindeki `index.html` değiştirilmeyecek.
 
-Önceki ZIP'in bağlantıları `izargames.com/dareflip/` içindi. Yeni paket, ekranda görülen alt alan adı ve klasöre göre `https://dareflip.izargames.com/dareflip/` bağlantılarıyla yeniden üretilir. `izargames.publisher-plan.json` bu hedefleri kaydeder; gerçek uygulama yapılandırması veya canlı yayın kanıtı değildir.
+Önceki ZIP'in bağlantıları `izargames.com/dareflip/` içindi. Yeni paket, ekranda görülen alt alan adı ve klasöre göre `https://dareflip.izargames.com/dareflip/` bağlantılarıyla yeniden üretildi. Kullanıcı dört dosyanın izinlerini düzelttikten sonra gizlilik, destek ve koşullar bağlantılarının normal açıldığını doğruladı. `izargames.publisher-plan.json` hedefleri ve kullanıcı doğrulamasını kaydeder; uygulamanın ana sayfa/gizlilik/destek adresleri de artık bu hedeflerle yapılandırılmıştır.
 
-Bu ortamdan yapılan HTTPS isteği proxy tarafından origin'e ulaşmadan HTTP CONNECT 403 ile engellendi. Bu, sitenin kapalı olduğunu göstermez. Plesk'in belge kökü eşleşmesi ve dört sayfanın gerçek HTTPS yanıtı henüz doğrulanmadığından uygulamadaki üç web adresi boş kalır.
+Bu ortamdan yapılan HTTPS isteği proxy tarafından origin'e ulaşmadan HTTP CONNECT 403 ile engellendi. Bu, sitenin kapalı olduğunu göstermez. Kullanıcının tarayıcı doğrulaması bağımsız HTTP/TLS ölçümü değildir; bu yüzden kayıttaki `liveVerified` hâlâ `false`, `publisherConfirmedAccessible` ise `true` değerindedir.
 
 ## Hazırlanan dosyalar
 
@@ -33,7 +33,7 @@ Komut yerel HTML'leri ve yerel `build-manifest.json` dosyasını üretir; sunucu
 
 ## Yükleme sonrası
 
-Son Plesk ekranı dört HTML dosyasının artık doğru `dareflip` klasöründe bulunduğunu, ancak izinlerin `rw-------` (`600`) olduğunu gösterdi. Önceki arşiv yerel derlemenin özel dosya izinlerini taşımıştı. Üretici ve yerel ZIP düzeltildi; sunucuya daha önce açılmış dosyalar için Plesk'teki **Permissions / İzinler / Change Permissions** ekranından yalnızca bu dört HTML'yi `rw-r--r--` (`644`) yapın: sahip okuyup yazabilir, grup ve diğerleri yalnızca okuyabilir. Çalıştırma izni gerekmez. Klasör izni ekranda `755` görünüyor; başka dosya, dizin veya alt alan adlarına toplu/özyinelemeli izin değişikliği uygulamayın.
+Plesk ekranı dört HTML dosyasının doğru `dareflip` klasöründe bulunduğunu, ancak izinlerin `rw-------` (`600`) olduğunu göstermişti. Önceki arşiv yerel derlemenin özel dosya izinlerini taşımıştı. Üretici ve yerel ZIP düzeltildi; kullanıcı sunucudaki düzeltmeyi de tamamladığını bildirdi. Tekrar yükleme yapıldığında yalnızca bu dört HTML'nin izinleri `rw-r--r--` (`644`) olmalıdır: sahip okuyup yazabilir, grup ve diğerleri yalnızca okuyabilir. Çalıştırma izni gerekmez. Klasör izni ekranda `755` görünüyor; başka dosya, dizin veya alt alan adlarına toplu/özyinelemeli izin değişikliği uygulamayın.
 
 Tarayıcıdan şu dört hedefi ayrı ayrı kontrol edin:
 
@@ -44,4 +44,4 @@ Tarayıcıdan şu dört hedefi ayrı ayrı kontrol edin:
 
 Gerçek yanıtlar HTTPS üzerinden 200 olmalı; Plesk karşılama sayfası veya ana sayfaya yönlendirme yerine doğru EN/TR DareFlip metinleri, IzarGames ve `info@izargames.com` görünmelidir. Menü bağlantıları aynı alt alan adındaki bu sayfalara gitmelidir. Eski apex alan adına giden bağlantılar kalmamalıdır. Başka uygulamaları etkileyen genel yönlendirme kurallarını değiştirmeyin.
 
-Canlı adresler doğrulandıktan sonra web/gizlilik/destek adresleri `src/config/publisher.json` içine alınır ve uygulama yeniden hazırlanır. Bu yerel paket için henüz canlı yayın doğrulaması, native uygulama derlemesi veya App Store gönderimi yapılmadı. Şifre veya özel anahtar sohbet içinde paylaşılmaz.
+Kullanıcı doğrulamasının ardından web/gizlilik/destek adresleri `src/config/publisher.json` içine alındı. Kurulu TestFlight uygulamasına geçmesi için yeni Codemagic build'i gereklidir. Bu güncelleme bağımsız site doğrulaması, yeni imzalı native derleme veya App Store gönderimi anlamına gelmez. Şifre veya özel anahtar sohbet içinde paylaşılmaz.

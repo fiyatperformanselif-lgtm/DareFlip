@@ -6,8 +6,9 @@
   "supportUrl": "https://dareflip.izargames.com/dareflip/support.html",
   "termsUrl": "https://dareflip.izargames.com/dareflip/terms.html",
   "deployment": {
-    "status": "planned",
+    "status": "publisher-confirmed",
     "liveVerified": false,
-    "note": "The publisher's Plesk screenshot identifies dareflip.izargames.com and an extracted dareflip folder. These planned URLs preserve that observed layout and replace the earlier apex-domain plan. The corrected pages have only been generated locally; document-root mapping and public HTTPS responses remain unverified. These URLs are not activated in the application."
+    "publisherConfirmedAccessible": true,
+    "note": "The publisher confirmed correcting the four HTML permissions and that the privacy, support and terms pages all open normally in their browser. Application website/privacy/support URLs now use this Plesk subdomain layout. liveVerified remains false because independent HTTPS requests from the agent environment were blocked by its proxy before reaching the origin. This record is not a claim of independent HTTP/TLS verification or store approval."
   }
 }

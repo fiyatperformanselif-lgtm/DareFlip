@@ -12,7 +12,14 @@ All copy below describes the intended app. Publish only claims verified against 
 | Primary language | English |
 | Proposed category | Games / Casual (confirm store taxonomy) |
 | Target audience | Adults; complete store questionnaires honestly |
-| Privacy / support URLs | Required, publisher-owned HTTPS URLs; not configured |
+| Publisher | IzarGames |
+| Support email | info@izargames.com |
+| Website / marketing URL | https://dareflip.izargames.com/dareflip/ |
+| Privacy URL | https://dareflip.izargames.com/dareflip/privacy.html |
+| Support URL | https://dareflip.izargames.com/dareflip/support.html |
+| Terms URL | https://dareflip.izargames.com/dareflip/terms.html |
+
+The publisher confirmed that the privacy, support and terms pages open in their browser after the Plesk permission correction. These addresses are now configured in the application source; they have not been entered into App Store Connect by this agent. Independent origin/TLS verification from this environment remains proxy-blocked. The copy below is still a draft, including the private-mode framing and advertising profile, and is not a claim of store approval.
 
 ## Apple promotional text
 
