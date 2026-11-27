@@ -1,6 +1,6 @@
 # App Privacy, yaş ve ihracat bilgileri
 
-Bu çalışma **0.1.0 (3)** için kaynak ve resmi Google SDK manifestinden doğrulanabilen bilgileri ayırır. App Store Connect'teki yanıtlar bu ajan tarafından girilmedi. Google manifesti SDK genelindeki beyanlardır; uygulamanın hesap/UMP/mediation ayarlarının veya gerçekleşen ağ trafiğinin yerine geçmez.
+Bu çalışma, önceki build 3 için incelenmiş ve premium kaynakta değişmemiş veri/reklam davranışını, kullanıcı tarafından bildirilen **0.1.0 (4)** adayı için ayırır. Build 4 IPA içeriği ve cihazdaki veri trafiği doğrudan incelenmedi; kaynak ve resmi Google SDK manifesti kanıtı kullanılır. App Store Connect'teki yanıtlar bu ajan tarafından girilmedi. Google manifesti SDK genelindeki beyanlardır; uygulamanın hesap/UMP/mediation ayarlarının veya gerçekleşen ağ trafiğinin yerine geçmez.
 
 ## Uygulamanın kendi davranışı
 
@@ -9,7 +9,7 @@ Bu çalışma **0.1.0 (3)** için kaynak ve resmi Google SDK manifestinden doğr
 | Üyelik, giriş, sunucu | Oyun için yok; incelemeci hesabı gerekmez. |
 | Oyuncu adı, seçilen cinsiyet, favoriler, ilerleme | Cihazda saklanır; DareFlip bunları sunucuya veya reklam çağrılarına aktarmaz. |
 | Oyuncu yanıtları, mikrofon, video | Kaydedilmez. |
-| Paylaşım | Oluşturulan PNG kart metni/türü/markasını içerir; oyuncu adı/cinsiyeti eklenmez. Sistem paylaşım ekranının hedefini kullanıcı seçer. |
+| Paylaşım | Oluşturulan PNG kart metni/türü/modu/zorluğu/markasını içerir; oyuncu adı/cinsiyeti eklenmez. Sistem paylaşım ekranının hedefini kullanıcı seçer. |
 | Reklam | AdMob Banner/Interstitial/Rewarded var; isteğe bağlıdır ve UMP canRequestAds sonucuyla kapılanır. |
 | Kişiselleştirme | Üç reklam isteği de npa:true kullanır. Bu tek başına No Tracking veya Data Not Collected sonucu vermez. |
 

@@ -51,7 +51,7 @@
       "utf8Bytes": 1626,
       "limit": 4000,
       "withinLimit": true,
-      "sha256": "98af7526373e208ac362a19da7296679199968dc91fad6352e5578762e8b5c06"
+      "sha256": "798ac8fa29dd97becfb224583e6df831fb3c2870a8f7371ddd5a4a60036e39bb"
     }
   },
   "sourceCorrection": "The source title count was corrected to 23 characters; subtitle remains 21.",
@@ -77,7 +77,8 @@
     "source": "Publisher text report on 2026-11-27: the new premium build is uploaded to TestFlight. Account, signed IPA and build status not independently inspected.",
     "expectedApplicationSourceCommit": "979d6b36bd5b6198606d90250d5d16cd98dcca68",
     "signedSourceCommitVerified": false,
-    "nativeDeviceChecksVerified": false
+    "nativeDeviceChecksVerified": false,
+    "distributionDraftFromLatestScreenshot": "1.0 Prepare for Submission; does not yet match reported 0.1.0 (4). Required fields and build are still missing."
   },
   "disclosures": {
     "privateMode": "Description explicitly identifies sexual prompts/tasks for exactly two consenting adult partners and separate confirmations.",

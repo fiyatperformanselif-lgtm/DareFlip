@@ -15,19 +15,19 @@
     "status": "Not independently verified for premium update"
   },
   "candidateStatusFromUserScreenshot": "New candidate is a text report, not a screenshot: publisher says 0.1.0 (4) is uploaded to TestFlight; exact processing/review status not independently inspected.",
-  "distributionVersionBuildConfirmation": "Use 0.1.0 build 4, as reported by publisher. Distribution build selection has not been directly inspected.",
+  "distributionVersionBuildConfirmation": "Latest screenshot still shows draft 1.0; the earlier build-selection error is no longer shown, but selected build is not visible. Intended candidate remains publisher-reported 0.1.0 (4); inspect actual selection before changing the draft.",
   "releasePreference": "Automatic release after Apple approval matches the explicit user publication request; not set in account by this agent.",
   "accountSubmissionPerformedByAgent": false,
   "appleApprovalVerified": false,
   "nativeScreenshotsProvidedInThisPacket": false,
   "files": {
     "PRIVACY_WORKSHEET_TR.md": {
-      "bytes": 5389,
-      "sha256": "8be8525688a7c14b21d88aeffdc9d41530acd7ed3e9115b61342f0ca285937be"
+      "bytes": 5608,
+      "sha256": "6e688960fd3441cbfa60a8adc10e3ab0dfcb0846b7f504dd15b101b3b05452f0"
     },
     "README_TR.md": {
-      "bytes": 4787,
-      "sha256": "67a966bd7ecabe987600b3fdd0e964b8e404a68e9402ca2d88c19038b00a6931"
+      "bytes": 4891,
+      "sha256": "fb83f5d1948bdc284289dd9c10985cd391110ababbf9cde2d2b6009fa3946e69"
     },
     "en-US/description.txt": {
       "bytes": 1597,
@@ -38,8 +38,8 @@
       "sha256": "1627d6a80fe5d35f80268effe4981b5113b49485d1c57d5cad0117045a6b209a"
     },
     "en-US/metadata-manifest.json": {
-      "bytes": 4362,
-      "sha256": "e716b6d1e42d43fe07451721334140ce26df87505fa0f52a94d742870cb03ef7"
+      "bytes": 4522,
+      "sha256": "e6909d7779bacc01d6c984167aa928f4dbceff1c9e0c7410593ad2fb4c6c9d2e"
     },
     "en-US/name.txt": {
       "bytes": 23,
@@ -51,7 +51,7 @@
     },
     "en-US/review_notes.txt": {
       "bytes": 1626,
-      "sha256": "98af7526373e208ac362a19da7296679199968dc91fad6352e5578762e8b5c06"
+      "sha256": "798ac8fa29dd97becfb224583e6df831fb3c2870a8f7371ddd5a4a60036e39bb"
     },
     "en-US/subtitle.txt": {
       "bytes": 21,
@@ -60,6 +60,10 @@
     "google-mobile-ads-privacy-evidence.json": {
       "bytes": 4217,
       "sha256": "96e4166532c97bbd45a6b476b362e8692e39184dbec4a06602c71b22025b1f8f"
+    },
+    "FIELD_ERRORS_TR.md": {
+      "bytes": 2262,
+      "sha256": "dab190c5f80e4c718170b1c603b79ea51c31a08089d5f6791279091a964cf382"
     }
   },
   "previousSignedCandidate": {
@@ -85,5 +89,22 @@
     "freshBuildReportedByUser": true,
     "expectedApplicationSourceCommit": "979d6b36bd5b6198606d90250d5d16cd98dcca68",
     "signedSourceCommitVerified": false
+  },
+  "latestDistributionScreenshot": {
+    "version": "1.0",
+    "status": "Prepare for Submission",
+    "reviewSubmissionBlocked": true,
+    "missingFields": [
+      "age ratings answers",
+      "primary category",
+      "content rights",
+      "review contact information",
+      "copyright",
+      "en-US description",
+      "en-US keywords",
+      "en-US support URL"
+    ],
+    "buildSelectionErrorShown": false,
+    "selectedBuildVerified": false
   }
 }

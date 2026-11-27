@@ -1,4 +1,4 @@
-Candidate: DareFlip 0.1.0 (3).
+Candidate: DareFlip 0.1.0 (4).
 
 No sign-in or reviewer account is required. Core gameplay works offline. English and Turkish card editions are complete; other languages can have disclosed English fallback.
 

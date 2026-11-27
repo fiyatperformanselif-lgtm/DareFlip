@@ -14,6 +14,8 @@ Kullanıcı 27 Kasım 2026 tarihinde yeni tasarım build'inin TestFlight'a yükl
 - Yeni build'in cihaz testi ve hesaptaki işlem durumu bağımsız olarak incelenmedi. Kullanıcı bildirimi, Apple inceleme onayı değildir.
 - [Tasarım ve doğrulama raporu](../../docs/PREMIUM_UX_2026_11_27.md)
 
+Ekrandaki `1.0` taslağını ve eksik alanları düzeltmek için [alan eşlemesi](FIELD_ERRORS_TR.md).
+
 ## Distribution ve gönderim
 
 1. [App Store Connect → DareFlip](https://appstoreconnect.apple.com/apps/6838894449/distribution) → **Distribution → 0.1.0** ekranında Build alanından **4** numaralı adayı seçin.
