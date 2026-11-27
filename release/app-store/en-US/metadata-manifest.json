@@ -73,14 +73,11 @@
   },
   "candidateEvidence": {
     "version": "0.1.0",
-    "build": "3",
-    "source": "Parent task reports a user-provided App Store Connect screenshot with candidate 0.1.0/build 3, Ready to Submit, and an internal group. Not independently authenticated or inspected by this metadata task.",
-    "userReportedNativeChecks": [
-      "player-name keyboard zoom",
-      "skip",
-      "resume"
-    ],
-    "scope": "Historical 0.1.0 (3), before the premium UX update. Listing copy remains reusable; updated application needs a fresh signed build and device checks."
+    "build": "4",
+    "source": "Publisher text report on 2026-11-27: the new premium build is uploaded to TestFlight. Account, signed IPA and build status not independently inspected.",
+    "expectedApplicationSourceCommit": "979d6b36bd5b6198606d90250d5d16cd98dcca68",
+    "signedSourceCommitVerified": false,
+    "nativeDeviceChecksVerified": false
   },
   "disclosures": {
     "privateMode": "Description explicitly identifies sexual prompts/tasks for exactly two consenting adult partners and separate confirmations.",
@@ -94,5 +91,16 @@
     "appleApprovalVerified": false,
     "nativeBinaryInspectedByThisTask": false,
     "screenshotsAndPrivacyAgeExportAnswers": "Outside these metadata files; complete honestly in the publisher account."
+  },
+  "previousCandidateEvidence": {
+    "version": "0.1.0",
+    "build": "3",
+    "source": "Parent task reports a user-provided App Store Connect screenshot with candidate 0.1.0/build 3, Ready to Submit, and an internal group. Not independently authenticated or inspected by this metadata task.",
+    "userReportedNativeChecks": [
+      "player-name keyboard zoom",
+      "skip",
+      "resume"
+    ],
+    "scope": "Historical 0.1.0 (3), before the premium UX update. Listing copy remains reusable; updated application needs a fresh signed build and device checks."
   }
 }

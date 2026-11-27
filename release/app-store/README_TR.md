@@ -2,18 +2,25 @@
 
 Kullanıcı mevcut içerikle yayına geçilmesini açıkça istedi. İçerik kalitesi değişiklikleri sonraki güncellemelere bırakıldı. Bu paket App Store Connect alanlarına girebileceğiniz metinleri hazırlar; Apple hesabında kayıt veya gönderim işlemi yapmaz.
 
-## Yeni tasarım için yeni build gerekiyor
+## Gönderilecek aday: 0.1.0 (4)
 
-**Önceki `0.1.0 (3)` bu premium tasarım güncellemesini içermiyor.** Önceki imzalı kaynak `3748094`; cihazdaki isim/skip/devam bildirimi de o adaya ait. Sürüm numarası `0.1.0` kalır; gerçek sonraki build numarasını Codemagic, App Store Connect'teki son değerden belirler. Yeni numara bu pakette uydurulmadı.
+Kullanıcı 27 Kasım 2026 tarihinde yeni tasarım build'inin TestFlight'a yüklendiğini ve sürüm/build bilgisinin **0.1.0 (4)** olduğunu bildirdi; bu adayla yayına geçilmesini istedi. Önceki **0.1.0 (3)** eski tasarımın tarihsel kaydıdır.
 
+- Sürüm: `0.1.0`
+- Build: `4`
 - Bundle ID: `com.dareflip.app`
 - App Store Connect Apple ID: `6838894449`
-- Yeni kaynak için imzalı build, kurulum ve cihaz kontrolleri henüz yapılmadı.
+- Beklenen uygulama kaynağı: `979d6b36bd5b6198606d90250d5d16cd98dcca68` (premium UX). Build 4'ün gerçek kaynak SHA'sı veya imzalı IPA içeriği bu oturumda doğrudan doğrulanmadı.
+- Yeni build'in cihaz testi ve hesaptaki işlem durumu bağımsız olarak incelenmedi. Kullanıcı bildirimi, Apple inceleme onayı değildir.
 - [Tasarım ve doğrulama raporu](../../docs/PREMIUM_UX_2026_11_27.md)
 
-## Distribution alanları
+## Distribution ve gönderim
 
-Manuel Codemagic iş akışıyla yeni adayı yükleyip cihazda test ettikten sonra Distribution sürümü `0.1.0` ile eşleşen **yeni build** seçilmelidir. Yeni mağaza görsellerini o sürümden alın. Önceki kullanıcı onayı yayın niyetini kaydeder; bu paket yeni binary'nin test edildiğini veya hesabın gönderildiğini iddia etmez.
+1. [App Store Connect → DareFlip](https://appstoreconnect.apple.com/apps/6838894449/distribution) → **Distribution → 0.1.0** ekranında Build alanından **4** numaralı adayı seçin.
+2. **Version Release** alanında **Automatically release this version** seçin ve kaydedin. Yayın, Apple onayından sonra gerçekleşir.
+3. **Add for Review → Submit for Review** akışını tamamlayın. Panel eksik zorunlu alan bildirirse gerçek hata listesine göre tamamlayın; bu paket bu alanların hesapta dolu olduğunu iddia etmez.
+
+Bu dosya güncellemesi uygulama kodunu değiştirmez; yalnızca bu evrak değişikliği için yeniden native build gerekmez. Hesaba erişecek connector/tarayıcı kontrol aracı bulunmadığından gönderim bu ajan tarafından yapılmadı.
 
 English (U.S.) için alan eşlemesi:
 

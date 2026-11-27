@@ -5,17 +5,17 @@
   "appleAppId": "6838894449",
   "bundleId": "com.dareflip.app",
   "version": "0.1.0",
-  "build": null,
+  "build": "4",
   "cloudRunSourceCommit": null,
   "publisher": "IzarGames",
   "publicationAuthorizedByUser": true,
-  "publicationRequest": "Publish current content; improve card quality in future updates.",
+  "publicationRequest": "Publisher explicitly requested publishing the premium update, then reported the new TestFlight candidate as 0.1.0 (4) on 2026-11-27.",
   "nativeCoreChecks": {
-    "source": "Pending for premium update",
-    "status": "Not run on physical devices"
+    "source": "No new physical-device report for build 4",
+    "status": "Not independently verified for premium update"
   },
-  "candidateStatusFromUserScreenshot": "Previous candidate evidence only. Updated premium source awaits a fresh signed build.",
-  "distributionVersionBuildConfirmation": "Earlier user confirmation was 0.1.0 (3). A new premium build is required; next number allocated by Codemagic.",
+  "candidateStatusFromUserScreenshot": "New candidate is a text report, not a screenshot: publisher says 0.1.0 (4) is uploaded to TestFlight; exact processing/review status not independently inspected.",
+  "distributionVersionBuildConfirmation": "Use 0.1.0 build 4, as reported by publisher. Distribution build selection has not been directly inspected.",
   "releasePreference": "Automatic release after Apple approval matches the explicit user publication request; not set in account by this agent.",
   "accountSubmissionPerformedByAgent": false,
   "appleApprovalVerified": false,
@@ -26,8 +26,8 @@
       "sha256": "8be8525688a7c14b21d88aeffdc9d41530acd7ed3e9115b61342f0ca285937be"
     },
     "README_TR.md": {
-      "bytes": 4156,
-      "sha256": "3ac2d69887deb3f4f5eef0946448e2fde45f830a5a6e4e45462f6d617e299d0a"
+      "bytes": 4787,
+      "sha256": "67a966bd7ecabe987600b3fdd0e964b8e404a68e9402ca2d88c19038b00a6931"
     },
     "en-US/description.txt": {
       "bytes": 1597,
@@ -38,8 +38,8 @@
       "sha256": "1627d6a80fe5d35f80268effe4981b5113b49485d1c57d5cad0117045a6b209a"
     },
     "en-US/metadata-manifest.json": {
-      "bytes": 3949,
-      "sha256": "94e87e54f1f189e338f637ab84e0952da717797dea764627992dc511dec53290"
+      "bytes": 4362,
+      "sha256": "e716b6d1e42d43fe07451721334140ce26df87505fa0f52a94d742870cb03ef7"
     },
     "en-US/name.txt": {
       "bytes": 23,
@@ -79,8 +79,11 @@
   },
   "premiumUpdate": {
     "report": "docs/PREMIUM_UX_2026_11_27.md",
-    "requiresFreshSignedBuild": true,
+    "requiresFreshSignedBuild": false,
     "contentChanged": false,
-    "nativeInstallationVerified": false
+    "nativeInstallationVerified": false,
+    "freshBuildReportedByUser": true,
+    "expectedApplicationSourceCommit": "979d6b36bd5b6198606d90250d5d16cd98dcca68",
+    "signedSourceCommitVerified": false
   }
 }
