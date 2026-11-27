@@ -47,3 +47,7 @@ artifacts/legal-site/
 artifacts/release-playwright/
 artifacts/release-report.json
 artifacts/admob/
+
+# Native Simulator screenshot workflow output (provenance ships with each run).
+artifacts/store-native/
+artifacts/DareFlip-native-store-screenshots.zip

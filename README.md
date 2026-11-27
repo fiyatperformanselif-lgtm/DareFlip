@@ -75,6 +75,8 @@ Read [native build instructions](docs/NATIVE_BUILDS.md) and [AdMob configuration
 
 Ads never start on opening the app. Explicit privacy action, UMP SDK permission and a supported native platform are prerequisites. Requests are nonpersonalized; tracking permission is not requested by the current UI. Sensitive gameplay and saved sensitive cards exclude advertising. Banners reserve the measured native height; interstitials require more than five cards, at least 120 seconds, and an active explicit pause. Rewarded pack unlock requires a genuine reward. The free core remains playable when ads fail or are declined.
 
+For actual iOS store screenshots without local Xcode, the separate manual `ios-store-screenshots` Codemagic workflow builds an unsigned Simulator app and captures iPhone 16 Pro / iPad Pro 13-inch (M4) home screens. It produces opaque JPEGs plus raw PNG/provenance, with no signing or Apple upload. See [the native capture guide](docs/IOS_STORE_SCREENSHOTS.md). Linux fixture tests validate the helper; the first real macOS run remains to be verified.
+
 ## Publication handoff
 
 The explicit ad-free/production-ad store build paths, public publisher configuration, shared EN/TR legal pages and remaining publisher/content choices are documented in [RELEASE_SETUP.md](docs/RELEASE_SETUP.md). No store profile is selected automatically. Missing publisher details and an unresolved content assessment still stop release preparation.

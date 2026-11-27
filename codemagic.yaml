@@ -61,6 +61,45 @@ workflows:
         submit_to_testflight: false
         submit_to_app_store: false
 
+  # Unsigned Simulator captures only. No signing, tester upload or store submission.
+  ios-store-screenshots:
+    name: DareFlip · Native store screenshots (manual)
+    instance_type: mac_mini_m2
+    max_build_duration: 45
+    environment:
+      vars:
+        BUNDLE_ID: *bundle_id
+        XCODE_PROJECT: ios/App/App.xcodeproj
+        XCODE_SCHEME: App
+        VITE_ADMOB_TESTING: "true"
+      node: "24.22.3"
+      xcode: latest
+    scripts:
+      - name: Validate screenshot tooling and prepare the application
+        script: |
+          set -euo pipefail
+          npm ci
+          npm run lint
+          npm test
+          python3 scripts/codemagic-tests.py
+          python3 scripts/codemagic-screenshots-tests.py
+          npm run beta:ios
+      - name: Capture real iPhone and iPad Simulator screens
+        script: |
+          set -euo pipefail
+          python3 scripts/codemagic-screenshots.py --project "$XCODE_PROJECT" --scheme "$XCODE_SCHEME" --bundle-id "$BUNDLE_ID" --output artifacts/store-native
+      - name: Package native screenshots and provenance
+        script: |
+          set -euo pipefail
+          python3 -c "import shutil; shutil.make_archive('artifacts/DareFlip-native-store-screenshots', 'zip', 'artifacts/store-native')"
+    artifacts:
+      - artifacts/DareFlip-native-store-screenshots.zip
+      - artifacts/store-native/upload/*.jpg
+      - artifacts/store-native/raw/*.png
+      - artifacts/store-native/manifest.json
+      - artifacts/store-native/README.md
+      - artifacts/store-native/capture.log
+
   # Release preparation is intentionally separate from the test-inventory beta flow.
   # Publisher-selected production advertising uses the public iOS IDs below.
   ios-app-store:

@@ -26,8 +26,8 @@
       "sha256": "6e688960fd3441cbfa60a8adc10e3ab0dfcb0846b7f504dd15b101b3b05452f0"
     },
     "README_TR.md": {
-      "bytes": 4891,
-      "sha256": "fb83f5d1948bdc284289dd9c10985cd391110ababbf9cde2d2b6009fa3946e69"
+      "bytes": 4965,
+      "sha256": "f6f73d5cbad195f49e355ec34edc7be3cd358b9f17580190fcd3a4857dff350f"
     },
     "en-US/description.txt": {
       "bytes": 1597,
@@ -38,8 +38,8 @@
       "sha256": "1627d6a80fe5d35f80268effe4981b5113b49485d1c57d5cad0117045a6b209a"
     },
     "en-US/metadata-manifest.json": {
-      "bytes": 4522,
-      "sha256": "e6909d7779bacc01d6c984167aa928f4dbceff1c9e0c7410593ad2fb4c6c9d2e"
+      "bytes": 4597,
+      "sha256": "82620ae23a0830b20837a5e039e8027d891714fed542696a0f72ae1cc8d892e8"
     },
     "en-US/name.txt": {
       "bytes": 23,
@@ -64,6 +64,10 @@
     "FIELD_ERRORS_TR.md": {
       "bytes": 2262,
       "sha256": "dab190c5f80e4c718170b1c603b79ea51c31a08089d5f6791279091a964cf382"
+    },
+    "PRIVACY_START_TR.md": {
+      "bytes": 3547,
+      "sha256": "88ce13fab1e4b58c8ecbbfb51dca864c6a70136b75d3c1500d177d88e2bb1107"
     }
   },
   "previousSignedCandidate": {
@@ -94,6 +98,18 @@
     "version": "1.0",
     "status": "Prepare for Submission",
     "reviewSubmissionBlocked": true,
+    "selectedBuildVerified": false,
+    "missingFields": [
+      "App Privacy practices entered/published by Admin",
+      "Privacy Policy URL in App Privacy",
+      "13-inch iPad screenshot",
+      "iPhone with Dynamic Island (medium display) screenshot"
+    ]
+  },
+  "previousDistributionScreenshot": {
+    "version": "1.0",
+    "status": "Prepare for Submission",
+    "reviewSubmissionBlocked": true,
     "missingFields": [
       "age ratings answers",
       "primary category",
@@ -106,5 +122,23 @@
     ],
     "buildSelectionErrorShown": false,
     "selectedBuildVerified": false
+  },
+  "assetPreparation": {
+    "nativeWorkflow": "ios-store-screenshots",
+    "nativeExecutionVerified": false,
+    "models": {
+      "iPhone 16 Pro": [
+        1206,
+        2622
+      ],
+      "iPad Pro 13-inch (M4)": [
+        2064,
+        2752
+      ]
+    },
+    "browserReferenceImages": 10,
+    "browserReferencesAreNative": false,
+    "slotAcceptanceVerified": false,
+    "accountPrivacyPublishedVerified": false
   }
 }

@@ -78,7 +78,7 @@
     "expectedApplicationSourceCommit": "979d6b36bd5b6198606d90250d5d16cd98dcca68",
     "signedSourceCommitVerified": false,
     "nativeDeviceChecksVerified": false,
-    "distributionDraftFromLatestScreenshot": "1.0 Prepare for Submission; does not yet match reported 0.1.0 (4). Required fields and build are still missing."
+    "distributionDraftFromLatestScreenshot": "1.0 Prepare for Submission; selected build not visible. Latest blockers shown are App Privacy practices, privacy URL, 13-inch iPad screenshot and Dynamic Island medium iPhone screenshot."
   },
   "disclosures": {
     "privateMode": "Description explicitly identifies sexual prompts/tasks for exactly two consenting adult partners and separate confirmations.",
